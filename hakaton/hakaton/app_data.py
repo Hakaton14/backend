@@ -161,7 +161,7 @@ def user_avatar_path(instance, filename) -> str:
 """Security."""
 
 
-ACCESS_TOKEN_LIFETIME: int = int(os.getenv('ACCESS_TOKEN_LIFETIME'))
-ACCESS_TOKEN_LIFETIME: timedelta = timedelta(days=ACCESS_TOKEN_LIFETIME)
+ACCESS_TOKEN_LIFETIME: int = int(os.getenv('ACCESS_TOKEN_LIFETIME', 0))
+ACCESS_TOKEN_LIFETIME_TD: timedelta = timedelta(days=ACCESS_TOKEN_LIFETIME)
 
 SECRET_KEY: str = os.getenv('SECRET_KEY')

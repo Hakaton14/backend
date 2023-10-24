@@ -5,17 +5,17 @@ from api.v1.serializers import UserRegisterSerializer, UserUpdateSerializer
 TOKEN_OBTAIN_SCHEMA: dict[str, str] = {
     'description': (
         'Принимает набор учетных данных пользователя и возвращает '
-        'пару JSON-токенов доступа и обновления.'
+        'пару JWT-токенов доступа и обновления.'
     ),
-    'summary': 'Получить пару JSON-токенов доступа и обновления.',
+    'summary': 'Получить пару JWT-токенов доступа и обновления.',
 }
 
 TOKEN_REFRESH_SCHEMA: dict[str, str] = {
     'description': (
-        'Принимает JSON-токен обновления и возвращает JSON-токен доступа, '
+        'Принимает JWT-токен обновления и возвращает JWT-токен доступа, '
         'если токен обновления действителен.'
     ),
-    'summary': 'Обновить JSON-токен доступа.',
+    'summary': 'Обновить JWT-токен доступа.',
 }
 
 USER_VIEW_SCHEMA: dict[str, str] = {

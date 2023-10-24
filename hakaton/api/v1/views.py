@@ -13,6 +13,7 @@ from api.v1.schemas import (
     TOKEN_OBTAIN_SCHEMA, TOKEN_REFRESH_SCHEMA,
     USER_VIEW_SCHEMA, USER_ME_SCHEMA,
 )
+from api.v1.permissions import IsOwnerPut
 from api.v1.serializers import UserRegisterSerializer, UserUpdateSerializer
 from user.models import User
 
@@ -31,7 +32,6 @@ class TokenRefreshView(TokenRefreshView):
 class UserViewSet(ModelViewSet):
 
     queryset = User.objects.all()
-    serializer_class = UserRegisterSerializer
     http_method_names = ('get', 'post', 'put',)
 
     @extend_schema(exclude=True)
@@ -50,6 +50,8 @@ class UserViewSet(ModelViewSet):
     def get_permissions(self):
         if self.request.method == 'POST':
             self.permission_classes = (AllowAny,)
+        if self.request.method == 'PUT':
+            self.permission_classes = (IsOwnerPut,)
         return super().get_permissions()
 
     @extend_schema(**USER_ME_SCHEMA)
