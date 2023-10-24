@@ -25,14 +25,14 @@ services:
     depends_on:
       - db
 
-  # frontend:
-  #   build:
-  #     context: ../frontend
-  #     dockerfile: Dockerfile
-  #   volumes:
-  #     - static_volume:/app/dist
-  #   depends_on:
-  #     - backend
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    volumes:
+      - static_volume:/app/build
+    depends_on:
+      - backend
 
   nginx:
     image: nginx:1.19.3-alpine
@@ -44,4 +44,4 @@ services:
       - media_volume:/var/html/media/
     depends_on:
       - backend
-      # - frontend
+      - frontend
