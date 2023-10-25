@@ -1,5 +1,4 @@
-import re
-
+from re import fullmatch
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext
 
@@ -9,8 +8,10 @@ EMAIL_ERROR: str = gettext(
     '\n'
     'Первый символ должен быть латинской буквой или цифрой.'
 )
+
 NAME_PATTERN: str = r'^[А-ЯЁа-яё][А-ЯЁа-яё\s\-]{1,30}[А-ЯЁа-яё]$'
 NAME_ERROR: str = gettext('Укажите корректное имя или фамилию')
+
 PASS_PATTERN: str = (
     r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!_@#$%^&+=]).{5,50}$'
 )
@@ -26,20 +27,20 @@ PASS_ERROR: str = gettext(
 
 def validate_email(value: str):
     """Производит валидацию поля "email"."""
-    if isinstance(value, str) and re.fullmatch(EMAIL_PATTERN, value):
+    if isinstance(value, str) and fullmatch(EMAIL_PATTERN, value):
         return value
     raise ValidationError(EMAIL_ERROR)
 
 
 def validate_password(value):
     """Производит валидацию поля "password"."""
-    if isinstance(value, str) and re.fullmatch(PASS_PATTERN, value):
+    if isinstance(value, str) and fullmatch(PASS_PATTERN, value):
         return value
     raise ValidationError(PASS_ERROR)
 
 
 def validate_name(value):
     """Производит валидацию полей "first_name" и "last_name"."""
-    if re.fullmatch(NAME_PATTERN, value):
+    if fullmatch(NAME_PATTERN, value):
         return value
     raise ValidationError(NAME_ERROR)
