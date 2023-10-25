@@ -3,11 +3,14 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.routers import DefaultRouter
 from rest_framework.viewsets import ModelViewSet
 
-from api.v1.views import TokenObtainPairView, TokenRefreshView, UserViewSet
+from api.v1.views import (
+    TaskViewSet, TokenObtainPairView, TokenRefreshView, UserViewSet,
+)
 
 router = DefaultRouter()
 
 ROUTER_DATA: list[dict[str, ModelViewSet]] = [
+    {'prefix': 'tasks', 'viewset': TaskViewSet},
     {'prefix': 'users', 'viewset': UserViewSet},
 ]
 
