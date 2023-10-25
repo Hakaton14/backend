@@ -1,6 +1,58 @@
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 
-from api.v1.serializers import UserRegisterSerializer, UserUpdateSerializer
+from api.v1.serializers import (
+    TaskSerializer, UserRegisterSerializer, UserUpdateSerializer,
+)
+
+TASK_VIEW_SCHEMA: dict[str, str] = {
+    'create': extend_schema(
+        description='Создает новую задачу пользователя.',
+        summary='Создать задачу пользователя.',
+        request=TaskSerializer,
+    ),
+    'destroy': extend_schema(
+        description=(
+            'Удаляет задачу пользователя с указанным идентификатором.'
+        ),
+        summary='Удалить задачу пользователя.',
+        request=TaskSerializer,
+    ),
+    'list': extend_schema(
+        description=(
+            'Возвращает список задач пользователя. '
+            'При передачи необязательного query параметра date в формате '
+            'YYYY-MM возвращает список задач за указанный месяц, '
+            'в формате YYYY-MM-DD - за указанный день.'
+        ),
+        summary='Получить список задач пользователя.',
+        request=TaskSerializer,
+    ),
+    'retrieve': extend_schema(
+        description=(
+            'Возвращает задачу пользователя с указанным идентификатором.'
+        ),
+        summary='Получить задачу пользователя.',
+        request=TaskSerializer,
+    ),
+    'update': extend_schema(
+        description=(
+            'Обновляет задачу пользователя.'
+        ),
+        summary='Обновить задачу пользователя.',
+        request=TaskSerializer,
+    ),
+}
+TASK_VIEW_LIST_SCHEMA: dict[str, any] = {
+    'parameters': [
+        OpenApiParameter(
+            name='date',
+            location=OpenApiParameter.QUERY,
+            description='Дата в формате YYYY-MM или YYYY-MM-DD.',
+            required=False,
+            type=str,
+        ),
+    ],
+}
 
 TOKEN_OBTAIN_SCHEMA: dict[str, str] = {
     'description': (
