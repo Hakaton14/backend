@@ -1,6 +1,6 @@
 import os
 
-from hakaton.app_data import (
+from hakaton.app_data import (  # noqa F401
     ACCESS_TOKEN_LIFETIME, BASE_DIR, DB_POSTGRESQL, DB_SQLITE, SECRET_KEY
 )
 
@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'api',
     'user',
+    'vacancy',
     'drf_spectacular',
 ]
 
