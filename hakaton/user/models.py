@@ -7,9 +7,9 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 from hakaton.app_data import (
     user_avatar_path,
-    CITIES_MAX_LEN, EMPLOYMENT_MAX_LEN, GRADE_CHOICES, GRADE_LEVELS,
-    GRADE_MAX_LEN, SKILL_CHOICES, SKILLS_CATEGORY_CHOICES, SKILL_MAX_LEN,
-    DJANGO_HASH_LEN, USER_NAME_MAX_LEN,
+    CITIES_MAX_LEN, DJANGO_HASH_LEN, EMPLOYMENT_MAX_LEN, GRADE_CHOICES,
+    GRADE_LEVELS, GRADE_MAX_LEN, SKILL_CHOICES, SKILLS_CATEGORY_CHOICES,
+    SKILL_MAX_LEN, TASK_DESCRIPTION_MAX_LEN, USER_NAME_MAX_LEN,
 )
 from user.validators import validate_email, validate_name, validate_password
 
@@ -297,11 +297,40 @@ class HrFavorited(models.Model):
             )
         ]
         ordering = ('-id',)
-        verbose_name = 'Избранное для HR'
-        verbose_name_plural = 'Избранное для HR'
+        verbose_name = 'Избранное для HR специалиста'
+        verbose_name_plural = 'Избранное для HR специалистов'
 
     def __str__(self):
         return f'{self.hr}: {self.candidate}'
+
+
+class HrTasks(models.Model):
+    """Модель задач календаря HR-специалиста."""
+
+    hr = models.ForeignKey(
+        verbose_name='HR-специалист',
+        to=User,
+        related_name='hr_tasks',
+        on_delete=models.CASCADE,
+    )
+    description = models.CharField(
+        verbose_name='Описание задачи',
+        max_length=TASK_DESCRIPTION_MAX_LEN,
+    )
+    date = models.DateField(
+        verbose_name='Дата задачи',
+    )
+    time = models.TimeField(
+        verbose_name='Время задачи',
+    )
+
+    class Meta:
+        ordering = ('date', 'time',)
+        verbose_name = 'Задача HR-специалиста'
+        verbose_name_plural = 'Задачи HR-специалистов'
+
+    def __str__(self):
+        return f'{self.date} {self.time}: {self.description}'
 
 
 class HrWatched(models.Model):
@@ -331,8 +360,8 @@ class HrWatched(models.Model):
             )
         ]
         ordering = ('-id',)
-        verbose_name = 'Просмотренное для HR'
-        verbose_name_plural = 'Просмотренное для HR'
+        verbose_name = 'Просмотренное для HR специалиста'
+        verbose_name_plural = 'Просмотренное для HR специалистов'
 
     def __str__(self):
         return f'{self.hr}: {self.candidate}'

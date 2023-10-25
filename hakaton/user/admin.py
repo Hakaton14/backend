@@ -2,8 +2,9 @@ from django.contrib import admin
 
 from hakaton.app_data import ADMIN_LIST_PER_PAGE
 from user.models import (
-    City, Grade, Employment, HrFavorited, HrWatched, Skill, SkillCategory,
-    User, UserStudentsFake, UserStudentsFakeEmployment, UserStudentsFakeSkill
+    City, Grade, Employment, HrFavorited, HrTasks, HrWatched, Skill,
+    SkillCategory, User, UserStudentsFake, UserStudentsFakeEmployment,
+    UserStudentsFakeSkill,
 )
 
 
@@ -108,6 +109,46 @@ class HrFavoritedAdmin(admin.ModelAdmin):
     list_filter = (
         'hr',
         'candidate',
+    )
+    list_per_page = ADMIN_LIST_PER_PAGE
+
+
+@admin.register(HrTasks)
+class HrTasksAdmin(admin.ModelAdmin):
+    """
+    Переопределяет административный интерфейс Django для модели HrTasks.
+
+    Атрибуты:
+        - list_display (tuple) - список полей для отображения в интерфейсе:
+            - ID (id)
+            - внешний ключ на User (hr)
+            - описание (description)
+            - дата (date)
+            - время (time)
+        - list_editable (tuple) - список полей для изменения в интерфейсе:
+            - описание (description)
+            - дата (date)
+            - время (time)
+        - list_filter (tuple) - список фильтров:
+            - внешний ключ на User (hr)
+            - дата (date)
+        - list_per_page (int) - количество объектов на одной странице
+    """
+    list_display = (
+        'id',
+        'hr',
+        'description',
+        'date',
+        'time',
+    )
+    list_editable = (
+        'description',
+        'date',
+        'time',
+    )
+    list_filter = (
+        'hr',
+        'date',
     )
     list_per_page = ADMIN_LIST_PER_PAGE
 
