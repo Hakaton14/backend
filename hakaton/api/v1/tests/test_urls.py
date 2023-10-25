@@ -2,6 +2,7 @@ import pytest
 
 from api.v1.tests.fixtures import (
     client_auth_admin,
+    API_TASKS_URL,
     API_TOKEN_CREATE_URL, API_TOKEN_REFRESH_URL,
     API_SCHEMA_URL, API_SWAGGER_URL,
     API_USERS_URL, API_USERS_ME_URL,
@@ -17,15 +18,15 @@ class TestEndpointsAvailability():
     """
 
     @pytest.mark.parametrize(
-            'url, meaning', [
-                (API_TOKEN_CREATE_URL,
-                 'получения JWT-токенов доступа и обновления'
-                 ),
-                (API_TOKEN_REFRESH_URL,
-                 'обновления JWT-токена доступа'
-                 ),
-            ]
-        )
+        'url, meaning', [
+            (API_TOKEN_CREATE_URL,
+             'получения JWT-токенов доступа и обновления'
+             ),
+            (API_TOKEN_REFRESH_URL,
+             'обновления JWT-токена доступа'
+             ),
+        ]
+    )
     def test_auth_token(self, url, meaning) -> None:
         """Производит тест доступности эндпоинтов JWT."""
         response = client_auth_admin().post(url)
@@ -36,11 +37,11 @@ class TestEndpointsAvailability():
         return
 
     @pytest.mark.parametrize(
-            'url, meaning', [
-                (API_SCHEMA_URL, 'схемы'),
-                (API_SWAGGER_URL, 'Swagger представления'),
-            ]
-        )
+        'url, meaning', [
+            (API_SCHEMA_URL, 'схемы'),
+            (API_SWAGGER_URL, 'Swagger представления'),
+        ]
+    )
     def test_schema(self, url, meaning) -> None:
         """Производит тест доступности эндпоинтов drf_spectacular."""
         response = client_auth_admin().get(url)
@@ -51,13 +52,17 @@ class TestEndpointsAvailability():
         return
 
     @pytest.mark.parametrize(
-            'method, url', [
-                ('post', API_USERS_URL),
-                ('put', f'{API_USERS_URL}1/'),
-                ('get', API_USERS_ME_URL),
-            ]
-        )
-    def test_user_viewset_available(self, method, url) -> None:
+        'method, url', [
+            ('get', API_TASKS_URL),
+            ('post', API_TASKS_URL),
+            # TODO: добавить тесты с учетом того, что по любому
+            #       запросу на "чужой" объект будет всегда 404.
+            # ('delete', f'{API_TASKS_URL}1/'),
+            # ('get', f'{API_TASKS_URL}1/'),
+            # ('patch', f'{API_TASKS_URL}1/'),
+        ]
+    )
+    def test_tasks_viewset_available(self, method, url) -> None:
         """Производит тест доступности эндпоинтов UserViewSet."""
         method_function = CLIENT_METHODS.get(method)
         response = method_function(url)
@@ -67,16 +72,32 @@ class TestEndpointsAvailability():
         return
 
     @pytest.mark.parametrize(
-            'method, url', [
-                ('get', API_USERS_URL),
-                ('delete', f'{API_USERS_URL}1/'),
-                ('patch', f'{API_USERS_URL}1/'),
-                ('delete', API_USERS_ME_URL),
-                ('post', API_USERS_ME_URL),
-                ('patch', API_USERS_ME_URL),
-            ]
+        'method, url', [
+            ('post', API_USERS_URL),
+            ('put', f'{API_USERS_URL}1/'),
+            ('get', API_USERS_ME_URL),
+        ]
+    )
+    def test_users_viewset_available(self, method, url) -> None:
+        """Производит тест доступности эндпоинтов UserViewSet."""
+        method_function = CLIENT_METHODS.get(method)
+        response = method_function(url)
+        assert response.status_code not in URL_MISSED_STATUSES, (
+            f'Убедитесь, что {method} запрос по адресу "{url}" доступен.'
         )
-    def test_user_viewset_unavailable(self, method, url) -> None:
+        return
+
+    @pytest.mark.parametrize(
+        'method, url', [
+            ('get', API_USERS_URL),
+            ('delete', f'{API_USERS_URL}1/'),
+            ('patch', f'{API_USERS_URL}1/'),
+            ('delete', API_USERS_ME_URL),
+            ('post', API_USERS_ME_URL),
+            ('patch', API_USERS_ME_URL),
+        ]
+    )
+    def test_users_viewset_unavailable(self, method, url) -> None:
         """Производит тест доступности эндпоинтов UserViewSet."""
         method_function = CLIENT_METHODS.get(method)
         response = method_function(url)

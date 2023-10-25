@@ -1,12 +1,12 @@
 import pytest
 
 from api.v1.tests.fixtures import (
-    client_anon, client_auth_admin, create_user_obj,
+    client_anon, client_auth_admin, create_user_obj, create_admin_user_obj,
     API_TOKEN_CREATE_URL, API_TOKEN_REFRESH_URL,
-    API_USERS_URL, API_USERS_ME_URL,
-    USER_DATA_VALID,
+    API_TASKS_URL, API_USERS_URL, API_USERS_ME_URL,
+    TASK_DATA_HR_INVALID, USER_DATA_VALID,
 )
-from user.models import User
+from user.models import HrTask, User
 
 
 @pytest.mark.django_db
@@ -73,7 +73,9 @@ class TestEndpoints():
         )
 
     def _compare_user_data(self, user_data: dict[str, str]) -> None:
-
+        """
+        Сверяет данные последнего созданного пользователя с user_data.
+        """
         last_user: User = User.objects.latest('id')
         invalid_data: list[str] = []
         # INFO: пароль хранится в хешированном виде.
@@ -86,6 +88,33 @@ class TestEndpoints():
             'которые были сообщены. Неверные данны для полей: '
             f'{", ".join(token for token in invalid_data)}'
         )
+
+    def test_tasks_post(self) -> None:
+        """Тест POST запроса на создание новой задачи."""
+        tasks_count: int = HrTask.objects.count()
+        task_data_valid: dict[str, str] = TASK_DATA_HR_INVALID.copy()
+        admin: User = create_admin_user_obj(
+            email='admin@email.com',
+            password='AdminPass!1',
+        )
+        client = client_auth_admin(
+            num=1,
+            admin=admin,
+        )
+        task_data_valid['hr'] = 1
+        client.post(
+            path=API_TASKS_URL,
+            data=task_data_valid,
+            format='json',
+        )
+        tasks_count_new: int = HrTask.objects.count()
+        assert tasks_count + 1 == tasks_count_new, (
+            f'Убедитесь, что POST запрос на {API_TASKS_URL} с валидными '
+            'данными создает нового пользователя.'
+        )
+        last_task: HrTask = HrTask.objects.latest('id')
+        assert last_task.description == task_data_valid.get('description')
+        return
 
     def test_users_post(self) -> None:
         """Тест POST запроса на создание нового пользователя."""
