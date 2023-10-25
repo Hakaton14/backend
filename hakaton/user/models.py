@@ -304,7 +304,7 @@ class HrFavorited(models.Model):
         return f'{self.hr}: {self.candidate}'
 
 
-class HrTasks(models.Model):
+class HrTask(models.Model):
     """Модель задач календаря HR-специалиста."""
 
     hr = models.ForeignKey(

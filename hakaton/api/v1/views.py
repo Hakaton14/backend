@@ -19,21 +19,21 @@ from api.v1.permissions import IsOwnerPut
 from api.v1.serializers import (
     TaskSerializer, UserRegisterSerializer, UserUpdateSerializer,
 )
-from user.models import HrTasks, User
+from user.models import HrTask, User
 
 
 @extend_schema_view(**TASK_VIEW_SCHEMA)
 class TaskViewSet(ModelViewSet):
-    """Вью-сет для взаимодействия с моделью HrTasks."""
+    """Вью-сет для взаимодействия с моделью HrTask."""
 
     filter_backends = (TaskMonthFilter,)
     filterset_fields = ('date',)
-    http_method_names = ('get', 'post', 'patch', 'delete',)
+    http_method_names = ('delete', 'get', 'patch', 'post',)
     serializer_class = TaskSerializer
-    queryset = HrTasks.objects.all()
+    queryset = HrTask.objects.all()
 
     def get_queryset(self):
-        return HrTasks.objects.filter(hr=self.request.user)
+        return HrTask.objects.filter(hr=self.request.user)
 
     @extend_schema(**TASK_VIEW_LIST_SCHEMA)
     def list(self, request, *args, **kwargs):

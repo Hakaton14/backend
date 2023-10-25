@@ -1,14 +1,14 @@
 from djoser.serializers import UserCreateSerializer
 from rest_framework.serializers import ModelSerializer
 
-from user.models import HrTasks, User
+from user.models import HrTask, User
 
 
 class TaskSerializer(ModelSerializer):
     """Сериализатор представления задач HR-специалиста."""
 
     class Meta:
-        model = HrTasks
+        model = HrTask
         fields = (
             'id',
             'hr',
