@@ -6,6 +6,8 @@
 @jwt_create = http://127.0.0.1:8000/api/v1/auth/token/create/
 @jwt_refresh = http://127.0.0.1:8000/api/v1/auth/token/refresh/
 
+@tasks = http://127.0.0.1:8000/api/v1/tasks/
+
 @users = http://127.0.0.1:8000/api/v1/users/
 
 
@@ -33,8 +35,51 @@ Content-Type: application/json
 
 
 ##########################################################################
+################################## TASKS #################################
+##########################################################################
+
+
+###
+GET {{tasks}} HTTP/1.1
+Authorization: Bearer 
+
+###
+GET {{tasks}}?date=2023-10-25 HTTP/1.1
+Authorization: Bearer 
+
+###
+POST {{tasks}} HTTP/1.1
+Authorization: Bearer 
+Content-Type: application/json
+
+{
+    "hr": 1,
+    "description": "API 1",
+    "date": "2023-12-01",
+    "time": "12:21:01"
+}
+
+###
+PATCH {{tasks}}2/ HTTP/1.1
+Authorization: Bearer 
+Content-Type: application/json
+
+{
+    "hr": 1,
+    "description": "REAPI 2",
+    "date": "2023-12-01",
+    "time": "12:21:01"
+}
+
+###
+DELETE {{tasks}}4/ HTTP/1.1
+Authorization: Bearer 
+
+
+##########################################################################
 ################################## USERS #################################
 ##########################################################################
+
 
 ###
 GET {{users}}me/ HTTP/1.1
