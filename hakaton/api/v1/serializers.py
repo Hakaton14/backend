@@ -18,6 +18,11 @@ class TaskSerializer(ModelSerializer):
         )
 
     def to_representation(self, instance):
+        # INFO: при передачи query параметра формата YYYY-DD сериализатор
+        #       должен вернуть не объекты queryset, а список list[int] дней
+        #       календаря, в которых есть хотя бы одна задача.
+        if isinstance(instance, int):
+            return instance
         data: dict[str, str] = super().to_representation(instance)
         data.pop('hr')
         return data

@@ -14,7 +14,6 @@ def validate_date(value: str) -> str:
     Производит валидацию даты. Допускает указание в форматах:
     'YYYY-MM-DD' или 'YYYY-MM'.
     """
-    print(value)
     if not fullmatch(pattern=DATE_PATTERN, string=value):
         raise ValidationError(DATE_ERROR)
     return value

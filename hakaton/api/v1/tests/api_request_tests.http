@@ -44,7 +44,7 @@ GET {{tasks}} HTTP/1.1
 Authorization: Bearer 
 
 ###
-GET {{tasks}}?date=2023-10-25 HTTP/1.1
+GET {{tasks}}?date=2023-10 HTTP/1.1
 Authorization: Bearer 
 
 ###
