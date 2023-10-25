@@ -9,27 +9,54 @@ from rest_framework_simplejwt.views import (
 )
 from rest_framework.viewsets import ModelViewSet
 
+from api.v1.filters import TaskMonthFilter
 from api.v1.schemas import (
+    TASK_VIEW_SCHEMA, TASK_VIEW_LIST_SCHEMA,
     TOKEN_OBTAIN_SCHEMA, TOKEN_REFRESH_SCHEMA,
     USER_VIEW_SCHEMA, USER_ME_SCHEMA,
 )
 from api.v1.permissions import IsOwnerPut
-from api.v1.serializers import UserRegisterSerializer, UserUpdateSerializer
-from user.models import User
+from api.v1.serializers import (
+    TaskSerializer, UserRegisterSerializer, UserUpdateSerializer,
+)
+from user.models import HrTasks, User
+
+
+@extend_schema_view(**TASK_VIEW_SCHEMA)
+class TaskViewSet(ModelViewSet):
+    """Вью-сет для взаимодействия с моделью HrTasks."""
+
+    filter_backends = (TaskMonthFilter,)
+    filterset_fields = ('date',)
+    http_method_names = ('get', 'post', 'patch', 'delete',)
+    serializer_class = TaskSerializer
+    queryset = HrTasks.objects.all()
+
+    def get_queryset(self):
+        return HrTasks.objects.filter(hr=self.request.user)
+
+    @extend_schema(**TASK_VIEW_LIST_SCHEMA)
+    def list(self, request, *args, **kwargs):
+        return super().list(self, request)
 
 
 @extend_schema(**TOKEN_OBTAIN_SCHEMA)
 class TokenObtainPairView(TokenObtainPairView):
+    """Вью-класс обновления получения пары JWT-токенов доступа и обновления."""
+
     pass
 
 
 @extend_schema(**TOKEN_REFRESH_SCHEMA)
 class TokenRefreshView(TokenRefreshView):
+    """Вью-класс обновления JWT-токена доступа."""
+
     pass
 
 
 @extend_schema_view(**USER_VIEW_SCHEMA)
 class UserViewSet(ModelViewSet):
+    """Вью-сет для взаимодействия с моделью User."""
 
     queryset = User.objects.all()
     http_method_names = ('get', 'post', 'put',)
