@@ -2,8 +2,8 @@ from django.contrib import admin
 
 from hakaton.app_data import ADMIN_LIST_PER_PAGE
 from user.models import (
-    City, Grade, HrFavorited, HrWatched, Skill, SkillCategory,
-    User, UserStudentsFake
+    City, Grade, Employment, HrFavorited, HrWatched, Skill, SkillCategory,
+    User, UserStudentsFake, UserStudentsFakeEmployment, UserStudentsFakeSkill
 )
 
 
@@ -14,7 +14,7 @@ class CityAdmin(admin.ModelAdmin):
 
     Атрибуты:
         - list_display (tuple) - список полей для отображения в интерфейсе:
-            - ID (pk)
+            - ID (id)
             - название (name)
         - list_editable (tuple) - список полей для изменения в интерфейсе:
             - название (name)
@@ -35,6 +35,29 @@ class CityAdmin(admin.ModelAdmin):
     list_per_page = ADMIN_LIST_PER_PAGE
 
 
+@admin.register(Employment)
+class EmploymentAdmin(admin.ModelAdmin):
+    """
+    Переопределяет административный интерфейс Django для модели Employment.
+
+    Атрибуты:
+        - list_display (tuple) - список полей для отображения в интерфейсе:
+            - ID (id)
+            - название (name)
+        - list_editable (tuple) - список полей для изменения в интерфейсе:
+            - название (name)
+        - list_per_page (int) - количество объектов на одной странице
+    """
+    list_display = (
+        'id',
+        'name',
+    )
+    list_editable = (
+        'name',
+    )
+    list_per_page = ADMIN_LIST_PER_PAGE
+
+
 @admin.register(Grade)
 class GradeAdmin(admin.ModelAdmin):
     """
@@ -42,7 +65,7 @@ class GradeAdmin(admin.ModelAdmin):
 
     Атрибуты:
         - list_display (tuple) - список полей для отображения в интерфейсе:
-            - ID (pk)
+            - ID (id)
             - название (name)
             - уровень (level)
         - list_per_page (int) - количество объектов на одной странице
@@ -62,7 +85,7 @@ class HrFavoritedAdmin(admin.ModelAdmin):
 
     Атрибуты:
         - list_display (tuple) - список полей для отображения в интерфейсе:
-            - ID (pk)
+            - ID (id)
             - внешний ключ на User (hr)
             - внешний ключ на UserStudentsFake (candidate)
         - list_editable (tuple) - список полей для изменения в интерфейсе:
@@ -96,7 +119,7 @@ class HrWatchedAdmin(admin.ModelAdmin):
 
     Атрибуты:
         - list_display (tuple) - список полей для отображения в интерфейсе:
-            - ID (pk)
+            - ID (id)
             - внешний ключ на User (hr)
             - внешний ключ на UserStudentsFake (candidate)
         - list_editable (tuple) - список полей для изменения в интерфейсе:
@@ -130,7 +153,7 @@ class SkillCategoryAdmin(admin.ModelAdmin):
 
     Атрибуты:
         - list_display (tuple) - список полей для отображения в интерфейсе:
-            - ID (pk)
+            - ID (id)
             - название (name)
         - list_editable (tuple) - список полей для изменения в интерфейсе:
             - название (name)
@@ -153,7 +176,7 @@ class SkillAdmin(admin.ModelAdmin):
 
     Атрибуты:
         - list_display (tuple) - список полей для отображения в интерфейсе:
-            - ID (pk)
+            - ID (id)
             - название (name)
             - категория (category)
         - list_editable (tuple) - список полей для изменения в интерфейсе:
@@ -180,7 +203,7 @@ class UserAdmin(admin.ModelAdmin):
 
     Атрибуты:
         - list_display (tuple) - список полей для отображения в интерфейсе:
-            - ID (pk)
+            - ID (id)
             - имя (first_name)
             - фамилия (second_name)
             - электронная почта (email)
@@ -204,7 +227,6 @@ class UserAdmin(admin.ModelAdmin):
     """
     list_display = (
         'id',
-        'password',
         'first_name',
         'last_name',
         'email',
@@ -239,7 +261,7 @@ class UserStudentsFakeAdmin(admin.ModelAdmin):
 
     Атрибуты:
         - list_display (tuple) - список полей для отображения в интерфейсе:
-            - ID (pk)
+            - ID (id)
             - имя (first_name)
             - фамилия (second_name)
             - электронная почта (email)
@@ -299,5 +321,61 @@ class UserStudentsFakeAdmin(admin.ModelAdmin):
         'last_name',
         'email',
         'phone',
+    )
+    list_per_page = ADMIN_LIST_PER_PAGE
+
+
+@admin.register(UserStudentsFakeEmployment)
+class UserStudentsFakeEmploymentAdmin(admin.ModelAdmin):
+    """
+    Переопределяет административный интерфейс Django
+    для модели UserStudentsFakeEmployment.
+
+    Атрибуты:
+        - list_display (tuple) - список полей для отображения в интерфейсе:
+            - ID (id)
+            - студент (student)
+            - формат работы (employment)
+        - list_editable (tuple) - список полей для изменения в интерфейсе:
+            - название (student)
+            - формат работы (employment)
+        - list_per_page (int) - количество объектов на одной странице
+    """
+    list_display = (
+        'id',
+        'student',
+        'employment',
+    )
+    list_editable = (
+        'student',
+        'employment',
+    )
+    list_per_page = ADMIN_LIST_PER_PAGE
+
+
+@admin.register(UserStudentsFakeSkill)
+class UserStudentsFakeSkillAdmin(admin.ModelAdmin):
+    """
+    Переопределяет административный интерфейс Django
+    для модели UserStudentsFakeSkill.
+
+    Атрибуты:
+        - list_display (tuple) - список полей для отображения в интерфейсе:
+            - ID (id)
+            - студент (student)
+            - навык (skill)
+        - list_editable (tuple) - список полей для изменения в интерфейсе:
+            - название (student)
+            - навык (skill)
+        - list_per_page (int) - количество объектов на одной странице
+    """
+    list_display = (
+        'id',
+        'student',
+        'skill',
+    )
+    list_editable = (
+        'student',
+        'skill',
     )
     list_per_page = ADMIN_LIST_PER_PAGE

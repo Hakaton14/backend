@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'api',
     'user',
+    'vacancy',
     'drf_spectacular',
 ]
 

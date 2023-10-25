@@ -44,6 +44,8 @@ DB_SQLITE: dict[str, dict[str, str]] = {
 
 DJANGO_HASH_LEN: int = 512
 
+EMPLOYMENT_MAX_LEN: int = 30
+
 GRADE_MAX_LEN: int = 10
 GRADE_JUNIOR: str = 'Junior'
 GRADE_MIDDLE: str = 'Middle'
@@ -132,6 +134,11 @@ SKILL_CHOICES = [
     ('Ruby', 'Ruby'),
     ('Swift', 'Swift'),
 ]
+
+VACANCY_DESCRIPTION_MAX_LEN: int = 512
+VACANCY_NAME_MAX_LEN: int = 30
+VACANCY_STUDENT_STATUS_MAX_LEN: int = 30
+VACANCY_TESTCASE_MAX_LEN: int = 512
 
 USER_NAME_MAX_LEN: int = 30
 
