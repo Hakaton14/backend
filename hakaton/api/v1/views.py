@@ -12,17 +12,39 @@ from rest_framework.viewsets import ModelViewSet
 
 from api.v1.filters import TaskMonthFilter
 from api.v1.schemas import (
+    CURRENCY_VIEW_SCHEMA, EXPERIENCE_VIEW_SCHEMA,
     SKILL_CATEGORY_VIEW_SCHEMA, SKILL_SEARCH_VIEW_SCHEMA,
     TASK_VIEW_SCHEMA, TASK_VIEW_LIST_SCHEMA,
     TOKEN_OBTAIN_SCHEMA, TOKEN_REFRESH_SCHEMA,
     USER_VIEW_SCHEMA, USER_ME_SCHEMA,
+    VACANCY_VIEW_SCHEMA,
 )
 from api.v1.permissions import IsOwnerPut
 from api.v1.serializers import (
-    SkillSerializer, SkillCategorySerializer, TaskSerializer,
+    CurrencySerializer, ExperienceSerializer, SkillSerializer,
+    SkillCategorySerializer, TaskSerializer, VacancySerializer,
     UserRegisterSerializer, UserUpdateSerializer,
 )
-from user.models import HrTask, Skill, SkillCategory, User
+from user.models import Experience, HrTask, Skill, SkillCategory, User
+from vacancy.models import Currency, Vacancy
+
+
+@extend_schema(**CURRENCY_VIEW_SCHEMA)
+class CurrencyView(ListAPIView):
+    """
+    Вью функция list предоставления валюты.
+    """
+    queryset = Currency.objects.all()
+    serializer_class = CurrencySerializer
+
+
+@extend_schema(**EXPERIENCE_VIEW_SCHEMA)
+class ExperienceView(ListAPIView):
+    """
+    Вью функция list предоставления сроков опыта работы.
+    """
+    queryset = Experience.objects.all()
+    serializer_class = ExperienceSerializer
 
 
 @extend_schema(**SKILL_CATEGORY_VIEW_SCHEMA)
@@ -62,6 +84,10 @@ class TaskViewSet(ModelViewSet):
 
     def get_queryset(self):
         return HrTask.objects.filter(hr=self.request.user)
+
+    def create(self, request, *args, **kwargs):
+        self.request.data['hr'] = self.request.user.id
+        return super().create(request, *args, **kwargs)
 
     @extend_schema(**TASK_VIEW_LIST_SCHEMA)
     def list(self, request, *args, **kwargs):
@@ -119,3 +145,32 @@ class UserViewSet(ModelViewSet):
         instance: User = request.user
         serializer = UserUpdateSerializer(instance=instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+# TODO: ввиду того, что skills указаны как write_only,
+#       в документации на GET запросы это поле не показано.
+# TODO: дописать метод update().
+@extend_schema_view(**VACANCY_VIEW_SCHEMA)
+class VacancyViewSet(ModelViewSet):
+    """Вью-сет для взаимодействия с моделью Vacancy."""
+
+    http_method_names = ('get', 'post', 'patch',)
+    serializer_class = VacancySerializer
+
+    def get_queryset(self):
+        return Vacancy.objects.filter(
+            hr=self.request.user,
+        ).select_related(
+            'hr',
+            'city',
+        ).prefetch_related(
+            'vacancy_employment',
+            'vacancy_skill',
+        )
+
+    def create(self, request, *args, **kwargs):
+        self.request.data['hr'] = self.request.user.id
+        return super().create(request, *args, **kwargs)
+
+    def retrieve(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)
