@@ -1,7 +1,9 @@
 from django.db import models
 
 from hakaton.app_data import (
-    VACANCY_DESCRIPTION_MAX_LEN, VACANCY_NAME_MAX_LEN,
+    VACANCY_DESCRIPTION_MAX_LEN, VACANCY_CURR_MAX_LEN, VACANCY_CURR_CHOICES,
+    VACANCY_EXP_CHOICES, VACANCY_EXP_MAX_LEN,
+    VACANCY_NAME_MAX_LEN, VACANCY_SPEC_MAX_LEN,
     VACANCY_STUDENT_STATUS_MAX_LEN, VACANCY_TESTCASE_MAX_LEN,
 )
 from user.models import City, Grade, Employment, Skill, User, UserStudentsFake
@@ -19,8 +21,12 @@ class Vacancy(models.Model):
         null=True,
     )
     name = models.CharField(
-        verbose_name='Название вакансии',
+        verbose_name='Название',
         max_length=VACANCY_NAME_MAX_LEN,
+    )
+    specialization = models.CharField(
+        verbose_name='Специализация',
+        max_length=VACANCY_SPEC_MAX_LEN,
     )
     city = models.ForeignKey(
         verbose_name='Город',
@@ -28,8 +34,22 @@ class Vacancy(models.Model):
         related_name='vacancy',
         on_delete=models.PROTECT,
     )
+    address = models.CharField(
+        verbose_name='Адрес офиса',
+        max_length=VACANCY_SPEC_MAX_LEN,
+        blank=True,
+        null=True,
+    )
     description = models.TextField(
-        verbose_name='Описание вакансии',
+        verbose_name='Описание',
+        max_length=VACANCY_DESCRIPTION_MAX_LEN,
+    )
+    responsibilities = models.TextField(
+        verbose_name='Обязанности',
+        max_length=VACANCY_DESCRIPTION_MAX_LEN,
+    )
+    conditions = models.TextField(
+        verbose_name='Условия',
         max_length=VACANCY_DESCRIPTION_MAX_LEN,
     )
     salary_from = models.PositiveIntegerField(
@@ -37,6 +57,11 @@ class Vacancy(models.Model):
     )
     salary_to = models.PositiveIntegerField(
         verbose_name='Заработная вилка, до',
+    )
+    currency = models.CharField(
+        verbose_name='Валюта',
+        max_length=VACANCY_CURR_MAX_LEN,
+        choices=VACANCY_CURR_CHOICES,
     )
     testcase = models.TextField(
         verbose_name='Тестовый задание для кандидатов',
@@ -48,13 +73,20 @@ class Vacancy(models.Model):
         related_name='vacancy',
         on_delete=models.PROTECT,
     )
+    experience = models.CharField(
+        verbose_name='Опты работы',
+        max_length=VACANCY_EXP_MAX_LEN,
+        choices=VACANCY_EXP_CHOICES,
+        blank=True,
+        null=True,
+    )
     pub_datetime = models.DateTimeField(
-        verbose_name='Дата и время создания вакансии',
+        verbose_name='Дата и время создания',
         auto_now_add=True,
     )
     # TODO: по истечении этого срока вакансия должна что-то делать?
     deadline_datetime = models.DateTimeField(
-        verbose_name='Дата и время дедлайна вакансии',
+        verbose_name='Дата и время дедлайна',
         default=None,
         blank=True,
         null=True,
