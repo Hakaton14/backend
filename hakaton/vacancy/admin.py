@@ -2,9 +2,36 @@ from django.contrib import admin
 
 from hakaton.app_data import ADMIN_LIST_PER_PAGE
 from vacancy.models import (
-    Vacancy, VacancyEmployment, VacancyFavorited, VacancySkill,
+    Currency, Vacancy, VacancyEmployment, VacancyFavorited, VacancySkill,
     VacancyStudentStatus, VacancyWatched,
 )
+
+
+@admin.register(Currency)
+class CurrencyAdmin(admin.ModelAdmin):
+    """
+    Переопределяет административный интерфейс Django для модели Currency.
+
+    Атрибуты:
+        - list_display (tuple) - список полей для отображения в интерфейсе:
+            - ID (id)
+            - название (name)
+            - символ (symbol)
+        - list_editable (tuple) - список полей для изменения в интерфейсе:
+            - название (name)
+            - символ (symbol)
+        - list_per_page (int) - количество объектов на одной странице
+    """
+    list_display = (
+        'id',
+        'name',
+        'symbol',
+    )
+    list_editable = (
+        'name',
+        'symbol',
+    )
+    list_per_page = ADMIN_LIST_PER_PAGE
 
 
 @admin.register(Vacancy)
@@ -18,35 +45,46 @@ class VacancyAdmin(admin.ModelAdmin):
             - ответственный HR (hr)
             - название (name)
             - город (city)
+            - адрес (address)
             - описание (description)
+            - обязанности (responsibilities)
+            - условия (conditions)
             - заработная вилка, от (salary_from)
             - заработная вилка, до (salary_to)
+            - валюта (currency)
             - тестовое задание (testcase)
-            - требуемый грейд (grade)
+            - опыт работы (experience)
             - дата и время публикации (pub_datetime)
-            - дата и время дедлайна (deadline_datetime)
-            - статус архивной (archived)
+            - статус архивной (is_archived)
+            - статус шаблона (is_template)
         - list_editable (tuple) - список полей для изменения в интерфейсе:
             - название (name)
             - город (city)
+            - адрес (address)
             - описание (description)
+            - обязанности (responsibilities)
+            - условия (conditions)
             - заработная вилка, от (salary_from)
             - заработная вилка, до (salary_to)
+            - валюта (currency)
             - тестовое задание (testcase)
-            - требуемый грейд (grade)
-            - дата и время дедлайна (deadline_datetime)
-            - статус архивной (archived)
+            - опыт работы (experience)
+            - статус архивной (is_archived)
+            - статус шаблона (is_template)
         - list_filter (tuple) - список фильтров:
             - ответственный HR (hr)
             - название (name)
             - город (city)
             - заработная вилка, от (salary_from)
             - заработная вилка, до (salary_to)
-            - требуемый грейд (grade)
-            - статус архивной (archived)
+            - валюта (currency)
+            - опыт работы (experience)
+            - статус архивной (is_archived)
+            - статус шаблона (is_template)
         - search_fields (tuple) - список полей для поиска объектов:
             - ответственный HR (hr)
             - название (name)
+            - адрес (address)
         - list_per_page (int) - количество объектов на одной странице
     """
     list_display = (
@@ -54,25 +92,33 @@ class VacancyAdmin(admin.ModelAdmin):
         'hr',
         'name',
         'city',
+        'address',
         'description',
+        'responsibilities',
+        'conditions',
         'salary_from',
         'salary_to',
+        'currency',
         'testcase',
-        'grade',
+        'experience',
         'pub_datetime',
-        'deadline_datetime',
-        'archived',
+        'is_archived',
+        'is_template',
     )
     list_editable = (
         'name',
         'city',
+        'address',
         'description',
+        'responsibilities',
+        'conditions',
         'salary_from',
         'salary_to',
+        'currency',
         'testcase',
-        'grade',
-        'deadline_datetime',
-        'archived',
+        'experience',
+        'is_archived',
+        'is_template',
     )
     list_filter = (
         'hr',
@@ -80,12 +126,15 @@ class VacancyAdmin(admin.ModelAdmin):
         'city',
         'salary_from',
         'salary_to',
-        'grade',
-        'archived',
+        'currency',
+        'experience',
+        'is_archived',
+        'is_template',
     )
     search_fields = (
         'hr',
         'name',
+        'address'
     )
     list_per_page = ADMIN_LIST_PER_PAGE
 

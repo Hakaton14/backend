@@ -1,21 +1,68 @@
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 
-from api.v1.serializers import (
-    TaskSerializer, UserRegisterSerializer, UserUpdateSerializer,
-)
+from api.v1.serializers import UserRegisterSerializer, UserUpdateSerializer
+
+CITY_VIEW_SCHEMA: dict[str, str] = {
+    'description': (
+        'Возвращает список городов.  '
+        'При передачи необязательного query параметра search возвращает '
+        'список городов, которые начинаются с указанных букв.'
+    ),
+    'summary': 'Получить список городов.',
+    'parameters': [
+        OpenApiParameter(
+            name='search',
+            location=OpenApiParameter.QUERY,
+            description='Название навыка.',
+            required=False,
+            type=str,
+        ),
+    ],
+}
+
+CURRENCY_VIEW_SCHEMA: dict[str, str] = {
+    'description': 'Возвращает список валюты. ',
+    'summary': 'Получить список валюты.',
+}
+
+EXPERIENCE_VIEW_SCHEMA: dict[str, str] = {
+    'description': 'Возвращает список сроков опыта работы. ',
+    'summary': 'Получить список сроков опыта работы.',
+}
+
+SKILL_SEARCH_VIEW_SCHEMA: dict[str, str] = {
+    'description': (
+        'Возвращает список навыков. '
+        'При передачи необязательного query параметра search возвращает '
+        'список навыков, которые начинаются с указанных букв.'
+    ),
+    'summary': 'Получить список навыков.',
+    'parameters': [
+        OpenApiParameter(
+            name='search',
+            location=OpenApiParameter.QUERY,
+            description='Название навыка.',
+            required=False,
+            type=str,
+        ),
+    ],
+}
+
+SKILL_CATEGORY_VIEW_SCHEMA: dict[str, str] = {
+    'description': 'Возвращает список категорий навыков с перечнем навыков.',
+    'summary': 'Получить категории навыков с перечнем навыков.',
+}
 
 TASK_VIEW_SCHEMA: dict[str, str] = {
     'create': extend_schema(
         description='Создает новую задачу пользователя.',
         summary='Создать задачу пользователя.',
-        request=TaskSerializer,
     ),
     'destroy': extend_schema(
         description=(
             'Удаляет задачу пользователя с указанным идентификатором.'
         ),
         summary='Удалить задачу пользователя.',
-        request=TaskSerializer,
     ),
     'list': extend_schema(
         description=(
@@ -25,23 +72,21 @@ TASK_VIEW_SCHEMA: dict[str, str] = {
             'в формате YYYY-MM-DD - за указанный день.'
         ),
         summary='Получить список задач пользователя.',
-        request=TaskSerializer,
     ),
     'retrieve': extend_schema(
         description=(
             'Возвращает задачу пользователя с указанным идентификатором.'
         ),
         summary='Получить задачу пользователя.',
-        request=TaskSerializer,
     ),
-    'update': extend_schema(
+    'partial_update': extend_schema(
         description=(
             'Обновляет задачу пользователя.'
         ),
         summary='Обновить задачу пользователя.',
-        request=TaskSerializer,
     ),
 }
+
 TASK_VIEW_LIST_SCHEMA: dict[str, any] = {
     'parameters': [
         OpenApiParameter(
@@ -86,4 +131,27 @@ USER_VIEW_SCHEMA: dict[str, str] = {
 USER_ME_SCHEMA: dict[str, str] = {
     'description': 'Возвращает авторизированного пользователя.',
     'summary': 'Получить авторизированного пользователя.',
+}
+
+VACANCY_VIEW_SCHEMA: dict[str, str] = {
+    'create': extend_schema(
+        description='Создает новую вакансию пользователя.',
+        summary='Создать вакансию пользователя.',
+    ),
+    'list': extend_schema(
+        description='Возвращает список вакансий пользователя.',
+        summary='Получить список вакансий пользователя.',
+    ),
+    'retrieve': extend_schema(
+        description=(
+            'Возвращает вакансию пользователя с указанным идентификатором.'
+        ),
+        summary='Получить вакансию пользователя.',
+    ),
+    'partial_update': extend_schema(
+        description=(
+            'Обновляет вакансию пользователя.'
+        ),
+        summary='Обновить вакансию пользователя.',
+    ),
 }

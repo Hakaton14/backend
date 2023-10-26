@@ -1,10 +1,42 @@
 from django.db import models
 
 from hakaton.app_data import (
-    VACANCY_DESCRIPTION_MAX_LEN, VACANCY_NAME_MAX_LEN,
+    CURRENCY_MAX_LEN, CURRENCY_SYMBOL_MAX_LEN,
+    VACANCY_DESCRIPTION_MAX_LEN, VACANCY_NAME_MAX_LEN, VACANCY_SPEC_MAX_LEN,
     VACANCY_STUDENT_STATUS_MAX_LEN, VACANCY_TESTCASE_MAX_LEN,
 )
-from user.models import City, Grade, Employment, Skill, User, UserStudentsFake
+from user.models import (
+    City, Employment, Experience, Skill, User, UserStudentsFake,
+)
+
+
+class Currency(models.Model):
+    """Модель валют."""
+
+    name = models.CharField(
+        verbose_name='Название валюты',
+        max_length=CURRENCY_MAX_LEN,
+        unique=True,
+    )
+    symbol = models.CharField(
+        verbose_name='Символ',
+        max_length=CURRENCY_SYMBOL_MAX_LEN,
+        unique=True,
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=('name', 'symbol',),
+                name='unique_name_symbols',
+            )
+        ]
+        ordering = ('-name',)
+        verbose_name = 'Валюта'
+        verbose_name_plural = 'Валюты'
+
+    def __str__(self):
+        return f'{self.name} ({self.symbol})'
 
 
 class Vacancy(models.Model):
@@ -19,7 +51,7 @@ class Vacancy(models.Model):
         null=True,
     )
     name = models.CharField(
-        verbose_name='Название вакансии',
+        verbose_name='Название',
         max_length=VACANCY_NAME_MAX_LEN,
     )
     city = models.ForeignKey(
@@ -28,8 +60,22 @@ class Vacancy(models.Model):
         related_name='vacancy',
         on_delete=models.PROTECT,
     )
+    address = models.CharField(
+        verbose_name='Адрес офиса',
+        max_length=VACANCY_SPEC_MAX_LEN,
+        blank=True,
+        null=True,
+    )
     description = models.TextField(
-        verbose_name='Описание вакансии',
+        verbose_name='Описание',
+        max_length=VACANCY_DESCRIPTION_MAX_LEN,
+    )
+    responsibilities = models.TextField(
+        verbose_name='Обязанности',
+        max_length=VACANCY_DESCRIPTION_MAX_LEN,
+    )
+    conditions = models.TextField(
+        verbose_name='Условия',
         max_length=VACANCY_DESCRIPTION_MAX_LEN,
     )
     salary_from = models.PositiveIntegerField(
@@ -38,36 +84,39 @@ class Vacancy(models.Model):
     salary_to = models.PositiveIntegerField(
         verbose_name='Заработная вилка, до',
     )
+    currency = models.ForeignKey(
+        verbose_name='Валюта',
+        to=Currency,
+        related_name='vacancy',
+        on_delete=models.PROTECT,
+    )
     testcase = models.TextField(
         verbose_name='Тестовый задание для кандидатов',
         max_length=VACANCY_TESTCASE_MAX_LEN,
     )
-    grade = models.ForeignKey(
-        verbose_name='Требуемый грейд',
-        to=Grade,
+    experience = models.ForeignKey(
+        verbose_name='Опыт работы',
+        to=Experience,
         related_name='vacancy',
         on_delete=models.PROTECT,
     )
     pub_datetime = models.DateTimeField(
-        verbose_name='Дата и время создания вакансии',
+        verbose_name='Дата и время создания',
         auto_now_add=True,
     )
-    # TODO: по истечении этого срока вакансия должна что-то делать?
-    deadline_datetime = models.DateTimeField(
-        verbose_name='Дата и время дедлайна вакансии',
-        default=None,
-        blank=True,
-        null=True,
+    is_archived = models.BooleanField(
+        verbose_name='Статус архивной',
+        default=False,
     )
-    archived = models.BooleanField(
-        verbose_name='Статус архивной вакансии',
+    is_template = models.BooleanField(
+        verbose_name='Статус шаблона',
         default=False,
     )
 
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=('hr', 'name', 'description',),
+                fields=('name', 'description',),
                 name='unique_vacancy',
             )
         ]

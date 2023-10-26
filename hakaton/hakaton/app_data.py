@@ -17,6 +17,9 @@ ADMIN_LIST_PER_PAGE: int = 15
 
 CITIES_MAX_LEN: int = 30
 
+CURRENCY_MAX_LEN: int = 30
+CURRENCY_SYMBOL_MAX_LEN: int = 1
+
 DB_ENGINE: str = os.getenv('DB_ENGINE')
 DB_USER: str = os.getenv('POSTGRES_USER')
 DB_PASSWORD: str = os.getenv('POSTGRES_PASSWORD')
@@ -46,26 +49,10 @@ DJANGO_HASH_LEN: int = 512
 
 EMPLOYMENT_MAX_LEN: int = 30
 
-GRADE_MAX_LEN: int = 10
-GRADE_JUNIOR: str = 'Junior'
-GRADE_MIDDLE: str = 'Middle'
-GRADE_SENIOR: str = 'Senior'
-GRADE_LEAD: str = 'Lead'
-GRADE_CHOICES: list[tuple[str]] = [
-    (GRADE_JUNIOR, 'Junior'),
-    (GRADE_MIDDLE, 'Middle'),
-    (GRADE_SENIOR, 'Senior'),
-    (GRADE_LEAD, 'Lead'),
-]
-GRADE_LEVELS: dict[str, int] = {
-    GRADE_JUNIOR: 1,
-    GRADE_MIDDLE: 2,
-    GRADE_SENIOR: 3,
-    GRADE_LEAD: 4,
-}
+EXP_MAX_LEN: int = 30
 
 SKILL_MAX_LEN: int = 50
-SKILLS_CATEGORY_CHOICES = [
+SKILLS_CATEGORY_CHOICES: list[str] = [
     ('Database', 'Базы данных'),
     ('Web-Development', 'Веб-разработка'),
     ('AI/ML', 'Искусственный интеллект и машинное обучение'),
@@ -76,7 +63,7 @@ SKILLS_CATEGORY_CHOICES = [
     ('Version Control', 'Системы контроля версий'),
     ('Lenguage', 'Язык'),
 ]
-SKILL_CHOICES = [
+SKILL_CHOICES: list[str] = [
     # Базы данных.
     ('MySQL', 'MySQL'),
     ('SQL', 'SQL'),
@@ -137,8 +124,22 @@ SKILL_CHOICES = [
 
 TASK_DESCRIPTION_MAX_LEN: int = 50
 
+VACANCY_CURR_CHOICES: list[str] = [
+    ('rub', '₽'),
+    ('usd', '$'),
+    ('eur', '€'),
+]
+VACANCY_CURR_MAX_LEN: int = 10
 VACANCY_DESCRIPTION_MAX_LEN: int = 512
+VACANCY_EXP_MAX_LEN: int = 10
+VACANCY_EXP_CHOICES: list[str] = [
+    ('None', 'Нет опыта работы'),
+    ('1-to-3', 'от 1 года до 3 лет'),
+    ('3-to-6', 'от 3 лет до 6 лет'),
+    ('6-plus', 'более 6 лет'),
+]
 VACANCY_NAME_MAX_LEN: int = 30
+VACANCY_SPEC_MAX_LEN: int = 30
 VACANCY_STUDENT_STATUS_MAX_LEN: int = 30
 VACANCY_TESTCASE_MAX_LEN: int = 512
 

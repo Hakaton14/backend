@@ -2,6 +2,7 @@ from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.exceptions import MethodNotAllowed
+from rest_framework.generics import ListAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import (
@@ -11,15 +12,79 @@ from rest_framework.viewsets import ModelViewSet
 
 from api.v1.filters import TaskMonthFilter
 from api.v1.schemas import (
+    CITY_VIEW_SCHEMA, CURRENCY_VIEW_SCHEMA, EXPERIENCE_VIEW_SCHEMA,
+    SKILL_CATEGORY_VIEW_SCHEMA, SKILL_SEARCH_VIEW_SCHEMA,
     TASK_VIEW_SCHEMA, TASK_VIEW_LIST_SCHEMA,
     TOKEN_OBTAIN_SCHEMA, TOKEN_REFRESH_SCHEMA,
     USER_VIEW_SCHEMA, USER_ME_SCHEMA,
+    VACANCY_VIEW_SCHEMA,
 )
 from api.v1.permissions import IsOwnerPut
 from api.v1.serializers import (
-    TaskSerializer, UserRegisterSerializer, UserUpdateSerializer,
+    CitySerializer, CurrencySerializer, ExperienceSerializer, SkillSerializer,
+    SkillCategorySerializer, TaskSerializer, VacancySerializer,
+    UserRegisterSerializer, UserUpdateSerializer,
 )
-from user.models import HrTask, User
+from user.models import City, Experience, HrTask, Skill, SkillCategory, User
+from vacancy.models import Currency, Vacancy
+
+
+@extend_schema(**CITY_VIEW_SCHEMA)
+class CityView(ListAPIView):
+    """
+    Вью функция list предоставления городов.
+    """
+    queryset = City.objects.all()
+    serializer_class = CitySerializer
+
+    def get_queryset(self):
+        search_param: str = self.request.query_params.get('search')
+        if search_param:
+            return City.objects.filter(name__startswith=search_param)
+        return City.objects.all()
+
+
+@extend_schema(**CURRENCY_VIEW_SCHEMA)
+class CurrencyView(ListAPIView):
+    """
+    Вью функция list предоставления валюты.
+    """
+    queryset = Currency.objects.all()
+    serializer_class = CurrencySerializer
+
+
+@extend_schema(**EXPERIENCE_VIEW_SCHEMA)
+class ExperienceView(ListAPIView):
+    """
+    Вью функция list предоставления сроков опыта работы.
+    """
+    queryset = Experience.objects.all()
+    serializer_class = ExperienceSerializer
+
+
+@extend_schema(**SKILL_CATEGORY_VIEW_SCHEMA)
+class SkillCategoryView(ListAPIView):
+    """
+    Вью функция list предоставления навыков, сгруппированных по категориям.
+    """
+    queryset = SkillCategory.objects.prefetch_related('skill').all()
+    serializer_class = SkillCategorySerializer
+
+
+@extend_schema(**SKILL_SEARCH_VIEW_SCHEMA)
+class SkillSearchView(ListAPIView):
+    """
+    Вью функция list предоставления навыков.
+    Позволяет использовать search параметр для фильтрации по названию.
+    """
+    queryset = Skill.objects.all()
+    serializer_class = SkillSerializer
+
+    def get_queryset(self):
+        search_param: str = self.request.query_params.get('search')
+        if search_param:
+            return Skill.objects.filter(name__startswith=search_param)
+        return Skill.objects.all()
 
 
 @extend_schema_view(**TASK_VIEW_SCHEMA)
@@ -34,6 +99,10 @@ class TaskViewSet(ModelViewSet):
 
     def get_queryset(self):
         return HrTask.objects.filter(hr=self.request.user)
+
+    def create(self, request, *args, **kwargs):
+        self.request.data['hr'] = self.request.user.id
+        return super().create(request, *args, **kwargs)
 
     @extend_schema(**TASK_VIEW_LIST_SCHEMA)
     def list(self, request, *args, **kwargs):
@@ -91,3 +160,32 @@ class UserViewSet(ModelViewSet):
         instance: User = request.user
         serializer = UserUpdateSerializer(instance=instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+# TODO: ввиду того, что skills указаны как write_only,
+#       в документации на GET запросы это поле не показано.
+# TODO: дописать метод update().
+@extend_schema_view(**VACANCY_VIEW_SCHEMA)
+class VacancyViewSet(ModelViewSet):
+    """Вью-сет для взаимодействия с моделью Vacancy."""
+
+    http_method_names = ('get', 'post', 'patch',)
+    serializer_class = VacancySerializer
+
+    def get_queryset(self):
+        return Vacancy.objects.filter(
+            hr=self.request.user,
+        ).select_related(
+            'hr',
+            'city',
+        ).prefetch_related(
+            'vacancy_employment',
+            'vacancy_skill',
+        )
+
+    def create(self, request, *args, **kwargs):
+        self.request.data['hr'] = self.request.user.id
+        return super().create(request, *args, **kwargs)
+
+    def retrieve(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)

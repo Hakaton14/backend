@@ -1,8 +1,10 @@
+# TODO: проверить зарегистрированные модели.
+
 from django.contrib import admin
 
 from hakaton.app_data import ADMIN_LIST_PER_PAGE
 from user.models import (
-    City, Grade, Employment, HrFavorited, HrTask, HrWatched, Skill,
+    City, Employment, Experience, HrFavorited, HrTask, HrWatched, Skill,
     SkillCategory, User, UserStudentsFake, UserStudentsFakeEmployment,
     UserStudentsFakeSkill,
 )
@@ -59,22 +61,25 @@ class EmploymentAdmin(admin.ModelAdmin):
     list_per_page = ADMIN_LIST_PER_PAGE
 
 
-@admin.register(Grade)
-class GradeAdmin(admin.ModelAdmin):
+@admin.register(Experience)
+class ExperienceAdmin(admin.ModelAdmin):
     """
-    Переопределяет административный интерфейс Django для модели Grade.
+    Переопределяет административный интерфейс Django для модели Experience.
 
     Атрибуты:
         - list_display (tuple) - список полей для отображения в интерфейсе:
             - ID (id)
             - название (name)
-            - уровень (level)
+        - list_editable (tuple) - список полей для изменения в интерфейсе:
+            - название (name)
         - list_per_page (int) - количество объектов на одной странице
     """
     list_display = (
         'id',
         'name',
-        'level',
+    )
+    list_editable = (
+        'name',
     )
     list_per_page = ADMIN_LIST_PER_PAGE
 
@@ -246,22 +251,22 @@ class UserAdmin(admin.ModelAdmin):
         - list_display (tuple) - список полей для отображения в интерфейсе:
             - ID (id)
             - имя (first_name)
-            - фамилия (second_name)
+            - фамилия (last_name)
             - электронная почта (email)
             - номер телефона по стандарту E.164 (phone)
             - ссылка на фотографию (avatar)
         - list_editable (tuple) - список полей для изменения в интерфейсе:
             - имя (first_name)
-            - фамилия (second_name)
+            - фамилия (last_name)
             - электронная почта (email)
             - номер телефона по стандарту E.164 (phone)
             - ссылка на фотографию (avatar)
         - list_filter (tuple) - список фильтров:
             - имя (first_name)
-            - фамилия (second_name)
+            - фамилия (last_name)
         - search_fields (tuple) - список полей для поиска объектов:
             - имя (first_name)
-            - фамилия (second_name)
+            - фамилия (last_name)
             - электронная почта (email)
            - номер телефона по стандарту E.164 (phone)
         - list_per_page (int) - количество объектов на одной странице
@@ -307,7 +312,6 @@ class UserStudentsFakeAdmin(admin.ModelAdmin):
             - фамилия (second_name)
             - электронная почта (email)
             - номер телефона по стандарту E.164 (phone)
-            - грейд (grade)
             # TODO: добавить навыки из связной модели
             - город проживания (city)
             - ссылка на фотографию (avatar)
@@ -315,14 +319,12 @@ class UserStudentsFakeAdmin(admin.ModelAdmin):
             - имя (first_name)
             - фамилия (second_name)
             - электронная почта (email)
-            - грейд (grade)
             - город проживания (city)
             - номер телефона по стандарту E.164 (phone)
             - ссылка на фотографию (avatar)
         - list_filter (tuple) - список фильтров:
             - имя (first_name)
             - фамилия (second_name)
-            - грейд (grade)
             # TODO: добавить навыки из связной модели
             - город проживания (city)
         - search_fields (tuple) - список полей для поиска объектов:
@@ -338,7 +340,6 @@ class UserStudentsFakeAdmin(admin.ModelAdmin):
         'last_name',
         'email',
         'phone',
-        'grade',
         'city',
         'avatar',
     )
@@ -347,14 +348,12 @@ class UserStudentsFakeAdmin(admin.ModelAdmin):
         'last_name',
         'email',
         'phone',
-        'grade',
         'city',
         'avatar',
     )
     list_filter = (
         'first_name',
         'last_name',
-        'grade',
         'city',
     )
     search_fields = (
