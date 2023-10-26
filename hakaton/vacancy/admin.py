@@ -25,7 +25,8 @@ class VacancyAdmin(admin.ModelAdmin):
             - требуемый грейд (grade)
             - дата и время публикации (pub_datetime)
             - дата и время дедлайна (deadline_datetime)
-            - статус архивной (archived)
+            - статус архивной (is_archived)
+            - статус шаблона (is_template)
         - list_editable (tuple) - список полей для изменения в интерфейсе:
             - название (name)
             - город (city)
@@ -35,7 +36,8 @@ class VacancyAdmin(admin.ModelAdmin):
             - тестовое задание (testcase)
             - требуемый грейд (grade)
             - дата и время дедлайна (deadline_datetime)
-            - статус архивной (archived)
+            - статус архивной (is_archived)
+            - статус шаблона (is_template)
         - list_filter (tuple) - список фильтров:
             - ответственный HR (hr)
             - название (name)
@@ -43,7 +45,8 @@ class VacancyAdmin(admin.ModelAdmin):
             - заработная вилка, от (salary_from)
             - заработная вилка, до (salary_to)
             - требуемый грейд (grade)
-            - статус архивной (archived)
+            - статус архивной (is_archived)
+            - статус шаблона (is_template)
         - search_fields (tuple) - список полей для поиска объектов:
             - ответственный HR (hr)
             - название (name)
@@ -61,7 +64,8 @@ class VacancyAdmin(admin.ModelAdmin):
         'grade',
         'pub_datetime',
         'deadline_datetime',
-        'archived',
+        'is_archived',
+        'is_template',
     )
     list_editable = (
         'name',
@@ -72,7 +76,8 @@ class VacancyAdmin(admin.ModelAdmin):
         'testcase',
         'grade',
         'deadline_datetime',
-        'archived',
+        'is_archived',
+        'is_template',
     )
     list_filter = (
         'hr',
@@ -81,7 +86,8 @@ class VacancyAdmin(admin.ModelAdmin):
         'salary_from',
         'salary_to',
         'grade',
-        'archived',
+        'is_archived',
+        'is_template',
     )
     search_fields = (
         'hr',

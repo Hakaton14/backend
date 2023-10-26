@@ -59,8 +59,12 @@ class Vacancy(models.Model):
         blank=True,
         null=True,
     )
-    archived = models.BooleanField(
-        verbose_name='Статус архивной вакансии',
+    is_archived = models.BooleanField(
+        verbose_name='Статус архивной',
+        default=False,
+    )
+    is_template = models.BooleanField(
+        verbose_name='Статус шаблона',
         default=False,
     )
 
