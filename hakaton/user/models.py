@@ -4,12 +4,11 @@ from django.db import models
 # TODO: использовать from django.utils.translation import ugettext_lazy
 from phonenumber_field.modelfields import PhoneNumberField
 
-
 from hakaton.app_data import (
     user_avatar_path,
-    CITIES_MAX_LEN, DJANGO_HASH_LEN, EMPLOYMENT_MAX_LEN, GRADE_CHOICES,
-    GRADE_LEVELS, GRADE_MAX_LEN, SKILL_CHOICES, SKILLS_CATEGORY_CHOICES,
-    SKILL_MAX_LEN, TASK_DESCRIPTION_MAX_LEN, USER_NAME_MAX_LEN,
+    CITIES_MAX_LEN, DJANGO_HASH_LEN, EMPLOYMENT_MAX_LEN, EXP_MAX_LEN,
+    SKILL_CHOICES, SKILLS_CATEGORY_CHOICES, SKILL_MAX_LEN,
+    TASK_DESCRIPTION_MAX_LEN, USER_NAME_MAX_LEN,
 )
 from user.validators import validate_email, validate_name, validate_password
 
@@ -50,29 +49,19 @@ class Employment(models.Model):
         return self.name
 
 
-class Grade(models.Model):
-    """Модель грейдов."""
+class Experience(models.Model):
+    """Модель срока опыта работы."""
 
     name = models.CharField(
-        verbose_name='Грейд',
-        choices=GRADE_CHOICES,
-        max_length=GRADE_MAX_LEN,
-    )
-    level = models.IntegerField(
-        verbose_name='Уровень грейда',
-        blank=True,
-        null=True,
+        verbose_name='Срок опыта работы',
+        max_length=EXP_MAX_LEN,
+        unique=True,
     )
 
     class Meta:
-        ordering = ('level',)
-        verbose_name = 'Грейд'
-        verbose_name_plural = 'Грейды'
-
-    def save(self, *args, **kwargs):
-        self.level: int = GRADE_LEVELS.get(self.name)
-        super().save(*args, **kwargs)
-        return
+        ordering = ('id',)
+        verbose_name = 'Срок опыта работы'
+        verbose_name_plural = 'Сроки опыта работы'
 
     def __str__(self):
         return self.name
@@ -250,12 +239,6 @@ class UserStudentsFake(models.Model):
         upload_to=user_avatar_path,
         blank=True,
         null=True,
-    )
-    grade = models.ForeignKey(
-        verbose_name='Грейд',
-        to=Grade,
-        related_name='student',
-        on_delete=models.PROTECT,
     )
     city = models.ForeignKey(
         verbose_name='Город проживания',
