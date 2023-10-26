@@ -1,7 +1,16 @@
 ##########################################################################
+################################## TOKENS ################################
+##########################################################################
+
+
+@jwt_access = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTU4NDIwLCJpYXQiOjE2OTgzNTM2MjAsImp0aSI6IjkxMjQwOGIwMTllMDRjMDM5NTc5ZmVjZTZmNDYwMzQxIiwidXNlcl9pZCI6Mn0.9o_wA2dSjKGa2WjAt2hVw9fDB265kVV0nGi-ok6PVAM
+
+
+##########################################################################
 ################################ ENDPOINTS ###############################
 ##########################################################################
 
+@currency = http://127.0.0.1:8000/api/v1/currency/
 
 @jwt_create = http://127.0.0.1:8000/api/v1/auth/token/create/
 @jwt_refresh = http://127.0.0.1:8000/api/v1/auth/token/refresh/
@@ -14,6 +23,17 @@
 
 @users = http://127.0.0.1:8000/api/v1/users/
 
+@vacancies = http://127.0.0.1:8000/api/v1/vacancies/
+
+
+##########################################################################
+################################### JWT ##################################
+##########################################################################
+
+
+###
+GET {{currency}} HTTP/1.1
+
 
 ##########################################################################
 ################################### JWT ##################################
@@ -25,7 +45,7 @@ POST {{jwt_create}} HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "testuser1@email.com",
+    "email": "testuser2@email.com",
     "password": "MyPass!1"
 }
 
@@ -45,12 +65,12 @@ Content-Type: application/json
 
 ###
 GET {{skills}} HTTP/1.1
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTU4NDIwLCJpYXQiOjE2OTgzNTM2MjAsImp0aSI6IjkxMjQwOGIwMTllMDRjMDM5NTc5ZmVjZTZmNDYwMzQxIiwidXNlcl9pZCI6Mn0.9o_wA2dSjKGa2WjAt2hVw9fDB265kVV0nGi-ok6PVAM
 
 
 ###
 GET {{skill-categories}} HTTP/1.1
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTM3NDM4LCJpYXQiOjE2OTgzMzI2MzgsImp0aSI6IjY3NzdkNmFjOWIwOTRmYTk5NjdkMTUwNGJmODQ1MGVjIiwidXNlcl9pZCI6Mn0.OOrK-4vwoyxRd8DlXOpT-9eJgwNOjmAj6ciLQE9Blls
 
 
 ##########################################################################
@@ -60,39 +80,37 @@ Authorization: Bearer
 
 ###
 GET {{tasks}} HTTP/1.1
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTU4NDIwLCJpYXQiOjE2OTgzNTM2MjAsImp0aSI6IjkxMjQwOGIwMTllMDRjMDM5NTc5ZmVjZTZmNDYwMzQxIiwidXNlcl9pZCI6Mn0.9o_wA2dSjKGa2WjAt2hVw9fDB265kVV0nGi-ok6PVAM
 
 ###
-GET {{tasks}}?date=2023-10 HTTP/1.1
-Authorization: Bearer 
+GET {{tasks}}?date=2023-12 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTU4NDIwLCJpYXQiOjE2OTgzNTM2MjAsImp0aSI6IjkxMjQwOGIwMTllMDRjMDM5NTc5ZmVjZTZmNDYwMzQxIiwidXNlcl9pZCI6Mn0.9o_wA2dSjKGa2WjAt2hVw9fDB265kVV0nGi-ok6PVAM
 
 ###
 POST {{tasks}} HTTP/1.1
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTU4NDIwLCJpYXQiOjE2OTgzNTM2MjAsImp0aSI6IjkxMjQwOGIwMTllMDRjMDM5NTc5ZmVjZTZmNDYwMzQxIiwidXNlcl9pZCI6Mn0.9o_wA2dSjKGa2WjAt2hVw9fDB265kVV0nGi-ok6PVAM
 Content-Type: application/json
 
 {
-    "hr": 1,
     "description": "API 1",
     "date": "2023-12-01",
     "time": "12:21:01"
 }
 
 ###
-PATCH {{tasks}}2/ HTTP/1.1
-Authorization: Bearer 
+PATCH {{tasks}}3/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTU4NDIwLCJpYXQiOjE2OTgzNTM2MjAsImp0aSI6IjkxMjQwOGIwMTllMDRjMDM5NTc5ZmVjZTZmNDYwMzQxIiwidXNlcl9pZCI6Mn0.9o_wA2dSjKGa2WjAt2hVw9fDB265kVV0nGi-ok6PVAM
 Content-Type: application/json
 
 {
-    "hr": 1,
     "description": "REAPI 2",
     "date": "2023-12-01",
     "time": "12:21:01"
 }
 
 ###
-DELETE {{tasks}}4/ HTTP/1.1
-Authorization: Bearer 
+DELETE {{tasks}}3/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTU4NDIwLCJpYXQiOjE2OTgzNTM2MjAsImp0aSI6IjkxMjQwOGIwMTllMDRjMDM5NTc5ZmVjZTZmNDYwMzQxIiwidXNlcl9pZCI6Mn0.9o_wA2dSjKGa2WjAt2hVw9fDB265kVV0nGi-ok6PVAM
 
 
 ##########################################################################
@@ -102,7 +120,7 @@ Authorization: Bearer
 
 ###
 GET {{users}}me/ HTTP/1.1
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTM3NDM4LCJpYXQiOjE2OTgzMzI2MzgsImp0aSI6IjY3NzdkNmFjOWIwOTRmYTk5NjdkMTUwNGJmODQ1MGVjIiwidXNlcl9pZCI6Mn0.OOrK-4vwoyxRd8DlXOpT-9eJgwNOjmAj6ciLQE9Blls
 
 
 ###
@@ -110,9 +128,41 @@ POST {{users}} HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "testuser1@email.com",
+    "email": "testuser2@email.com",
     "password": "MyPass!1",
     "first_name": "Илона",
     "last_name": "Маск",
-    "phone": "+7 911 111 22 13"
+    "phone": "+7 911 111 22 22"
+}
+
+
+##########################################################################
+################################ VACANCIES ###############################
+##########################################################################
+
+
+###
+GET {{vacancies}} HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTU4NDIwLCJpYXQiOjE2OTgzNTM2MjAsImp0aSI6IjkxMjQwOGIwMTllMDRjMDM5NTc5ZmVjZTZmNDYwMzQxIiwidXNlcl9pZCI6Mn0.9o_wA2dSjKGa2WjAt2hVw9fDB265kVV0nGi-ok6PVAM
+
+
+###
+POST {{vacancies}} HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTM1NjEzLCJpYXQiOjE2OTgzMzA4MTMsImp0aSI6IjQyZDhlYTUxNmQzOTRhMjY5ZDZiNmYxMWRmNWU0YjhiIiwidXNlcl9pZCI6Mn0.aZEiZorb7jvb1Rwj3UL1biVLWminI-GZnZ_bngDNotE
+Content-Type: application/json
+
+{
+    "name": "Python разработчик",
+    "city": 1,
+    "address": "Тут адрес в виде текста.",
+    "description": "Тут описание вакансии в виде текста5.",
+    "responsibilities": "Тут обязанности в виде текста.",
+    "conditions": "Тут условия в виде текста.",
+    "salary_from": 1000,
+    "salary_to": 2000,
+    "currency": 1,
+    "testcase": "Тут тестовое задание в виде текста.",
+    "experience": 1,
+    "skills": [1, 2, 3]
+
 }
