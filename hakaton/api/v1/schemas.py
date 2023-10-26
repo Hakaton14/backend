@@ -4,6 +4,31 @@ from api.v1.serializers import (
     TaskSerializer, UserRegisterSerializer, UserUpdateSerializer,
 )
 
+SKILL_SEARCH_VIEW_SCHEMA: dict[str, str] = {
+    'description': (
+        'Возвращает список навыков. '
+        'При передачи необязательного query параметра search возвращает '
+        'список навыков, которые начинаются с указанных букв.'
+    ),
+    'summary': 'Получить список навыков.',
+    'parameters': [
+        OpenApiParameter(
+            name='search',
+            location=OpenApiParameter.QUERY,
+            description='Название навыка.',
+            required=False,
+            type=str,
+        ),
+    ],
+}
+
+SKILL_CATEGORY_VIEW_SCHEMA: dict[str, str] = {
+    'description': (
+        'Возвращает список категорий навыков с перечнем навыков.'
+    ),
+    'summary': 'Получить категории навыков с перечнем навыков.',
+}
+
 TASK_VIEW_SCHEMA: dict[str, str] = {
     'create': extend_schema(
         description='Создает новую задачу пользователя.',

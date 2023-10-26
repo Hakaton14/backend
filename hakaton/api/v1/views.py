@@ -2,6 +2,7 @@ from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.exceptions import MethodNotAllowed
+from rest_framework.generics import ListAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import (
@@ -11,15 +12,42 @@ from rest_framework.viewsets import ModelViewSet
 
 from api.v1.filters import TaskMonthFilter
 from api.v1.schemas import (
+    SKILL_CATEGORY_VIEW_SCHEMA, SKILL_SEARCH_VIEW_SCHEMA,
     TASK_VIEW_SCHEMA, TASK_VIEW_LIST_SCHEMA,
     TOKEN_OBTAIN_SCHEMA, TOKEN_REFRESH_SCHEMA,
     USER_VIEW_SCHEMA, USER_ME_SCHEMA,
 )
 from api.v1.permissions import IsOwnerPut
 from api.v1.serializers import (
-    TaskSerializer, UserRegisterSerializer, UserUpdateSerializer,
+    SkillSerializer, SkillCategorySerializer, TaskSerializer,
+    UserRegisterSerializer, UserUpdateSerializer,
 )
-from user.models import HrTask, User
+from user.models import HrTask, Skill, SkillCategory, User
+
+
+@extend_schema(**SKILL_CATEGORY_VIEW_SCHEMA)
+class SkillCategoryView(ListAPIView):
+    """
+    Вью функция list предоставления навыков, сгруппированных по категориям.
+    """
+    queryset = SkillCategory.objects.prefetch_related('skill').all()
+    serializer_class = SkillCategorySerializer
+
+
+@extend_schema(**SKILL_SEARCH_VIEW_SCHEMA)
+class SkillSearchView(ListAPIView):
+    """
+    Вью функция list предоставления навыков.
+    Позволяет использовать search параметр для фильтрации по названию.
+    """
+    queryset = Skill.objects.all()
+    serializer_class = SkillSerializer
+
+    def get_queryset(self):
+        search_param: str = self.request.query_params.get('search')
+        if search_param:
+            return Skill.objects.filter(name__startswith=search_param)
+        return Skill.objects.all()
 
 
 @extend_schema_view(**TASK_VIEW_SCHEMA)

@@ -65,7 +65,7 @@ GRADE_LEVELS: dict[str, int] = {
 }
 
 SKILL_MAX_LEN: int = 50
-SKILLS_CATEGORY_CHOICES = [
+SKILLS_CATEGORY_CHOICES: list[str] = [
     ('Database', 'Базы данных'),
     ('Web-Development', 'Веб-разработка'),
     ('AI/ML', 'Искусственный интеллект и машинное обучение'),
@@ -76,7 +76,7 @@ SKILLS_CATEGORY_CHOICES = [
     ('Version Control', 'Системы контроля версий'),
     ('Lenguage', 'Язык'),
 ]
-SKILL_CHOICES = [
+SKILL_CHOICES: list[str] = [
     # Базы данных.
     ('MySQL', 'MySQL'),
     ('SQL', 'SQL'),
@@ -137,8 +137,22 @@ SKILL_CHOICES = [
 
 TASK_DESCRIPTION_MAX_LEN: int = 50
 
+VACANCY_CURR_CHOICES: list[str] = [
+    ('rub', '₽'),
+    ('usd', '$'),
+    ('eur', '€'),
+]
+VACANCY_CURR_MAX_LEN: int = 10
 VACANCY_DESCRIPTION_MAX_LEN: int = 512
+VACANCY_EXP_MAX_LEN: int = 10
+VACANCY_EXP_CHOICES: list[str] = [
+    ('None', 'Нет опыта работы'),
+    ('1-to-3', 'от 1 года до 3 лет'),
+    ('3-to-6', 'от 3 лет до 6 лет'),
+    ('6-plus', 'более 6 лет'),
+]
 VACANCY_NAME_MAX_LEN: int = 30
+VACANCY_SPEC_MAX_LEN: int = 30
 VACANCY_STUDENT_STATUS_MAX_LEN: int = 30
 VACANCY_TESTCASE_MAX_LEN: int = 512
 

@@ -6,6 +6,10 @@
 @jwt_create = http://127.0.0.1:8000/api/v1/auth/token/create/
 @jwt_refresh = http://127.0.0.1:8000/api/v1/auth/token/refresh/
 
+@skills = http://127.0.0.1:8000/api/v1/skills/
+
+@skill-categories = http://127.0.0.1:8000/api/v1/skills/by-categories/
+
 @tasks = http://127.0.0.1:8000/api/v1/tasks/
 
 @users = http://127.0.0.1:8000/api/v1/users/
@@ -32,6 +36,21 @@ Content-Type: application/json
 {
     "refresh": ""
 }
+
+
+##########################################################################
+################################## SKILLS ################################
+##########################################################################
+
+
+###
+GET {{skills}} HTTP/1.1
+Authorization: Bearer 
+
+
+###
+GET {{skill-categories}} HTTP/1.1
+Authorization: Bearer 
 
 
 ##########################################################################

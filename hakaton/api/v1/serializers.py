@@ -1,7 +1,39 @@
+from django.db.models import QuerySet
 from djoser.serializers import UserCreateSerializer
-from rest_framework.serializers import ModelSerializer
+from drf_spectacular.utils import extend_schema_field
+from rest_framework.serializers import (
+    ListField, ModelSerializer, SerializerMethodField,
+)
 
-from user.models import HrTask, User
+from user.models import HrTask, Skill, SkillCategory, User
+
+
+class SkillSerializer(ModelSerializer):
+    """Сериализатор представления навыков."""
+
+    class Meta:
+        model = Skill
+        fields = ('id', 'name',)
+
+
+class SkillCategorySerializer(ModelSerializer):
+    """Сериализатор представления навыков, сгруппированных по категориям."""
+
+    skills = SerializerMethodField()
+
+    class Meta:
+        model = SkillCategory
+        fields = ('name', 'skills',)
+
+    @extend_schema_field(ListField(child=SkillSerializer()))
+    def get_skills(self, obj):
+        skills: QuerySet = obj.skill.all()
+        print(skills)
+        skill_serializer: SkillSerializer = SkillSerializer(
+            instance=skills,
+            many=True
+        )
+        return skill_serializer.data
 
 
 class TaskSerializer(ModelSerializer):
