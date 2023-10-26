@@ -4,8 +4,9 @@ from rest_framework.routers import DefaultRouter
 from rest_framework.viewsets import ModelViewSet
 
 from api.v1.views import (
-    SkillSearchView, SkillCategoryView,
+    CityView, CurrencyView, ExperienceView, SkillSearchView, SkillCategoryView,
     TaskViewSet, TokenObtainPairView, TokenRefreshView, UserViewSet,
+    VacancyViewSet,
 )
 
 router = DefaultRouter()
@@ -13,6 +14,7 @@ router = DefaultRouter()
 ROUTER_DATA: list[dict[str, ModelViewSet]] = [
     {'prefix': 'tasks', 'viewset': TaskViewSet},
     {'prefix': 'users', 'viewset': UserViewSet},
+    {'prefix': 'vacancies', 'viewset': VacancyViewSet},
 ]
 
 for route in ROUTER_DATA:
@@ -23,6 +25,9 @@ for route in ROUTER_DATA:
     )
 
 views: list[path] = [
+    path('cities/', CityView.as_view(), name='city'),
+    path('currencies/', CurrencyView.as_view(), name='currencies'),
+    path('experiences/', ExperienceView.as_view(), name='experiences'),
     path('skills/', SkillSearchView.as_view(), name='skills-search'),
     path('skills/by-categories/', SkillCategoryView.as_view(), name='skill-categories')  # noqa (E501)
 ]
