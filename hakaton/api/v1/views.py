@@ -12,7 +12,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from api.v1.filters import TaskMonthFilter
 from api.v1.schemas import (
-    CURRENCY_VIEW_SCHEMA, EXPERIENCE_VIEW_SCHEMA,
+    CITY_VIEW_SCHEMA, CURRENCY_VIEW_SCHEMA, EXPERIENCE_VIEW_SCHEMA,
     SKILL_CATEGORY_VIEW_SCHEMA, SKILL_SEARCH_VIEW_SCHEMA,
     TASK_VIEW_SCHEMA, TASK_VIEW_LIST_SCHEMA,
     TOKEN_OBTAIN_SCHEMA, TOKEN_REFRESH_SCHEMA,
@@ -21,12 +21,27 @@ from api.v1.schemas import (
 )
 from api.v1.permissions import IsOwnerPut
 from api.v1.serializers import (
-    CurrencySerializer, ExperienceSerializer, SkillSerializer,
+    CitySerializer, CurrencySerializer, ExperienceSerializer, SkillSerializer,
     SkillCategorySerializer, TaskSerializer, VacancySerializer,
     UserRegisterSerializer, UserUpdateSerializer,
 )
-from user.models import Experience, HrTask, Skill, SkillCategory, User
+from user.models import City, Experience, HrTask, Skill, SkillCategory, User
 from vacancy.models import Currency, Vacancy
+
+
+@extend_schema(**CITY_VIEW_SCHEMA)
+class CityView(ListAPIView):
+    """
+    Вью функция list предоставления городов.
+    """
+    queryset = City.objects.all()
+    serializer_class = CitySerializer
+
+    def get_queryset(self):
+        search_param: str = self.request.query_params.get('search')
+        if search_param:
+            return City.objects.filter(name__startswith=search_param)
+        return City.objects.all()
 
 
 @extend_schema(**CURRENCY_VIEW_SCHEMA)
