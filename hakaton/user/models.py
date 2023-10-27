@@ -1,5 +1,4 @@
 # TODO: возможно стоит вынести навыки, языки и т.п. в отдельный модуль.
-# TODO: вынести студентов в отдельный модуль. 
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.db import models
@@ -8,148 +7,9 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 from hakaton.app_data import (
     user_avatar_path,
-    CITIES_MAX_LEN, DJANGO_HASH_LEN, EMPLOYMENT_MAX_LEN, EXP_MAX_LEN,
-    SKILL_CHOICES, SKILLS_CATEGORY_CHOICES, SKILL_MAX_LEN,
-    TASK_DESCRIPTION_MAX_LEN, USER_NAME_MAX_LEN,
+    DJANGO_HASH_LEN, TASK_DESCRIPTION_MAX_LEN, USER_NAME_MAX_LEN,
 )
 from user.validators import validate_email, validate_name, validate_password
-
-
-class City(models.Model):
-    """Модель городов."""
-
-    name = models.CharField(
-        verbose_name='Город',
-        max_length=CITIES_MAX_LEN,
-        unique=True,
-    )
-
-    class Meta:
-        ordering = ('name',)
-        verbose_name = 'Город'
-        verbose_name_plural = 'Города'
-
-    def __str__(self):
-        return self.name
-
-
-class Employment(models.Model):
-    """Модель формата работы."""
-
-    name = models.CharField(
-        verbose_name='Формат работы',
-        max_length=EMPLOYMENT_MAX_LEN,
-        unique=True,
-    )
-
-    class Meta:
-        ordering = ('name',)
-        verbose_name = 'Формат работы'
-        verbose_name_plural = 'Форматы работы'
-
-    def __str__(self):
-        return self.name
-
-
-class Experience(models.Model):
-    """Модель срока опыта работы."""
-
-    name = models.CharField(
-        verbose_name='Срок опыта работы',
-        max_length=EXP_MAX_LEN,
-        unique=True,
-    )
-
-    class Meta:
-        ordering = ('id',)
-        verbose_name = 'Срок опыта работы'
-        verbose_name_plural = 'Сроки опыта работы'
-
-    def __str__(self):
-        return self.name
-
-
-class Language(models.Model):
-    """Модель разговорных языков."""
-
-    name = models.CharField(
-        verbose_name='Название языка',
-        max_length=10,
-        unique=True,
-    )
-
-    class Meta:
-        ordering = ('name',)
-        verbose_name = 'Название языка'
-        verbose_name_plural = 'Названия языков'
-
-    def __str__(self):
-        return self.name
-
-
-class LanguageLevel(models.Model):
-    """Уровень владения разговорным языком языком"""
-
-    name = models.CharField(
-        verbose_name='Название',
-        max_length=10,
-        unique=True,
-    )
-    level = models.IntegerField(
-        verbose_name='Уровень владения',
-        unique=True,
-    )
-
-    class Meta:
-        ordering = ('level',)
-        verbose_name = 'Уровень владения языком'
-        verbose_name_plural = 'Уровни владения языками'
-
-    def __str__(self):
-        return self.name
-
-
-class SkillCategory(models.Model):
-    """Модель категорий навыков."""
-
-    name = models.CharField(
-        verbose_name='Категория',
-        choices=SKILLS_CATEGORY_CHOICES,
-        max_length=SKILL_MAX_LEN,
-    )
-
-    class Meta:
-        ordering = ('name',)
-        verbose_name = 'Категория навыков'
-        verbose_name_plural = 'Категории навыков'
-
-    def __str__(self):
-        return f'{self.name}'
-
-
-class Skill(models.Model):
-    """Модель навыков."""
-
-    name = models.CharField(
-        verbose_name='Навык',
-        choices=SKILL_CHOICES,
-        max_length=SKILL_MAX_LEN,
-        unique=True,
-    )
-    category = models.ForeignKey(
-        verbose_name='Категория',
-        to=SkillCategory,
-        related_name='skill',
-        on_delete=models.PROTECT,
-    )
-
-    class Meta:
-        ordering = ('name',)
-        verbose_name = 'Навык'
-        verbose_name_plural = 'Навыки'
-
-    def __str__(self):
-        return f'{self.name}'
 
 
 class UserManager(BaseUserManager):
@@ -245,72 +105,19 @@ class User(AbstractBaseUser, PermissionsMixin):
         return f'{self.first_name} {self.last_name}'
 
 
-class UserStudentsFake(models.Model):
-    """
-    Модель временно имитирует профили студентов на карьерном трекере.
-    Здесь и в связанных моделях представлено видение того,
-    какие данные должны быть дополнены.
-    """
-
-    email = models.EmailField(
-        verbose_name='Адрес электронной почты',
-        validators=(validate_email,),
-        unique=True,
-    )
-    first_name = models.CharField(
-        verbose_name='Имя',
-        max_length=USER_NAME_MAX_LEN,
-        validators=(validate_name,),
-        blank=True,
-        null=True,
-    )
-    last_name = models.CharField(
-        verbose_name='Фамилия',
-        max_length=USER_NAME_MAX_LEN,
-        validators=(validate_name,),
-        blank=True,
-        null=True,
-    )
-    phone = PhoneNumberField(
-        verbose_name='Номер телефона',
-        region='RU',
-        unique=True,
-    )
-    avatar = models.ImageField(
-        verbose_name='Аватар',
-        upload_to=user_avatar_path,
-        blank=True,
-        null=True,
-    )
-    city = models.ForeignKey(
-        verbose_name='Город проживания',
-        to=City,
-        related_name='user',
-        on_delete=models.PROTECT,
-    )
-
-    class Meta:
-        ordering = ('-id',)
-        verbose_name = 'Студент'
-        verbose_name_plural = 'Студенты'
-
-    def __str__(self):
-        return self.email
-
-
 class HrFavorited(models.Model):
     """Модель избранных кандидатов для HR-специалиста."""
 
     hr = models.ForeignKey(
         verbose_name='HR-специалист',
-        to=User,
-        related_name='hr_favorite',
+        to='user.User',
+        related_name='hr_favorited',
         on_delete=models.CASCADE,
     )
     candidate = models.ForeignKey(
         verbose_name='Кандидат',
-        to=UserStudentsFake,
-        related_name='hr_favorite',
+        to='student.Student',
+        related_name='hr_favorited',
         on_delete=models.CASCADE,
     )
 
@@ -334,8 +141,8 @@ class HrTask(models.Model):
 
     hr = models.ForeignKey(
         verbose_name='HR-специалист',
-        to=User,
-        related_name='hr_tasks',
+        to='user.User',
+        related_name='hr_task',
         on_delete=models.CASCADE,
     )
     description = models.CharField(
@@ -366,13 +173,13 @@ class HrWatched(models.Model):
 
     hr = models.ForeignKey(
         verbose_name='HR-специалист',
-        to=User,
+        to='user.User',
         related_name='hr_watched',
         on_delete=models.CASCADE,
     )
     candidate = models.ForeignKey(
         verbose_name='Кандидат',
-        to=UserStudentsFake,
+        to='student.Student',
         related_name='hr_watched',
         on_delete=models.CASCADE,
     )
@@ -390,71 +197,3 @@ class HrWatched(models.Model):
 
     def __str__(self):
         return f'{self.hr}: {self.candidate}'
-
-
-class UserStudentsFakeEmployment(models.Model):
-    """Модель форматов работы студентов."""
-
-    student = models.ForeignKey(
-        verbose_name='Студент',
-        to=UserStudentsFake,
-        related_name='student_employment',
-        on_delete=models.CASCADE,
-    )
-    employment = models.ForeignKey(
-        verbose_name='Формат работы',
-        to=Employment,
-        related_name='student_employment',
-        on_delete=models.PROTECT,
-    )
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=('student', 'employment'),
-                name='unique_student_employment',
-            )
-        ]
-        ordering = ('-id',)
-        verbose_name = 'Формат работы студента'
-        verbose_name_plural = 'Форматы работы студентов'
-
-    def __str__(self):
-        return (
-            f'{self.student.first_name} {self.student.last_name}: '
-            f'{self.employment.name}'
-        )
-
-
-class UserStudentsFakeSkill(models.Model):
-    """Модель навыков студентов."""
-
-    student = models.ForeignKey(
-        verbose_name='Студент',
-        to=UserStudentsFake,
-        related_name='student_skill',
-        on_delete=models.CASCADE,
-    )
-    skill = models.ForeignKey(
-        verbose_name='Навык',
-        to=Skill,
-        related_name='student_skill',
-        on_delete=models.CASCADE,
-    )
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=('student', 'skill'),
-                name='unique_student_skill',
-            )
-        ]
-        ordering = ('-id',)
-        verbose_name = 'Навыки студента'
-        verbose_name_plural = 'Навыки студентов'
-
-    def __str__(self):
-        return (
-            f'{self.student.first_name} {self.student.last_name}: '
-            f'{self.skill.name}'
-        )

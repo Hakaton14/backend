@@ -51,6 +51,12 @@ EMPLOYMENT_MAX_LEN: int = 30
 
 EXP_MAX_LEN: int = 30
 
+LANGUAGE_MAX_LEN: int = 30
+
+LANGUAGE_LEVEL_MAX_LEN: int = 30
+
+SCHEDULE_MAX_LEN: int = 30
+
 SKILL_MAX_LEN: int = 50
 SKILLS_CATEGORY_CHOICES: list[str] = [
     ('Database', 'Базы данных'),

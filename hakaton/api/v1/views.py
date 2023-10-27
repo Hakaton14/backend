@@ -27,10 +27,11 @@ from api.v1.serializers import (
     SkillSerializer, SkillCategorySerializer, TaskSerializer,
     VacancySerializer, UserRegisterSerializer, UserUpdateSerializer,
 )
-from user.models import (
-    City, Experience, HrTask, Language, Skill, SkillCategory, User,
+from user.models import HrTask, User
+from vacancy.models import (
+    City, Currency, Employment, Experience, Language,
+    Schedule, Skill, SkillCategory, Vacancy,
 )
-from vacancy.models import Currency, Employment, Schedule, Vacancy
 
 
 @extend_schema(**CITY_VIEW_SCHEMA)

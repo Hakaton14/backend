@@ -1,14 +1,30 @@
 from django.db import models
 
 from hakaton.app_data import (
-    CURRENCY_MAX_LEN, CURRENCY_SYMBOL_MAX_LEN,
-    VACANCY_DESCRIPTION_MAX_LEN, VACANCY_NAME_MAX_LEN, VACANCY_SPEC_MAX_LEN,
-    VACANCY_STUDENT_STATUS_MAX_LEN, VACANCY_TESTCASE_MAX_LEN,
+    CITIES_MAX_LEN, CURRENCY_MAX_LEN, CURRENCY_SYMBOL_MAX_LEN,
+    EMPLOYMENT_MAX_LEN, EXP_MAX_LEN, LANGUAGE_MAX_LEN, LANGUAGE_LEVEL_MAX_LEN,
+    SCHEDULE_MAX_LEN, SKILL_MAX_LEN, VACANCY_DESCRIPTION_MAX_LEN,
+    VACANCY_NAME_MAX_LEN, VACANCY_SPEC_MAX_LEN, VACANCY_STUDENT_STATUS_MAX_LEN,
+    VACANCY_TESTCASE_MAX_LEN,
 )
-from user.models import (
-    City, Employment, Experience, Language, LanguageLevel, Skill,
-    User, UserStudentsFake,
-)
+
+
+class City(models.Model):
+    """Модель городов."""
+
+    name = models.CharField(
+        verbose_name='Город',
+        max_length=CITIES_MAX_LEN,
+        unique=True,
+    )
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'Город'
+        verbose_name_plural = 'Города'
+
+    def __str__(self):
+        return self.name
 
 
 class Currency(models.Model):
@@ -40,12 +56,88 @@ class Currency(models.Model):
         return f'{self.name} ({self.symbol})'
 
 
+class Employment(models.Model):
+    """Модель формата работы."""
+
+    name = models.CharField(
+        verbose_name='Формат работы',
+        max_length=EMPLOYMENT_MAX_LEN,
+        unique=True,
+    )
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'Формат работы'
+        verbose_name_plural = 'Форматы работы'
+
+    def __str__(self):
+        return self.name
+
+
+class Experience(models.Model):
+    """Модель срока опыта работы."""
+
+    name = models.CharField(
+        verbose_name='Срок опыта работы',
+        max_length=EXP_MAX_LEN,
+        unique=True,
+    )
+
+    class Meta:
+        ordering = ('id',)
+        verbose_name = 'Срок опыта работы'
+        verbose_name_plural = 'Сроки опыта работы'
+
+    def __str__(self):
+        return self.name
+
+
+class Language(models.Model):
+    """Модель разговорных языков."""
+
+    name = models.CharField(
+        verbose_name='Название языка',
+        max_length=LANGUAGE_MAX_LEN,
+        unique=True,
+    )
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'Название языка'
+        verbose_name_plural = 'Названия языков'
+
+    def __str__(self):
+        return self.name
+
+
+class LanguageLevel(models.Model):
+    """Уровень владения разговорным языком языком"""
+
+    name = models.CharField(
+        verbose_name='Название',
+        max_length=LANGUAGE_LEVEL_MAX_LEN,
+        unique=True,
+    )
+    level = models.IntegerField(
+        verbose_name='Уровень владения',
+        unique=True,
+    )
+
+    class Meta:
+        ordering = ('level',)
+        verbose_name = 'Уровень владения языком'
+        verbose_name_plural = 'Уровни владения языками'
+
+    def __str__(self):
+        return self.name
+
+
 class Schedule(models.Model):
     """Модель графика работы."""
 
     name = models.CharField(
         verbose_name='График работы',
-        max_length=15,
+        max_length=SCHEDULE_MAX_LEN,
         unique=True,
     )
 
@@ -58,12 +150,53 @@ class Schedule(models.Model):
         return self.name
 
 
+class SkillCategory(models.Model):
+    """Модель категорий навыков."""
+
+    name = models.CharField(
+        verbose_name='Категория',
+        max_length=SKILL_MAX_LEN,
+    )
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'Категория навыков'
+        verbose_name_plural = 'Категории навыков'
+
+    def __str__(self):
+        return f'{self.name}'
+
+
+class Skill(models.Model):
+    """Модель навыков."""
+
+    name = models.CharField(
+        verbose_name='Навык',
+        max_length=SKILL_MAX_LEN,
+        unique=True,
+    )
+    category = models.ForeignKey(
+        verbose_name='Категория',
+        to='vacancy.SkillCategory',
+        related_name='skill',
+        on_delete=models.PROTECT,
+    )
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'Навык'
+        verbose_name_plural = 'Навыки'
+
+    def __str__(self):
+        return f'{self.name}'
+
+
 class Vacancy(models.Model):
     """Модель вакансий."""
 
     hr = models.ForeignKey(
         verbose_name='Ответственный HR',
-        to=User,
+        to='user.User',
         related_name='vacancy',
         # TODO: при удалении HR вакансия должна становиться архивной.
         on_delete=models.SET_NULL,
@@ -75,7 +208,7 @@ class Vacancy(models.Model):
     )
     city = models.ForeignKey(
         verbose_name='Город',
-        to=City,
+        to='vacancy.City',
         related_name='vacancy',
         on_delete=models.PROTECT,
     )
@@ -105,7 +238,7 @@ class Vacancy(models.Model):
     )
     currency = models.ForeignKey(
         verbose_name='Валюта',
-        to=Currency,
+        to='vacancy.Currency',
         related_name='vacancy',
         on_delete=models.PROTECT,
     )
@@ -115,19 +248,19 @@ class Vacancy(models.Model):
     )
     experience = models.ForeignKey(
         verbose_name='Опыт работы',
-        to=Experience,
+        to='vacancy.Experience',
         related_name='vacancy',
         on_delete=models.PROTECT,
     )
     employment = models.ForeignKey(
         verbose_name='Тип занятости',
-        to=Employment,
+        to='vacancy.Employment',
         related_name='vacancy',
         on_delete=models.PROTECT,
     )
     schedule = models.ForeignKey(
         verbose_name='График работы',
-        to=Schedule,
+        to='vacancy.Schedule',
         related_name='vacancy',
         on_delete=models.PROTECT,
     )
@@ -164,13 +297,13 @@ class VacancyEmployment(models.Model):
 
     vacancy = models.ForeignKey(
         verbose_name='Вакансия',
-        to=Vacancy,
+        to='vacancy.Vacancy',
         related_name='vacancy_employment',
         on_delete=models.CASCADE,
     )
     employment = models.ForeignKey(
         verbose_name='Формат работы',
-        to=Employment,
+        to='vacancy.Employment',
         related_name='vacancy_employment',
         on_delete=models.PROTECT,
     )
@@ -198,19 +331,19 @@ class VacancyLanguage(models.Model):
 
     vacancy = models.ForeignKey(
         verbose_name='Вакансия',
-        to=Vacancy,
+        to='vacancy.Vacancy',
         related_name='vacancy_language',
         on_delete=models.CASCADE,
     )
     language = models.ForeignKey(
         verbose_name='Разговорный язык',
-        to=Language,
+        to='vacancy.Language',
         related_name='vacancy_language',
         on_delete=models.PROTECT,
     )
     level = models.ForeignKey(
         verbose_name='Уровень владения',
-        to=LanguageLevel,
+        to='vacancy.LanguageLevel',
         related_name='vacancy_language',
         on_delete=models.PROTECT,
     )
@@ -253,19 +386,19 @@ class VacancyFavorited(models.Model):
 
     vacancy = models.ForeignKey(
         verbose_name='Вакансия',
-        to=Vacancy,
+        to='vacancy.Vacancy',
         related_name='vacancy_favorited',
         on_delete=models.CASCADE,
     )
     student = models.ForeignKey(
         verbose_name='Избранный студент',
-        to=UserStudentsFake,
+        to='student.Student',
         related_name='vacancy_favorited',
         on_delete=models.CASCADE,
     )
     status = models.ForeignKey(
         verbose_name='Статус кандидата',
-        to=VacancyStudentStatus,
+        to='vacancy.VacancyStudentStatus',
         related_name='vacancy_favorited',
         on_delete=models.PROTECT,
     )
@@ -290,13 +423,13 @@ class VacancySkill(models.Model):
 
     vacancy = models.ForeignKey(
         verbose_name='Вакансия',
-        to=Vacancy,
+        to='vacancy.Vacancy',
         related_name='vacancy_skill',
         on_delete=models.CASCADE,
     )
     skill = models.ForeignKey(
         verbose_name='Навык',
-        to=Skill,
+        to='vacancy.Skill',
         related_name='vacancy_skill',
         on_delete=models.PROTECT,
     )
@@ -321,13 +454,13 @@ class VacancyWatched(models.Model):
 
     vacancy = models.ForeignKey(
         verbose_name='Вакансия',
-        to=Vacancy,
+        to='vacancy.Vacancy',
         related_name='vacancy_watched',
         on_delete=models.CASCADE,
     )
     student = models.ForeignKey(
         verbose_name='Просмотренный студент',
-        to=UserStudentsFake,
+        to='student.Student',
         related_name='vacancy_watched',
         on_delete=models.PROTECT,
     )

@@ -19,7 +19,7 @@ DEBUG = True
 
 AUTH_USER_MODEL = 'user.User'
 
-DATABASES = DB_POSTGRESQL
+DATABASES = DB_SQLITE
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'phonenumber_field',
     'api',
+    'student',
     'user',
     'vacancy',
     'drf_spectacular',
