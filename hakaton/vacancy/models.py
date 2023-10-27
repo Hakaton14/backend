@@ -48,7 +48,7 @@ class Currency(models.Model):
                 name='unique_name_symbols',
             )
         ]
-        ordering = ('-name',)
+        ordering = ('name',)
         verbose_name = 'Валюта'
         verbose_name_plural = 'Валюты'
 
@@ -57,18 +57,18 @@ class Currency(models.Model):
 
 
 class Employment(models.Model):
-    """Модель формата работы."""
+    """Модель типа занятости."""
 
     name = models.CharField(
-        verbose_name='Формат работы',
+        verbose_name='Тип занятости',
         max_length=EMPLOYMENT_MAX_LEN,
         unique=True,
     )
 
     class Meta:
         ordering = ('name',)
-        verbose_name = 'Формат работы'
-        verbose_name_plural = 'Форматы работы'
+        verbose_name = 'Тип занятости'
+        verbose_name_plural = 'Типы занятости'
 
     def __str__(self):
         return self.name
@@ -142,7 +142,7 @@ class Schedule(models.Model):
     )
 
     class Meta:
-        ordering = ('-name',)
+        ordering = ('name',)
         verbose_name = 'График работы'
         verbose_name_plural = 'Графики работы'
 
@@ -401,6 +401,9 @@ class VacancyFavorited(models.Model):
         to='vacancy.VacancyStudentStatus',
         related_name='vacancy_favorited',
         on_delete=models.PROTECT,
+        default=None,
+        blank=True,
+        null=True,
     )
 
     class Meta:

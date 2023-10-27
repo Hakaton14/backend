@@ -1,0 +1,40 @@
+name,category
+MySQL,Базы данных
+SQL,Базы данных
+NoSQL (MongoDB, Redis),Базы данных
+Oracle,Базы данных
+PostgreSQL,Базы данных
+Angular,Веб-разработка
+Django,Веб-разработка
+Express.js,Веб-разработка
+HTML/CSS,Веб-разработка
+Node.js,Веб-разработка
+React.js,Веб-разработка
+RESTful API,Веб-разработка
+Vue.js,Веб-разработка
+TensorFlow,Искусственный интеллект и машинное обучение
+PyTorch,Искусственный интеллект и машинное обучение
+Deep Learning,Искусственный интеллект и машинное обучение
+AWS (Amazon Web Services),Облачные технологии
+Azure (Microsoft Azure),Облачные технологии
+DevOps,Облачные технологии
+Google Cloud,Облачные технологии
+Linux,Операционные системы
+Windows Server,Операционные системы
+TCP/IP,Сетевые протоколы
+HTTP/HTTPS,Сетевые протоколы
+Ansible,Системное администрирование
+Linux/Unix администрирование,Системное администрирование
+Git,Системы контроля версий
+GitHub,Системы контроля версий
+GitLab,Системы контроля версий
+C++,Язык
+Go,Язык
+Java,Язык
+JavaScript,Язык
+Kotlin,Язык
+PHP,Язык
+Python,Язык
+Rust,Язык
+Ruby,Язык
+Swift,Язык

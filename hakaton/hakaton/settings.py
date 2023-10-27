@@ -19,7 +19,7 @@ DEBUG = True
 
 AUTH_USER_MODEL = 'user.User'
 
-DATABASES = DB_SQLITE
+DATABASES = DB_POSTGRESQL
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
