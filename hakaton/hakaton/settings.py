@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'phonenumber_field',
     'api',
+    'student',
     'user',
     'vacancy',
     'drf_spectacular',

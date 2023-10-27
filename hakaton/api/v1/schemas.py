@@ -4,8 +4,7 @@ from rest_framework.serializers import CharField, ListField, ModelSerializer
 from api.v1.serializers import (
     UserRegisterSerializer, UserUpdateSerializer, VacancySerializer,
 )
-from vacancy.models import Employment, Schedule, VacancyLanguage
-from user.models import Skill
+from vacancy.models import Employment, Schedule, Skill, VacancyLanguage
 
 
 class VacancyEmploymentSerializer(ModelSerializer):

@@ -2,9 +2,38 @@ from django.contrib import admin
 
 from hakaton.app_data import ADMIN_LIST_PER_PAGE
 from vacancy.models import (
-    Currency, Schedule, Vacancy, VacancyEmployment, VacancyFavorited,
+    City, Currency, Employment, Experience, Language, LanguageLevel, Schedule,
+    Skill, SkillCategory, Vacancy, VacancyEmployment, VacancyFavorited,
     VacancyLanguage, VacancySkill, VacancyStudentStatus, VacancyWatched,
 )
+
+
+@admin.register(City)
+class CityAdmin(admin.ModelAdmin):
+    """
+    Переопределяет административный интерфейс Django для модели City.
+
+    Атрибуты:
+        - list_display (tuple) - список полей для отображения в интерфейсе:
+            - ID (id)
+            - название (name)
+        - list_editable (tuple) - список полей для изменения в интерфейсе:
+            - название (name)
+        - search_fields (tuple) - список полей для поиска объектов:
+            - название (name)
+        - list_per_page (int) - количество объектов на одной странице
+    """
+    list_display = (
+        'id',
+        'name',
+    )
+    list_editable = (
+        'name',
+    )
+    search_fields = (
+        'name',
+    )
+    list_per_page = ADMIN_LIST_PER_PAGE
 
 
 @admin.register(Currency)
@@ -34,6 +63,102 @@ class CurrencyAdmin(admin.ModelAdmin):
     list_per_page = ADMIN_LIST_PER_PAGE
 
 
+@admin.register(Employment)
+class EmploymentAdmin(admin.ModelAdmin):
+    """
+    Переопределяет административный интерфейс Django для модели Employment.
+
+    Атрибуты:
+        - list_display (tuple) - список полей для отображения в интерфейсе:
+            - ID (id)
+            - название (name)
+        - list_editable (tuple) - список полей для изменения в интерфейсе:
+            - название (name)
+        - list_per_page (int) - количество объектов на одной странице
+    """
+    list_display = (
+        'id',
+        'name',
+    )
+    list_editable = (
+        'name',
+    )
+    list_per_page = ADMIN_LIST_PER_PAGE
+
+
+@admin.register(Experience)
+class ExperienceAdmin(admin.ModelAdmin):
+    """
+    Переопределяет административный интерфейс Django для модели Experience.
+
+    Атрибуты:
+        - list_display (tuple) - список полей для отображения в интерфейсе:
+            - ID (id)
+            - название (name)
+        - list_editable (tuple) - список полей для изменения в интерфейсе:
+            - название (name)
+        - list_per_page (int) - количество объектов на одной странице
+    """
+    list_display = (
+        'id',
+        'name',
+    )
+    list_editable = (
+        'name',
+    )
+    list_per_page = ADMIN_LIST_PER_PAGE
+
+
+@admin.register(Language)
+class LanguageAdmin(admin.ModelAdmin):
+    """
+    Переопределяет административный интерфейс Django для модели Language.
+
+    Атрибуты:
+        - list_display (tuple) - список полей для отображения в интерфейсе:
+            - ID (id)
+            - название (name)
+        - list_editable (tuple) - список полей для изменения в интерфейсе:
+            - название (name)
+        - list_per_page (int) - количество объектов на одной странице
+    """
+    list_display = (
+        'id',
+        'name',
+    )
+    list_editable = (
+        'name',
+    )
+    list_per_page = ADMIN_LIST_PER_PAGE
+
+
+@admin.register(LanguageLevel)
+class LanguageLevelAdmin(admin.ModelAdmin):
+    """
+    Переопределяет административный интерфейс Django для модели LanguageLevel.
+
+    Атрибуты:
+        - list_display (tuple) - список полей для отображения в интерфейсе:
+            - ID (id)
+            - название (name)
+            - уровень (level)
+        - list_editable (tuple) - список полей для изменения в интерфейсе:
+            - название (name)
+            - уровень (level)
+        - list_per_page (int) - количество объектов на одной странице
+    """
+    list_display = (
+        'id',
+        'name',
+        'level',
+    )
+    list_editable = (
+        'name',
+        'level',
+    )
+    list_per_page = ADMIN_LIST_PER_PAGE
+
+
 @admin.register(Schedule)
 class ScheduleAdmin(admin.ModelAdmin):
     """
@@ -53,6 +178,56 @@ class ScheduleAdmin(admin.ModelAdmin):
     )
     list_editable = (
         'name',
+    )
+    list_per_page = ADMIN_LIST_PER_PAGE
+
+
+@admin.register(SkillCategory)
+class SkillCategoryAdmin(admin.ModelAdmin):
+    """
+    Переопределяет административный интерфейс Django для модели SkillCategory.
+
+    Атрибуты:
+        - list_display (tuple) - список полей для отображения в интерфейсе:
+            - ID (id)
+            - название (name)
+        - list_editable (tuple) - список полей для изменения в интерфейсе:
+            - название (name)
+        - list_per_page (int) - количество объектов на одной странице
+    """
+    list_display = (
+        'id',
+        'name',
+    )
+    list_editable = (
+        'name',
+    )
+    list_per_page = ADMIN_LIST_PER_PAGE
+
+
+@admin.register(Skill)
+class SkillAdmin(admin.ModelAdmin):
+    """
+    Переопределяет административный интерфейс Django для модели Skill.
+
+    Атрибуты:
+        - list_display (tuple) - список полей для отображения в интерфейсе:
+            - ID (id)
+            - название (name)
+            - категория (category)
+        - list_editable (tuple) - список полей для изменения в интерфейсе:
+            - название (name)
+            - категория (category)
+        - list_per_page (int) - количество объектов на одной странице
+    """
+    list_display = (
+        'id',
+        'name',
+        'category',
+    )
+    list_editable = (
+        'name',
+        'category',
     )
     list_per_page = ADMIN_LIST_PER_PAGE
 

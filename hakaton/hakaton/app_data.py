@@ -51,93 +51,20 @@ EMPLOYMENT_MAX_LEN: int = 30
 
 EXP_MAX_LEN: int = 30
 
+LANGUAGE_MAX_LEN: int = 30
+
+LANGUAGE_LEVEL_MAX_LEN: int = 30
+
+SCHEDULE_MAX_LEN: int = 30
+
 SKILL_MAX_LEN: int = 50
-SKILLS_CATEGORY_CHOICES: list[str] = [
-    ('Database', 'Базы данных'),
-    ('Web-Development', 'Веб-разработка'),
-    ('AI/ML', 'Искусственный интеллект и машинное обучение'),
-    ('Cloud Technologies', 'Облачные технологии'),
-    ('Operating Systems', 'Операционные системы'),
-    ('Network Protocols', 'Сетевые протоколы'),
-    ('System Administration', 'Системное администрирование'),
-    ('Version Control', 'Системы контроля версий'),
-    ('Lenguage', 'Язык'),
-]
-SKILL_CHOICES: list[str] = [
-    # Базы данных.
-    ('MySQL', 'MySQL'),
-    ('SQL', 'SQL'),
-    ('NoSQL (MongoDB, Redis)', 'NoSQL (MongoDB, Redis)'),
-    ('Oracle', 'Oracle'),
-    ('PostgreSQL', 'PostgreSQL'),
-
-    # Веб-разработка.
-    ('Angular', 'Angular'),
-    ('Django', 'Django'),
-    ('Express.js', 'Express.js'),
-    ('HTML/CSS', 'HTML/CSS'),
-    ('Node.js', 'Node.js'),
-    ('React.js', 'React.js'),
-    ('RESTful API', 'RESTful API'),
-    ('Vue.js', 'Vue.js'),
-
-    # Искусственный интеллект и машинное обучение.
-    ('TensorFlow', 'TensorFlow'),
-    ('PyTorch', 'PyTorch'),
-    ('Deep Learning', 'Deep Learning'),
-
-    # Облачные технологии.
-    ('AWS (Amazon Web Services)', 'AWS (Amazon Web Services)'),
-    ('Azure (Microsoft Azure)', 'Azure (Microsoft Azure)'),
-    ('DevOps', 'DevOps'),
-    ('Google Cloud', 'Google Cloud'),
-
-    # Операционные системы.
-    ('Linux', 'Linux'),
-    ('Windows Server', 'Windows Server'),
-
-    # Сетевые протоколы.
-    ('TCP/IP', 'TCP/IP'),
-    ('HTTP/HTTPS', 'HTTP/HTTPS'),
-
-    # Системное администрирование.
-    ('Ansible', 'Ansible'),
-    ('Linux/Unix администрирование', 'Linux/Unix администрирование'),
-
-    # Системы контроля версий.
-    ('Git', 'Git'),
-    ('GitHub', 'GitHub'),
-    ('GitLab', 'GitLab'),
-
-    # Язык.
-    ('C++', 'C++'),
-    ('Go', 'Go'),
-    ('Java', 'Java'),
-    ('JavaScript', 'JavaScript'),
-    ('Kotlin', 'Kotlin'),
-    ('PHP', 'PHP'),
-    ('Python', 'Python'),
-    ('Rust', 'Rust'),
-    ('Ruby', 'Ruby'),
-    ('Swift', 'Swift'),
-]
 
 TASK_DESCRIPTION_MAX_LEN: int = 50
 
-VACANCY_CURR_CHOICES: list[str] = [
-    ('rub', '₽'),
-    ('usd', '$'),
-    ('eur', '€'),
-]
 VACANCY_CURR_MAX_LEN: int = 10
 VACANCY_DESCRIPTION_MAX_LEN: int = 512
 VACANCY_EXP_MAX_LEN: int = 10
-VACANCY_EXP_CHOICES: list[str] = [
-    ('None', 'Нет опыта работы'),
-    ('1-to-3', 'от 1 года до 3 лет'),
-    ('3-to-6', 'от 3 лет до 6 лет'),
-    ('6-plus', 'более 6 лет'),
-]
+
 VACANCY_NAME_MAX_LEN: int = 30
 VACANCY_SPEC_MAX_LEN: int = 30
 VACANCY_STUDENT_STATUS_MAX_LEN: int = 30

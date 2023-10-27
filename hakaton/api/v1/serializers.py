@@ -8,12 +8,10 @@ from rest_framework.serializers import (
     ValidationError,
 )
 
-from user.models import (
-    City, Experience, HrTask, Language,
-    LanguageLevel, Skill, SkillCategory, User,
-)
+from user.models import HrTask, User
 from vacancy.models import (
-    Currency, Employment, Vacancy, VacancyLanguage, VacancySkill,
+    City, Currency, Employment, Experience, Language, LanguageLevel,
+    Skill, SkillCategory, Vacancy, VacancyLanguage, VacancySkill,
 )
 
 
