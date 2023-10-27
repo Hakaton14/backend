@@ -4,9 +4,9 @@ from django.contrib import admin
 
 from hakaton.app_data import ADMIN_LIST_PER_PAGE
 from user.models import (
-    City, Employment, Experience, HrFavorited, HrTask, HrWatched, Skill,
-    SkillCategory, User, UserStudentsFake, UserStudentsFakeEmployment,
-    UserStudentsFakeSkill,
+    City, Employment, Experience, HrFavorited, HrTask, HrWatched,
+    Language, LanguageLevel, Skill, SkillCategory, User, UserStudentsFake,
+    UserStudentsFakeEmployment, UserStudentsFakeSkill,
 )
 
 
@@ -188,6 +188,56 @@ class HrWatchedAdmin(admin.ModelAdmin):
     list_filter = (
         'hr',
         'candidate',
+    )
+    list_per_page = ADMIN_LIST_PER_PAGE
+
+
+@admin.register(Language)
+class LanguageAdmin(admin.ModelAdmin):
+    """
+    Переопределяет административный интерфейс Django для модели Language.
+
+    Атрибуты:
+        - list_display (tuple) - список полей для отображения в интерфейсе:
+            - ID (id)
+            - название (name)
+        - list_editable (tuple) - список полей для изменения в интерфейсе:
+            - название (name)
+        - list_per_page (int) - количество объектов на одной странице
+    """
+    list_display = (
+        'id',
+        'name',
+    )
+    list_editable = (
+        'name',
+    )
+    list_per_page = ADMIN_LIST_PER_PAGE
+
+
+@admin.register(LanguageLevel)
+class LanguageLevelAdmin(admin.ModelAdmin):
+    """
+    Переопределяет административный интерфейс Django для модели LanguageLevel.
+
+    Атрибуты:
+        - list_display (tuple) - список полей для отображения в интерфейсе:
+            - ID (id)
+            - название (name)
+            - уровень (level)
+        - list_editable (tuple) - список полей для изменения в интерфейсе:
+            - название (name)
+            - уровень (level)
+        - list_per_page (int) - количество объектов на одной странице
+    """
+    list_display = (
+        'id',
+        'name',
+        'level',
+    )
+    list_editable = (
+        'name',
+        'level',
     )
     list_per_page = ADMIN_LIST_PER_PAGE
 

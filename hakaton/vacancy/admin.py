@@ -2,8 +2,8 @@ from django.contrib import admin
 
 from hakaton.app_data import ADMIN_LIST_PER_PAGE
 from vacancy.models import (
-    Currency, Vacancy, VacancyEmployment, VacancyFavorited, VacancySkill,
-    VacancyStudentStatus, VacancyWatched,
+    Currency, Schedule, Vacancy, VacancyEmployment, VacancyFavorited,
+    VacancyLanguage, VacancySkill, VacancyStudentStatus, VacancyWatched,
 )
 
 
@@ -30,6 +30,29 @@ class CurrencyAdmin(admin.ModelAdmin):
     list_editable = (
         'name',
         'symbol',
+    )
+    list_per_page = ADMIN_LIST_PER_PAGE
+
+
+@admin.register(Schedule)
+class ScheduleAdmin(admin.ModelAdmin):
+    """
+    Переопределяет административный интерфейс Django для модели Schedule.
+
+    Атрибуты:
+        - list_display (tuple) - список полей для отображения в интерфейсе:
+            - ID (id)
+            - название (name)
+        - list_editable (tuple) - список полей для изменения в интерфейсе:
+            - название (name)
+        - list_per_page (int) - количество объектов на одной странице
+    """
+    list_display = (
+        'id',
+        'name',
+    )
+    list_editable = (
+        'name',
     )
     list_per_page = ADMIN_LIST_PER_PAGE
 
@@ -211,6 +234,47 @@ class VacancyFavoritedAdmin(admin.ModelAdmin):
         'student',
         'vacancy',
         'status',
+    )
+    list_per_page = ADMIN_LIST_PER_PAGE
+
+
+@admin.register(VacancyLanguage)
+class VacancyLanguageAdmin(admin.ModelAdmin):
+    """
+    Переопределяет административный интерфейс Django
+    для модели VacancyLanguage.
+
+    Атрибуты:
+        - list_display (tuple) - список полей для отображения в интерфейсе:
+            - ID (id)
+            - вакансия (vacancy)
+            - разговорный язык (language)
+            - уровень владения (level)
+        - list_editable (tuple) - список полей для изменения в интерфейсе:
+            - вакансия (vacancy)
+            - разговорный язык (language)
+            - уровень владения (level)
+        - list_filter (tuple) - список фильтров:
+            - вакансия (vacancy)
+            - разговорный язык (language)
+            - уровень владения (level)
+        - list_per_page (int) - количество объектов на одной странице
+    """
+    list_display = (
+        'id',
+        'vacancy',
+        'language',
+        'level',
+    )
+    list_editable = (
+        'vacancy',
+        'language',
+        'level',
+    )
+    list_filter = (
+        'vacancy',
+        'language',
+        'level',
     )
     list_per_page = ADMIN_LIST_PER_PAGE
 

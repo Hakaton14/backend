@@ -1,3 +1,5 @@
+# TODO: возможно стоит вынести навыки, языки и т.п. в отдельный модуль.
+# TODO: вынести студентов в отдельный модуль. 
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.db import models
@@ -62,6 +64,46 @@ class Experience(models.Model):
         ordering = ('id',)
         verbose_name = 'Срок опыта работы'
         verbose_name_plural = 'Сроки опыта работы'
+
+    def __str__(self):
+        return self.name
+
+
+class Language(models.Model):
+    """Модель разговорных языков."""
+
+    name = models.CharField(
+        verbose_name='Название языка',
+        max_length=10,
+        unique=True,
+    )
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'Название языка'
+        verbose_name_plural = 'Названия языков'
+
+    def __str__(self):
+        return self.name
+
+
+class LanguageLevel(models.Model):
+    """Уровень владения разговорным языком языком"""
+
+    name = models.CharField(
+        verbose_name='Название',
+        max_length=10,
+        unique=True,
+    )
+    level = models.IntegerField(
+        verbose_name='Уровень владения',
+        unique=True,
+    )
+
+    class Meta:
+        ordering = ('level',)
+        verbose_name = 'Уровень владения языком'
+        verbose_name_plural = 'Уровни владения языками'
 
     def __str__(self):
         return self.name

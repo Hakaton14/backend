@@ -6,7 +6,8 @@ from hakaton.app_data import (
     VACANCY_STUDENT_STATUS_MAX_LEN, VACANCY_TESTCASE_MAX_LEN,
 )
 from user.models import (
-    City, Employment, Experience, Skill, User, UserStudentsFake,
+    City, Employment, Experience, Language, LanguageLevel, Skill,
+    User, UserStudentsFake,
 )
 
 
@@ -37,6 +38,24 @@ class Currency(models.Model):
 
     def __str__(self):
         return f'{self.name} ({self.symbol})'
+
+
+class Schedule(models.Model):
+    """Модель графика работы."""
+
+    name = models.CharField(
+        verbose_name='График работы',
+        max_length=15,
+        unique=True,
+    )
+
+    class Meta:
+        ordering = ('-name',)
+        verbose_name = 'График работы'
+        verbose_name_plural = 'Графики работы'
+
+    def __str__(self):
+        return self.name
 
 
 class Vacancy(models.Model):
@@ -100,6 +119,18 @@ class Vacancy(models.Model):
         related_name='vacancy',
         on_delete=models.PROTECT,
     )
+    employment = models.ForeignKey(
+        verbose_name='Тип занятости',
+        to=Employment,
+        related_name='vacancy',
+        on_delete=models.PROTECT,
+    )
+    schedule = models.ForeignKey(
+        verbose_name='График работы',
+        to=Schedule,
+        related_name='vacancy',
+        on_delete=models.PROTECT,
+    )
     pub_datetime = models.DateTimeField(
         verbose_name='Дата и время создания',
         auto_now_add=True,
@@ -157,6 +188,46 @@ class VacancyEmployment(models.Model):
 
     def __str__(self) -> str:
         return f'{self.vacancy}: {self.employment}'
+
+
+class VacancyLanguage(models.Model):
+    """
+    Модель перечня требуемых уровней владения
+    разговорными языками для вакансии.
+    """
+
+    vacancy = models.ForeignKey(
+        verbose_name='Вакансия',
+        to=Vacancy,
+        related_name='vacancy_language',
+        on_delete=models.CASCADE,
+    )
+    language = models.ForeignKey(
+        verbose_name='Разговорный язык',
+        to=Language,
+        related_name='vacancy_language',
+        on_delete=models.PROTECT,
+    )
+    level = models.ForeignKey(
+        verbose_name='Уровень владения',
+        to=LanguageLevel,
+        related_name='vacancy_language',
+        on_delete=models.PROTECT,
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=('vacancy', 'language', 'level',),
+                name='unique_vacancy_language_level',
+            )
+        ]
+        ordering = ('vacancy', 'language',)
+        verbose_name = 'Требуемый уровень владения языка'
+        verbose_name_plural = 'Требования к владению языкам'
+
+    def __str__(self) -> str:
+        return f'{self.language} ({self.level})'
 
 
 class VacancyStudentStatus(models.Model):
