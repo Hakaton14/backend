@@ -1,6 +1,95 @@
 from drf_spectacular.utils import extend_schema, OpenApiParameter
+from rest_framework.serializers import CharField, ListField, ModelSerializer
 
-from api.v1.serializers import UserRegisterSerializer, UserUpdateSerializer
+from api.v1.serializers import (
+    UserRegisterSerializer, UserUpdateSerializer, VacancySerializer,
+)
+from vacancy.models import Employment, Schedule, VacancyLanguage
+from user.models import Skill
+
+
+class VacancyEmploymentSerializer(ModelSerializer):
+    """
+    Вспомогательный сериализатор для VacancyResponseSchemaSerializer.
+    Показывает правильную конфигурацию структуры поля employment
+    для retrieve и list запросов.
+    """
+
+    class Meta:
+        model = Employment
+        fields = ('name',)
+
+
+class VacancyLanguageSerializer(ModelSerializer):
+    """
+    Вспомогательный сериализатор для VacancyResponseSchemaSerializer.
+    Показывает правильную конфигурацию структуры поля languages
+    для retrieve и list запросов.
+    """
+
+    language = CharField(source='language.name')
+    level = CharField(source='level.name')
+
+    class Meta:
+        model = VacancyLanguage
+        fields = ('language', 'level',)
+
+
+class VacancyScheduleSerializer(ModelSerializer):
+    """
+    Вспомогательный сериализатор для VacancyResponseSchemaSerializer.
+    Показывает правильную конфигурацию структуры поля schedule
+    для retrieve и list запросов.
+    """
+
+    class Meta:
+        model = Schedule
+        fields = ('name',)
+
+
+class VacancySkillSerializer(ModelSerializer):
+    """
+    Вспомогательный сериализатор для VacancyResponseSchemaSerializer.
+    Показывает правильную конфигурацию структуры поля skill
+    для retrieve и list запросов.
+    """
+    class Meta:
+        model = Skill
+        fields = ('name',)
+
+
+class VacancyResponseSchemaSerializer(VacancySerializer):
+    """
+    Сериализатор используется для корректировки полей
+    в drf_spectacular для методов list и retrieve:
+        - добавляет список languages
+        - добавляет список skills
+    """
+    employment = VacancyEmploymentSerializer()
+    languages = ListField(child=VacancyLanguageSerializer())
+    schedule = VacancyScheduleSerializer()
+    skills = ListField(child=VacancySkillSerializer())
+
+
+class LanguageLevelSerializer(ModelSerializer):
+    """
+    Вспомогательный сериализатор для VacancyRequestSchemaSerializer.
+    Показывает правильную конфигурацию структуры поля languages
+    для post и update запросов.
+    """
+    class Meta:
+        model = VacancyLanguage
+        fields = ('language', 'level',)
+
+
+class VacancyRequestSchemaSerializer(VacancySerializer):
+    """
+    Сериализатор используется для корректировки полей
+    в drf_spectacular для методов post и update:
+        - корректирует список languages
+    """
+    languages = ListField(child=LanguageLevelSerializer())
+
 
 CITY_VIEW_SCHEMA: dict[str, str] = {
     'description': (
@@ -21,13 +110,28 @@ CITY_VIEW_SCHEMA: dict[str, str] = {
 }
 
 CURRENCY_VIEW_SCHEMA: dict[str, str] = {
-    'description': 'Возвращает список валюты. ',
+    'description': 'Возвращает список валюты.',
     'summary': 'Получить список валюты.',
 }
 
+EMPLOYMENT_VIEW_SCHEMA: dict[str, str] = {
+    'description': 'Возвращает список форматов работы.',
+    'summary': 'Получить список форматов работы.',
+}
+
 EXPERIENCE_VIEW_SCHEMA: dict[str, str] = {
-    'description': 'Возвращает список сроков опыта работы. ',
+    'description': 'Возвращает список сроков опыта работы.',
     'summary': 'Получить список сроков опыта работы.',
+}
+
+LANGUAGE_VIEW_SCHEMA: dict[str, str] = {
+    'description': 'Возвращает список разговорных языков.',
+    'summary': 'Получить список разговорных языков.',
+}
+
+SCHEDULE_VIEW_SCHEMA: dict[str, str] = {
+    'description': 'Возвращает список графиков работы.',
+    'summary': 'Получить список графиков работы.',
 }
 
 SKILL_SEARCH_VIEW_SCHEMA: dict[str, str] = {
@@ -137,21 +241,27 @@ VACANCY_VIEW_SCHEMA: dict[str, str] = {
     'create': extend_schema(
         description='Создает новую вакансию пользователя.',
         summary='Создать вакансию пользователя.',
+        responses=VacancyResponseSchemaSerializer,
+        request=VacancyRequestSchemaSerializer,
     ),
     'list': extend_schema(
         description='Возвращает список вакансий пользователя.',
         summary='Получить список вакансий пользователя.',
+        responses=VacancyResponseSchemaSerializer,
     ),
     'retrieve': extend_schema(
         description=(
             'Возвращает вакансию пользователя с указанным идентификатором.'
         ),
         summary='Получить вакансию пользователя.',
+        responses=VacancyResponseSchemaSerializer,
+        request=VacancyRequestSchemaSerializer,
     ),
     'partial_update': extend_schema(
         description=(
             'Обновляет вакансию пользователя.'
         ),
         summary='Обновить вакансию пользователя.',
+        responses=VacancyResponseSchemaSerializer,
     ),
 }

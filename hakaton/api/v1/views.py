@@ -12,7 +12,8 @@ from rest_framework.viewsets import ModelViewSet
 
 from api.v1.filters import TaskMonthFilter
 from api.v1.schemas import (
-    CITY_VIEW_SCHEMA, CURRENCY_VIEW_SCHEMA, EXPERIENCE_VIEW_SCHEMA,
+    CITY_VIEW_SCHEMA, CURRENCY_VIEW_SCHEMA, EMPLOYMENT_VIEW_SCHEMA,
+    EXPERIENCE_VIEW_SCHEMA, LANGUAGE_VIEW_SCHEMA, SCHEDULE_VIEW_SCHEMA,
     SKILL_CATEGORY_VIEW_SCHEMA, SKILL_SEARCH_VIEW_SCHEMA,
     TASK_VIEW_SCHEMA, TASK_VIEW_LIST_SCHEMA,
     TOKEN_OBTAIN_SCHEMA, TOKEN_REFRESH_SCHEMA,
@@ -21,12 +22,15 @@ from api.v1.schemas import (
 )
 from api.v1.permissions import IsOwnerPut
 from api.v1.serializers import (
-    CitySerializer, CurrencySerializer, ExperienceSerializer, SkillSerializer,
-    SkillCategorySerializer, TaskSerializer, VacancySerializer,
-    UserRegisterSerializer, UserUpdateSerializer,
+    CitySerializer, CurrencySerializer, EmploymentSerializer,
+    ExperienceSerializer, LanguageSerializer, ScheduleSerializer,
+    SkillSerializer, SkillCategorySerializer, TaskSerializer,
+    VacancySerializer, UserRegisterSerializer, UserUpdateSerializer,
 )
-from user.models import City, Experience, HrTask, Skill, SkillCategory, User
-from vacancy.models import Currency, Vacancy
+from user.models import (
+    City, Experience, HrTask, Language, Skill, SkillCategory, User,
+)
+from vacancy.models import Currency, Employment, Schedule, Vacancy
 
 
 @extend_schema(**CITY_VIEW_SCHEMA)
@@ -42,6 +46,15 @@ class CityView(ListAPIView):
         if search_param:
             return City.objects.filter(name__startswith=search_param)
         return City.objects.all()
+
+
+@extend_schema(**EMPLOYMENT_VIEW_SCHEMA)
+class EmploymentView(ListAPIView):
+    """
+    Вью функция list предоставления форматов работы.
+    """
+    queryset = Employment.objects.all()
+    serializer_class = EmploymentSerializer
 
 
 @extend_schema(**CURRENCY_VIEW_SCHEMA)
@@ -60,6 +73,24 @@ class ExperienceView(ListAPIView):
     """
     queryset = Experience.objects.all()
     serializer_class = ExperienceSerializer
+
+
+@extend_schema(**LANGUAGE_VIEW_SCHEMA)
+class LanguageView(ListAPIView):
+    """
+    Вью функция list предоставления разговорных языков.
+    """
+    queryset = Language.objects.all()
+    serializer_class = LanguageSerializer
+
+
+@extend_schema(**SCHEDULE_VIEW_SCHEMA)
+class ScheduleView(ListAPIView):
+    """
+    Вью функция list предоставления графиков работы.
+    """
+    queryset = Schedule.objects.all()
+    serializer_class = ScheduleSerializer
 
 
 @extend_schema(**SKILL_CATEGORY_VIEW_SCHEMA)
@@ -181,11 +212,8 @@ class VacancyViewSet(ModelViewSet):
         ).prefetch_related(
             'vacancy_employment',
             'vacancy_skill',
+            'vacancy_language',
         )
-
-    def create(self, request, *args, **kwargs):
-        self.request.data['hr'] = self.request.user.id
-        return super().create(request, *args, **kwargs)
 
     def retrieve(self, request, *args, **kwargs):
         return super().retrieve(request, *args, **kwargs)

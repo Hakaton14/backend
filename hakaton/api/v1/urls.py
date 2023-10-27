@@ -4,8 +4,9 @@ from rest_framework.routers import DefaultRouter
 from rest_framework.viewsets import ModelViewSet
 
 from api.v1.views import (
-    CityView, CurrencyView, ExperienceView, SkillSearchView, SkillCategoryView,
-    TaskViewSet, TokenObtainPairView, TokenRefreshView, UserViewSet,
+    CityView, CurrencyView, EmploymentView, ExperienceView, LanguageView,
+    ScheduleView, SkillSearchView, SkillCategoryView, TaskViewSet,
+    TokenObtainPairView, TokenRefreshView, UserViewSet,
     VacancyViewSet,
 )
 
@@ -27,7 +28,10 @@ for route in ROUTER_DATA:
 views: list[path] = [
     path('cities/', CityView.as_view(), name='city'),
     path('currencies/', CurrencyView.as_view(), name='currencies'),
+    path('employments/', EmploymentView.as_view(), name='employment'),
     path('experiences/', ExperienceView.as_view(), name='experiences'),
+    path('languages/', LanguageView.as_view(), name='language'),
+    path('schedules/', ScheduleView.as_view(), name='schedule'),
     path('skills/', SkillSearchView.as_view(), name='skills-search'),
     path('skills/by-categories/', SkillCategoryView.as_view(), name='skill-categories')  # noqa (E501)
 ]
