@@ -246,6 +246,7 @@ class VacancyAdmin(admin.ModelAdmin):
             - адрес (address)
             - описание (description)
             - обязанности (responsibilities)
+            - требования (requirements)
             - условия (conditions)
             - заработная вилка, от (salary_from)
             - заработная вилка, до (salary_to)
@@ -261,6 +262,7 @@ class VacancyAdmin(admin.ModelAdmin):
             - адрес (address)
             - описание (description)
             - обязанности (responsibilities)
+            - требования (requirements)
             - условия (conditions)
             - заработная вилка, от (salary_from)
             - заработная вилка, до (salary_to)
@@ -293,6 +295,7 @@ class VacancyAdmin(admin.ModelAdmin):
         'address',
         'description',
         'responsibilities',
+        'requirements',
         'conditions',
         'salary_from',
         'salary_to',

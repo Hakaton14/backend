@@ -133,6 +133,86 @@ SCHEDULE_VIEW_SCHEMA: dict[str, str] = {
     'summary': 'Получить список графиков работы.',
 }
 
+STUDENT_VIEW_SCHEMA: dict[str, str] = {
+    'list': extend_schema(
+        description=(
+            'Возвращает список кандидатов с кратким перечнем полей. '
+            'При передачи необязательных query параметра ?from_vacancy '
+            'с указанием id вакансии возвращает список кандидатов, '
+            'полностью подходящих под ее требованиям. '
+            'При передачи необязательных query параметров требований вакансии '
+            'возвращает список кандидатов, полностью им удовлетворяющих.'
+            'При передачи и ?from_vacancy и параметров вакансии ?from_vacancy '
+            'будет в приоритете.'
+        ),
+        summary='Получить список кандидатов с кратким перечнем полей.',
+        parameters=[
+            OpenApiParameter(
+                name='city',
+                location=OpenApiParameter.QUERY,
+                description='id города вакансии',
+                required=False,
+                type=int,
+            ),
+            OpenApiParameter(
+                name='employment',
+                location=OpenApiParameter.QUERY,
+                description='типа занятости',
+                required=False,
+                type=int,
+            ),
+            OpenApiParameter(
+                name='from_vacancy',
+                location=OpenApiParameter.QUERY,
+                description='id вакансии, выдает релевантных ей кандидатов',
+                required=False,
+                type=int,
+            ),
+            OpenApiParameter(
+                name='experience',
+                location=OpenApiParameter.QUERY,
+                description='id опыта работы',
+                required=False,
+                type=int,
+            ),
+            OpenApiParameter(
+                name='language',
+                location=OpenApiParameter.QUERY,
+                description='перечень id языков и уровня владения ими',
+                required=False,
+                type=int,
+            ),
+            OpenApiParameter(
+                name='schedule',
+                location=OpenApiParameter.QUERY,
+                description='id графика работы',
+                required=False,
+                type=int,
+            ),
+            OpenApiParameter(
+                name='skill',
+                location=OpenApiParameter.QUERY,
+                description='перечень id навыков',
+                required=False,
+                type=int,
+            ),
+        ],
+    ),
+    'retrieve': extend_schema(
+        description=(
+            'Возвращает кандидата с указанным идентификатором.'
+        ),
+        summary='Получить кандидата.',
+    ),
+}
+
+STUDENT_MARK_WATCHED_SCHEMA: dict[str, str] = {
+    'description': 'Отметить кандидата как "просмотрено".',
+    'summary': 'Отметить кандидата как "просмотрено".',
+    'responses': None,
+    'request': None,
+}
+
 SKILL_SEARCH_VIEW_SCHEMA: dict[str, str] = {
     'description': (
         'Возвращает список навыков. '

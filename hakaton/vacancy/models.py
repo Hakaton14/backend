@@ -3,9 +3,9 @@ from django.db import models
 from hakaton.app_data import (
     CITIES_MAX_LEN, CURRENCY_MAX_LEN, CURRENCY_SYMBOL_MAX_LEN,
     EMPLOYMENT_MAX_LEN, EXP_MAX_LEN, LANGUAGE_MAX_LEN, LANGUAGE_LEVEL_MAX_LEN,
-    SCHEDULE_MAX_LEN, SKILL_MAX_LEN, VACANCY_DESCRIPTION_MAX_LEN,
-    VACANCY_NAME_MAX_LEN, VACANCY_SPEC_MAX_LEN, VACANCY_STUDENT_STATUS_MAX_LEN,
-    VACANCY_TESTCASE_MAX_LEN,
+    SCHEDULE_MAX_LEN, SKILL_MAX_LEN, VACANCY_NAME_MAX_LEN,
+    VACANCY_ADDRESS_MAX_LEN, VACANCY_STUDENT_STATUS_MAX_LEN,
+    VACANCY_TEXT_MAX_LEN,
 )
 
 
@@ -214,21 +214,25 @@ class Vacancy(models.Model):
     )
     address = models.CharField(
         verbose_name='Адрес офиса',
-        max_length=VACANCY_SPEC_MAX_LEN,
+        max_length=VACANCY_ADDRESS_MAX_LEN,
         blank=True,
         null=True,
     )
     description = models.TextField(
         verbose_name='Описание',
-        max_length=VACANCY_DESCRIPTION_MAX_LEN,
+        max_length=VACANCY_TEXT_MAX_LEN,
     )
     responsibilities = models.TextField(
         verbose_name='Обязанности',
-        max_length=VACANCY_DESCRIPTION_MAX_LEN,
+        max_length=VACANCY_TEXT_MAX_LEN,
+    )
+    requirements = models.TextField(
+        verbose_name='Описание',
+        max_length=VACANCY_TEXT_MAX_LEN,
     )
     conditions = models.TextField(
         verbose_name='Условия',
-        max_length=VACANCY_DESCRIPTION_MAX_LEN,
+        max_length=VACANCY_TEXT_MAX_LEN,
     )
     salary_from = models.PositiveIntegerField(
         verbose_name='Заработная вилка, от',
@@ -244,7 +248,7 @@ class Vacancy(models.Model):
     )
     testcase = models.TextField(
         verbose_name='Тестовый задание для кандидатов',
-        max_length=VACANCY_TESTCASE_MAX_LEN,
+        max_length=VACANCY_TEXT_MAX_LEN,
     )
     experience = models.ForeignKey(
         verbose_name='Опыт работы',

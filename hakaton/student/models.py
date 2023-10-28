@@ -1,8 +1,12 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
-from hakaton.app_data import user_avatar_path, USER_NAME_MAX_LEN
-from user.validators import validate_email, validate_name
+from hakaton.app_data import (
+    user_avatar_path,
+    STUDENT_ABOUT_MAX_LEN, STUDENT_LINK_MAX_LEN,
+    STUDENT_SPEC_MAX_LEN, USER_NAME_MAX_LEN,
+)
+from user.validators import validate_email, validate_link, validate_name
 
 
 class Student(models.Model):
@@ -36,6 +40,41 @@ class Student(models.Model):
         region='RU',
         unique=True,
     )
+    link_vk = models.CharField(
+        verbose_name='Ссылка на страницу vk',
+        max_length=STUDENT_LINK_MAX_LEN,
+        validators=(validate_link,),
+        blank=True,
+        null=True,
+    )
+    link_tg = models.CharField(
+        verbose_name='Ссылка на страницу telegram',
+        max_length=STUDENT_LINK_MAX_LEN,
+        validators=(validate_link,),
+        blank=True,
+        null=True,
+    )
+    link_fb = models.CharField(
+        verbose_name='Ссылка на страницу facebook',
+        max_length=STUDENT_LINK_MAX_LEN,
+        validators=(validate_link,),
+        blank=True,
+        null=True,
+    )
+    link_be = models.CharField(
+        verbose_name='Ссылка на страницу behance',
+        max_length=STUDENT_LINK_MAX_LEN,
+        validators=(validate_link,),
+        blank=True,
+        null=True,
+    )
+    link_in = models.CharField(
+        verbose_name='Ссылка на страницу linkedin',
+        max_length=STUDENT_LINK_MAX_LEN,
+        validators=(validate_link,),
+        blank=True,
+        null=True,
+    )
     avatar = models.ImageField(
         verbose_name='Аватар',
         upload_to=user_avatar_path,
@@ -48,6 +87,33 @@ class Student(models.Model):
         related_name='student',
         on_delete=models.PROTECT,
     )
+    relocation = models.BooleanField(
+        verbose_name='Готовность к переезду',
+    )
+    specialization = models.CharField(
+        verbose_name='Специализация',
+        max_length=STUDENT_SPEC_MAX_LEN,
+        blank=True,
+        null=True,
+    )
+    about_me = models.TextField(
+        verbose_name='Обо мне',
+        max_length=STUDENT_ABOUT_MAX_LEN,
+        blank=True,
+        null=True,
+    )
+    about_exp = models.TextField(
+        verbose_name='Об опыте',
+        max_length=STUDENT_ABOUT_MAX_LEN,
+        blank=True,
+        null=True,
+    )
+    about_education = models.TextField(
+        verbose_name='Об образовании',
+        max_length=STUDENT_ABOUT_MAX_LEN,
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         ordering = ('-id',)
@@ -59,7 +125,7 @@ class Student(models.Model):
 
 
 class StudentEmployment(models.Model):
-    """Модель форматов работы студентов."""
+    """Модель возможных типов занятости студентов."""
 
     student = models.ForeignKey(
         verbose_name='Студент',
@@ -68,7 +134,7 @@ class StudentEmployment(models.Model):
         on_delete=models.CASCADE,
     )
     employment = models.ForeignKey(
-        verbose_name='Формат работы',
+        verbose_name='Тип занятости',
         to='vacancy.Employment',
         related_name='student_employment',
         on_delete=models.PROTECT,
@@ -82,13 +148,53 @@ class StudentEmployment(models.Model):
             )
         ]
         ordering = ('-id',)
-        verbose_name = 'Формат работы студента'
-        verbose_name_plural = 'Форматы работы студентов'
+        verbose_name = 'Тип занятости студента'
+        verbose_name_plural = 'Типы занятости работы студентов'
 
     def __str__(self):
         return (
             f'{self.student.first_name} {self.student.last_name}: '
             f'{self.employment.name}'
+        )
+
+
+class StudentLanguage(models.Model):
+    """Модель разговорных языков студентов."""
+
+    student = models.ForeignKey(
+        verbose_name='Студент',
+        to='student.Student',
+        related_name='student_language',
+        on_delete=models.CASCADE,
+    )
+    language = models.ForeignKey(
+        verbose_name='Разговорный язык',
+        to='vacancy.Language',
+        related_name='student_language',
+        on_delete=models.PROTECT,
+    )
+    level = models.ForeignKey(
+        verbose_name='Уровень владения',
+        to='vacancy.LanguageLevel',
+        related_name='student_language',
+        on_delete=models.PROTECT,
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=('student', 'language'),
+                name='unique_student_language',
+            )
+        ]
+        ordering = ('-id',)
+        verbose_name = 'Уровень владения языком'
+        verbose_name_plural = 'Уровни владения языками'
+
+    def __str__(self):
+        return (
+            f'{self.student.first_name} {self.student.last_name}: '
+            f'{self.language.name} ({self.level.name})'
         )
 
 

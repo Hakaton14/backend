@@ -8,6 +8,9 @@ from rest_framework.serializers import (
     ValidationError,
 )
 
+from student.models import (
+    Student, StudentEmployment, StudentLanguage, StudentSkill,
+)
 from user.models import HrTask, User
 from vacancy.models import (
     City, Currency, Employment, Experience, Language, LanguageLevel,
@@ -111,6 +114,120 @@ class SkillCategorySerializer(ModelSerializer):
         return skill_serializer.data
 
 
+class StudentEmploymentSerializer(ModelSerializer):
+    """Сериализатор представления типов занятости студента."""
+
+    id = SerializerMethodField()
+    name = SerializerMethodField()
+
+    class Meta:
+        model = StudentEmployment
+        fields = ('id', 'name',)
+
+    def get_id(self, obj) -> int:
+        print(obj)
+        return obj.employment.id
+
+    def get_name(self, obj) -> str:
+        return obj.employment.name
+
+
+class StudentSkillsSerializer(ModelSerializer):
+    """Сериализатор представления навыков студента."""
+
+    category = SerializerMethodField()
+    id = SerializerMethodField()
+    skill = SerializerMethodField()
+
+    class Meta:
+        model = StudentSkill
+        fields = ('id', 'skill', 'category',)
+
+    def get_category(self, obj) -> str:
+        return obj.skill.category.name
+
+    def get_id(self, obj) -> int:
+        return obj.skill.id
+
+    def get_skill(self, obj) -> str:
+        return obj.skill.name
+
+
+class StudentLanguageSerializer(ModelSerializer):
+    """Сериализатор представления владения языками студентом."""
+
+    id = SerializerMethodField()
+    language = SerializerMethodField()
+    level = SerializerMethodField()
+
+    class Meta:
+        model = StudentLanguage
+        fields = ('id', 'language', 'level',)
+
+    def get_id(self, obj) -> int:
+        return obj.language.id
+
+    def get_language(self, obj) -> str:
+        return obj.language.name
+
+    def get_level(self, obj) -> str:
+        return obj.level.name
+
+
+class StudentFullSerializer(ModelSerializer):
+    """Сериализатор представления полного профиля студента."""
+
+    city = CitySerializer()
+    employment = StudentEmploymentSerializer(source='student_employment', many=True,)  # noqa (E303)
+    language = StudentLanguageSerializer(source='student_language', many=True,)
+    skills = StudentSkillsSerializer(source='student_skill', many=True,)
+
+    class Meta:
+        model = Student
+        # TODO: добавить поле даты рождения и вычислять количество полных лет.
+        fields = (
+            'id',
+            'email',
+            'first_name',
+            'last_name',
+            # 'age',
+            'phone',
+            'link_vk',
+            'link_tg',
+            'link_fb',
+            'link_be',
+            'link_in',
+            'avatar',
+            'city',
+            'relocation',
+            'specialization',
+            'skills',
+            'language',
+            'employment',
+            'about_me',
+            'about_exp',
+            'about_education',
+        )
+
+
+class StudentShortSerializer(ModelSerializer):
+    """Сериализатор представления полного профиля студента."""
+
+    skills = StudentSkillsSerializer(source='student_skill', many=True,)
+
+    class Meta:
+        model = Student
+        # TODO: добавить поле даты рождения и вычислять количество полных лет.
+        fields = (
+            'id',
+            'first_name',
+            'last_name',
+            # 'age',
+            'skills',
+            'city',
+        )
+
+
 class TaskSerializer(ModelSerializer):
     """Сериализатор представления задач HR-специалиста."""
 
@@ -183,6 +300,7 @@ class VacancySerializer(ModelSerializer):
             'address',
             'description',
             'responsibilities',
+            'requirements',
             'conditions',
             'salary_from',
             'salary_to',

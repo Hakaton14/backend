@@ -1,7 +1,9 @@
 from django.contrib import admin
 
 from hakaton.app_data import ADMIN_LIST_PER_PAGE
-from student.models import Student, StudentEmployment, StudentSkill
+from student.models import (
+    Student, StudentEmployment, StudentLanguage, StudentSkill,
+)
 
 
 @admin.register(Student)
@@ -16,8 +18,18 @@ class StudentAdmin(admin.ModelAdmin):
             - фамилия (second_name)
             - электронная почта (email)
             - номер телефона по стандарту E.164 (phone)
+            - ссылка на страницу vk (link_vk)
+            - ссылка на страницу telegram (link_tg)
+            - ссылка на страницу facebook (link_fb)
+            - ссылка на страницу behance (link_be)
+            - ссылка на страницу linkedin (link_in)
             # TODO: добавить навыки из связной модели
             - город проживания (city)
+            - готовность к переезду (relocation)
+            - специализация (specialization)
+            - обо мне (about_me)
+            - об опыте (about_exp)
+            - об образовании (about_education)
             - ссылка на фотографию (avatar)
         - list_editable (tuple) - список полей для изменения в интерфейсе:
             - имя (first_name)
@@ -25,12 +37,24 @@ class StudentAdmin(admin.ModelAdmin):
             - электронная почта (email)
             - город проживания (city)
             - номер телефона по стандарту E.164 (phone)
+            - ссылка на страницу vk (link_vk)
+            - ссылка на страницу telegram (link_tg)
+            - ссылка на страницу facebook (link_fb)
+            - ссылка на страницу behance (link_be)
+            - ссылка на страницу linkedin (link_in)
+            - готовность к переезду (relocation)
+            - специализация (specialization)
+            - обо мне (about_me)
+            - об опыте (about_exp)
+            - об образовании (about_education)
             - ссылка на фотографию (avatar)
         - list_filter (tuple) - список фильтров:
             - имя (first_name)
             - фамилия (second_name)
             # TODO: добавить навыки из связной модели
             - город проживания (city)
+            - готовность к переезду (relocation)
+            - специализация (specialization)
         - search_fields (tuple) - список полей для поиска объектов:
             - имя (first_name)
             - фамилия (second_name)
@@ -44,7 +68,17 @@ class StudentAdmin(admin.ModelAdmin):
         'last_name',
         'email',
         'phone',
+        'link_vk',
+        'link_tg',
+        'link_fb',
+        'link_be',
+        'link_in',
         'city',
+        'relocation',
+        'specialization',
+        'about_me',
+        'about_exp',
+        'about_education',
         'avatar',
     )
     list_editable = (
@@ -52,13 +86,25 @@ class StudentAdmin(admin.ModelAdmin):
         'last_name',
         'email',
         'phone',
+        'link_vk',
+        'link_tg',
+        'link_fb',
+        'link_be',
+        'link_in',
         'city',
+        'relocation',
+        'specialization',
+        'about_me',
+        'about_exp',
+        'about_education',
         'avatar',
     )
     list_filter = (
         'first_name',
         'last_name',
         'city',
+        'relocation',
+        'specialization',
     )
     search_fields = (
         'first_name',
@@ -93,6 +139,48 @@ class StudentEmploymentAdmin(admin.ModelAdmin):
     list_editable = (
         'student',
         'employment',
+    )
+    list_per_page = ADMIN_LIST_PER_PAGE
+
+
+@admin.register(StudentLanguage)
+class StudentLanguageAdmin(admin.ModelAdmin):
+    """
+    Переопределяет административный интерфейс Django
+    для модели StudentLanguage.
+
+    Атрибуты:
+        - list_display (tuple) - список полей для отображения в интерфейсе:
+            - ID (id)
+            - студент (student)
+            - разговорный язык (language)
+            - уровень владения (level)
+        - list_editable (tuple) - список полей для изменения в интерфейсе:
+            - разговорный язык (language)
+            - уровень владения (level)
+        - list_filter (tuple) - список фильтров:
+            - разговорный язык (language)
+            - уровень владения (level)
+        - search_fields (tuple) - список полей для поиска объектов:
+            - студент (student)
+        - list_per_page (int) - количество объектов на одной странице
+    """
+    list_display = (
+        'id',
+        'student',
+        'language',
+        'level',
+    )
+    list_editable = (
+        'language',
+        'level',
+    )
+    list_filter = (
+        'language',
+        'level',
+    )
+    search_fields = (
+        'student',
     )
     list_per_page = ADMIN_LIST_PER_PAGE
 

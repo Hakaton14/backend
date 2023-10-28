@@ -9,6 +9,11 @@ EMAIL_ERROR: str = gettext(
     'Первый символ должен быть латинской буквой или цифрой.'
 )
 
+LINK_PATTERN: str = r'^http(s)?://[\w\d]+\.\w+/[\w\d]+(/)?$'
+LINK_ERROR: str = gettext(
+    'Укажите корректную ссылку вида https://github.com/thesuncatcher222'
+)
+
 NAME_PATTERN: str = r'^[А-ЯЁа-яё][А-ЯЁа-яё\s\-]{1,30}[А-ЯЁа-яё]$'
 NAME_ERROR: str = gettext('Укажите корректное имя или фамилию')
 
@@ -32,11 +37,11 @@ def validate_email(value: str):
     raise ValidationError(EMAIL_ERROR)
 
 
-def validate_password(value):
-    """Производит валидацию поля "password"."""
-    if isinstance(value, str) and fullmatch(PASS_PATTERN, value):
+def validate_link(value: str):
+    """Производит валидацию поля "email"."""
+    if isinstance(value, str) and fullmatch(LINK_PATTERN, value):
         return value
-    raise ValidationError(PASS_ERROR)
+    raise ValidationError(LINK_ERROR)
 
 
 def validate_name(value):
@@ -44,3 +49,10 @@ def validate_name(value):
     if fullmatch(NAME_PATTERN, value):
         return value
     raise ValidationError(NAME_ERROR)
+
+
+def validate_password(value):
+    """Производит валидацию поля "password"."""
+    if isinstance(value, str) and fullmatch(PASS_PATTERN, value):
+        return value
+    raise ValidationError(PASS_ERROR)
