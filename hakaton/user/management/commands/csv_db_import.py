@@ -18,6 +18,7 @@ from vacancy.models import (
     City, Currency, Employment, Experience, Language, LanguageLevel,
     Schedule, Skill, SkillCategory, VacancyStudentStatus,
 )
+from user.models import User
 
 CSV_BASE_PATH: str = 'user/management/commands/data/'
 
@@ -174,6 +175,15 @@ def import_vacancy_student_status() -> None:
     return
 
 
+def create_admin():
+    """Создает модель суперпользователя."""
+    email: str = 'admin@email.com'
+    password: str = 'admin'
+    if not User.objects.filter(email=email):
+        User.objects.create_superuser(email=email, password=password)
+    return
+
+
 class Command(BaseCommand):
     help = 'Loading data for all models in project.'
 
@@ -189,6 +199,7 @@ class Command(BaseCommand):
             import_skill_category()
             import_skill()
             import_vacancy_student_status()
+            create_admin()
         except Exception as err:
             raise CommandError(f'Exception has occurred: {err}')
         return
