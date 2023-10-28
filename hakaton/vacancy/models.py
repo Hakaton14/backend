@@ -230,7 +230,7 @@ class Vacancy(models.Model):
         max_length=VACANCY_TEXT_MAX_LEN,
     )
     requirements = models.TextField(
-        verbose_name='Описание',
+        verbose_name='Требования',
         max_length=VACANCY_TEXT_MAX_LEN,
     )
     conditions = models.TextField(
