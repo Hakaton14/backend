@@ -5,9 +5,9 @@ from rest_framework.viewsets import ModelViewSet
 
 from api.v1.views import (
     CityView, CurrencyView, EmploymentView, ExperienceView, LanguageView,
-    ScheduleView, SkillSearchView, SkillCategoryView, StudentViewSet,
-    TaskViewSet, TokenObtainPairView, TokenRefreshView, UserViewSet,
-    VacancyViewSet,
+    LanguageLevelView, ScheduleView, SkillSearchView, SkillCategoryView,
+    StudentViewSet, TaskViewSet, TokenObtainPairView, TokenRefreshView,
+    UserViewSet, VacancyViewSet,
 )
 
 router = DefaultRouter()
@@ -31,7 +31,8 @@ views: list[path] = [
     path('currencies/', CurrencyView.as_view(), name='currencies'),
     path('employments/', EmploymentView.as_view(), name='employment'),
     path('experiences/', ExperienceView.as_view(), name='experiences'),
-    path('languages/', LanguageView.as_view(), name='language'),
+    path('languages/', LanguageView.as_view(), name='languages'),
+    path('language-levels/', LanguageLevelView.as_view(), name='language-levels'),  # noqa (E501)
     path('schedules/', ScheduleView.as_view(), name='schedule'),
     path('skills/', SkillSearchView.as_view(), name='skills-search'),
     path('skills/by-categories/', SkillCategoryView.as_view(), name='skill-categories')  # noqa (E501)

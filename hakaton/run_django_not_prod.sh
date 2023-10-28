@@ -26,18 +26,6 @@ echo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 python manage.py collectstatic --noinput
 
 echo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-echo @@@@@@@@@@@@@@@@@@@@@@@  creating superuser  @@@@@@@@@@@@@@@@@@@@@@@@
-echo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-if ! python manage.py shell -c "from user.models import User; print(User.objects.filter(email='admin@email.com').exists())" | grep -q "True"; then
-    echo "from user.models import User; \
-    admin = User.objects.create_superuser('admin@email.com', 'admin')" | python manage.py shell
-    echo "Создан администратор с паролем 'admin' и адресом электронной почты 'admin@email.com'"
-else
-    echo "Пользователь-администратор уже существует"
-fi
-
-echo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 echo @@@@@@@@@@@@@@@@@@@@@@  import database data  @@@@@@@@@@@@@@@@@@@@@@@
 echo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
@@ -54,6 +42,9 @@ echo     - типы графиков работы
 echo     - категории навыков
 echo     - навыки
 echo     - статусы студентов на вакансии
+echo создан аккаунт суперпользователя:
+echo     - email: admin@email.com
+echo     - password: admin
 
 echo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 echo @@@@@@@@@@@@@@@@@@@@@@@@@@  run gunicorn  @@@@@@@@@@@@@@@@@@@@@@@@@@@

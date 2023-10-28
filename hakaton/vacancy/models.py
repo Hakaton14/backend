@@ -5,7 +5,7 @@ from hakaton.app_data import (
     EMPLOYMENT_MAX_LEN, EXP_MAX_LEN, LANGUAGE_MAX_LEN, LANGUAGE_LEVEL_MAX_LEN,
     SCHEDULE_MAX_LEN, SKILL_MAX_LEN, VACANCY_NAME_MAX_LEN,
     VACANCY_ADDRESS_MAX_LEN, VACANCY_STUDENT_STATUS_MAX_LEN,
-    VACANCY_TEXT_MAX_LEN,
+    VACANCY_TEMPLATE_INVITE, VACANCY_TEXT_MAX_LEN,
 )
 
 
@@ -249,6 +249,9 @@ class Vacancy(models.Model):
     testcase = models.TextField(
         verbose_name='Тестовый задание для кандидатов',
         max_length=VACANCY_TEXT_MAX_LEN,
+        default=None,
+        blank=True,
+        null=True
     )
     experience = models.ForeignKey(
         verbose_name='Опыт работы',
@@ -279,6 +282,11 @@ class Vacancy(models.Model):
     is_template = models.BooleanField(
         verbose_name='Статус шаблона',
         default=False,
+    )
+    template_invite = models.TextField(
+        verbose_name='Шаблон письма-приглашения',
+        max_length=VACANCY_TEXT_MAX_LEN,
+        default=VACANCY_TEMPLATE_INVITE,
     )
 
     class Meta:

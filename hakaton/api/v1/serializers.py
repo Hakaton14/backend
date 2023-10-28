@@ -74,6 +74,17 @@ class LanguageSerializer(ModelSerializer):
         )
 
 
+class LanguageLevelSerializer(ModelSerializer):
+    """Сериализатор представления уровней владения разговорными языками."""
+
+    class Meta:
+        model = LanguageLevel
+        fields = (
+            'id',
+            'name',
+        )
+
+
 class ScheduleSerializer(ModelSerializer):
     """Сериализатор представления графиков работы."""
 
@@ -287,6 +298,7 @@ class VacancySerializer(ModelSerializer):
     languages = ListField(
         child=DictField(child=IntegerField()),
         write_only=True,
+        required=False,
     )
     skills = ListField(child=IntegerField(), write_only=True)
 
@@ -314,6 +326,7 @@ class VacancySerializer(ModelSerializer):
             'pub_datetime',
             'is_archived',
             'is_template',
+            'template_invite',
         )
         read_only_fields = ('id', 'hr',)
 
@@ -360,17 +373,20 @@ class VacancySerializer(ModelSerializer):
     @transaction.atomic
     def create(self, validated_data):
         validated_data['hr'] = self.context['request'].user
-        language_qs, levels_qs, lang_data = validated_data.pop('languages')
+        lang_data: None = None
+        if 'languages' in validated_data:
+            language_qs, levels_qs, lang_data = validated_data.pop('languages')
         skills: QuerySet = validated_data.pop('skills')
         instance: Vacancy = super().create(validated_data)
         instance.experience = validated_data.get('experience')
         instance.save()
-        self._create_vacancy_languages(
-                language_data=lang_data,
-                vacancy=instance,
-                language_qs=language_qs,
-                levels_qs=levels_qs,
-            )
+        if lang_data:
+            self._create_vacancy_languages(
+                    language_data=lang_data,
+                    vacancy=instance,
+                    language_qs=language_qs,
+                    levels_qs=levels_qs,
+                )
         self._create_vacancy_skills(vacancy=instance, skills=skills)
         return instance
 
