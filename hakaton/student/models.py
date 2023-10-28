@@ -9,6 +9,7 @@ from hakaton.app_data import (
 from user.validators import validate_email, validate_link, validate_name
 
 
+# TODO: проверить поля сериализатора
 class Student(models.Model):
     """
     Модель временно имитирует профили студентов на карьерном трекере.
@@ -95,6 +96,12 @@ class Student(models.Model):
         max_length=STUDENT_SPEC_MAX_LEN,
         blank=True,
         null=True,
+    )
+    experience = models.ForeignKey(
+        verbose_name='Опыт работы',
+        to='vacancy.Experience',
+        related_name='student',
+        on_delete=models.PROTECT,
     )
     about_me = models.TextField(
         verbose_name='Обо мне',
@@ -195,6 +202,40 @@ class StudentLanguage(models.Model):
         return (
             f'{self.student.first_name} {self.student.last_name}: '
             f'{self.language.name} ({self.level.name})'
+        )
+
+
+class StudentSchedule(models.Model):
+    """Модель возможных типов графика работы студентов."""
+
+    student = models.ForeignKey(
+        verbose_name='Студент',
+        to='student.Student',
+        related_name='student_schedule',
+        on_delete=models.CASCADE,
+    )
+    schedule = models.ForeignKey(
+        verbose_name='График работы',
+        to='vacancy.schedule',
+        related_name='student_schedule',
+        on_delete=models.PROTECT,
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=('student', 'schedule'),
+                name='unique_student_schedule',
+            )
+        ]
+        ordering = ('-id',)
+        verbose_name = 'Тип графика работы студента'
+        verbose_name_plural = 'Типы графиков работы студентов'
+
+    def __str__(self):
+        return (
+            f'{self.student.first_name} {self.student.last_name}: '
+            f'{self.schedule.name}'
         )
 
 
