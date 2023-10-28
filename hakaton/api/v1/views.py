@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import status
 from rest_framework.decorators import action
@@ -14,8 +15,8 @@ from api.v1.filters import TaskMonthFilter
 from api.v1.schemas import (
     CITY_VIEW_SCHEMA, CURRENCY_VIEW_SCHEMA, EMPLOYMENT_VIEW_SCHEMA,
     EXPERIENCE_VIEW_SCHEMA, LANGUAGE_VIEW_SCHEMA, SCHEDULE_VIEW_SCHEMA,
-    SKILL_CATEGORY_VIEW_SCHEMA, SKILL_SEARCH_VIEW_SCHEMA,
-    TASK_VIEW_SCHEMA, TASK_VIEW_LIST_SCHEMA,
+    SKILL_CATEGORY_VIEW_SCHEMA, SKILL_SEARCH_VIEW_SCHEMA, STUDENT_VIEW_SCHEMA,
+    STUDENT_MARK_WATCHED_SCHEMA, TASK_VIEW_SCHEMA, TASK_VIEW_LIST_SCHEMA,
     TOKEN_OBTAIN_SCHEMA, TOKEN_REFRESH_SCHEMA,
     USER_VIEW_SCHEMA, USER_ME_SCHEMA,
     VACANCY_VIEW_SCHEMA,
@@ -24,10 +25,12 @@ from api.v1.permissions import IsOwnerPut
 from api.v1.serializers import (
     CitySerializer, CurrencySerializer, EmploymentSerializer,
     ExperienceSerializer, LanguageSerializer, ScheduleSerializer,
-    SkillSerializer, SkillCategorySerializer, TaskSerializer,
-    VacancySerializer, UserRegisterSerializer, UserUpdateSerializer,
+    SkillSerializer, SkillCategorySerializer, StudentShortSerializer,
+    StudentFullSerializer, TaskSerializer, VacancySerializer,
+    UserRegisterSerializer, UserUpdateSerializer,
 )
-from user.models import HrTask, User
+from student.models import Student
+from user.models import HrTask, HrWatched, User
 from vacancy.models import (
     City, Currency, Employment, Experience, Language,
     Schedule, Skill, SkillCategory, Vacancy,
@@ -119,6 +122,48 @@ class SkillSearchView(ListAPIView):
         return Skill.objects.all()
 
 
+@extend_schema_view(**STUDENT_VIEW_SCHEMA)
+class StudentViewSet(ModelViewSet):
+    """Вью-сет для взаимодействия с моделью Student."""
+    # INFO: метод POST нужен для того, чтобы дочерние @action
+    #       эндпоинты с методом POST были доступны.
+    http_method_names = ('get', 'post',)
+
+    def get_queryset(self):
+        return Student.objects.all(
+        ).select_related(
+            'city',
+        ).prefetch_related(
+            'student_employment',
+            'student_language',
+            'student_skill',
+        )
+
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return StudentFullSerializer
+        return StudentShortSerializer
+
+    @extend_schema(exclude=True)
+    def create(self, request, *args, **kwargs):
+        raise MethodNotAllowed(request.method)
+
+    @extend_schema(**STUDENT_MARK_WATCHED_SCHEMA)
+    # TODO: добавить возможность отмечать в просмотренное вакансии.
+    @action(
+        detail=True,
+        methods=('post',),
+        url_name='mark_watched',
+    )
+    def mark_watched(self, request, pk: int):
+        candidate: Student = get_object_or_404(Student, id=pk)
+        HrWatched.objects.create(
+            hr=request.user,
+            candidate=candidate
+        )
+        return Response(status=status.HTTP_200_OK)
+
+
 @extend_schema_view(**TASK_VIEW_SCHEMA)
 class TaskViewSet(ModelViewSet):
     """Вью-сет для взаимодействия с моделью HrTask."""
@@ -197,12 +242,16 @@ class UserViewSet(ModelViewSet):
 # TODO: ввиду того, что skills указаны как write_only,
 #       в документации на GET запросы это поле не показано.
 # TODO: дописать метод update().
+# INFO: при обновлении вакансии возможно имеет смысл очистить список
+#       просмотренных кандидатов, так как условия могли измениться.
+#       Только при изменении ключевых полей: навыки, условия работы.
 @extend_schema_view(**VACANCY_VIEW_SCHEMA)
 class VacancyViewSet(ModelViewSet):
     """Вью-сет для взаимодействия с моделью Vacancy."""
 
     http_method_names = ('get', 'post', 'patch',)
     serializer_class = VacancySerializer
+    queryset = Vacancy.objects.all()
 
     def get_queryset(self):
         return Vacancy.objects.filter(
@@ -212,8 +261,8 @@ class VacancyViewSet(ModelViewSet):
             'city',
         ).prefetch_related(
             'vacancy_employment',
-            'vacancy_skill',
             'vacancy_language',
+            'vacancy_skill',
         )
 
     def retrieve(self, request, *args, **kwargs):

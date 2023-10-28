@@ -34,6 +34,8 @@
 
 @skill-categories = http://127.0.0.1:8000/api/v1/skills/by-categories/
 
+@students = http://127.0.0.1:8000/api/v1/students/
+
 @tasks = http://127.0.0.1:8000/api/v1/tasks/
 
 @users = http://127.0.0.1:8000/api/v1/users/
@@ -74,7 +76,7 @@ GET {{cities}} HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MDE5OTM1LCJpYXQiOjE2OTg0MTUxMzUsImp0aSI6IjNjMDhkMTZiOTY5ZTQxZGVhZDk3NzQxNmY4MTc2NjgwIiwidXNlcl9pZCI6Mn0.eibz3GGh019Ngaqf5uHLST2lJkBv-i5r8AhmwnxgW9Q
 
 ###
-GET {{cities}}?search=Пит HTTP/1.1
+GET {{cities}}?search=М HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MDE5OTM1LCJpYXQiOjE2OTg0MTUxMzUsImp0aSI6IjNjMDhkMTZiOTY5ZTQxZGVhZDk3NzQxNmY4MTc2NjgwIiwidXNlcl9pZCI6Mn0.eibz3GGh019Ngaqf5uHLST2lJkBv-i5r8AhmwnxgW9Q
 
 
@@ -139,6 +141,20 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 ###
 GET {{skill-categories}} HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTM3NDM4LCJpYXQiOjE2OTgzMzI2MzgsImp0aSI6IjY3NzdkNmFjOWIwOTRmYTk5NjdkMTUwNGJmODQ1MGVjIiwidXNlcl9pZCI6Mn0.OOrK-4vwoyxRd8DlXOpT-9eJgwNOjmAj6ciLQE9Blls
+
+
+#########################################################################
+################################## SKILLS ################################
+##########################################################################
+
+
+###
+GET {{students}} HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MDE5OTM1LCJpYXQiOjE2OTg0MTUxMzUsImp0aSI6IjNjMDhkMTZiOTY5ZTQxZGVhZDk3NzQxNmY4MTc2NjgwIiwidXNlcl9pZCI6Mn0.eibz3GGh019Ngaqf5uHLST2lJkBv-i5r8AhmwnxgW9Q
+
+###
+GET {{students}}1/ HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTM3NDM4LCJpYXQiOjE2OTgzMzI2MzgsImp0aSI6IjY3NzdkNmFjOWIwOTRmYTk5NjdkMTUwNGJmODQ1MGVjIiwidXNlcl9pZCI6Mn0.OOrK-4vwoyxRd8DlXOpT-9eJgwNOjmAj6ciLQE9Blls
 
 
@@ -226,6 +242,7 @@ Content-Type: application/json
     "address": "Тут адрес в виде текста.",
     "description": "Тут требования вакансии в виде текста.",
     "responsibilities": "Тут обязанности в виде текста.",
+    "requirements": "Тут требования в виде текста.",
     "conditions": "Тут условия в виде текста.",
     "salary_from": 1000,
     "salary_to": 2000,

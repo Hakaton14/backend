@@ -5,14 +5,15 @@ from rest_framework.viewsets import ModelViewSet
 
 from api.v1.views import (
     CityView, CurrencyView, EmploymentView, ExperienceView, LanguageView,
-    ScheduleView, SkillSearchView, SkillCategoryView, TaskViewSet,
-    TokenObtainPairView, TokenRefreshView, UserViewSet,
+    ScheduleView, SkillSearchView, SkillCategoryView, StudentViewSet,
+    TaskViewSet, TokenObtainPairView, TokenRefreshView, UserViewSet,
     VacancyViewSet,
 )
 
 router = DefaultRouter()
 
 ROUTER_DATA: list[dict[str, ModelViewSet]] = [
+    {'prefix': 'students', 'viewset': StudentViewSet},
     {'prefix': 'tasks', 'viewset': TaskViewSet},
     {'prefix': 'users', 'viewset': UserViewSet},
     {'prefix': 'vacancies', 'viewset': VacancyViewSet},
