@@ -253,9 +253,12 @@ class VacancyAdmin(admin.ModelAdmin):
             - валюта (currency)
             - тестовое задание (testcase)
             - опыт работы (experience)
+            - тип занятости (employment)
+            - график работы (schedule)
             - дата и время публикации (pub_datetime)
             - статус архивной (is_archived)
             - статус шаблона (is_template)
+            - шаблон письма-приглашения (template_invite)
         - list_editable (tuple) - список полей для изменения в интерфейсе:
             - название (name)
             - город (city)
@@ -269,8 +272,11 @@ class VacancyAdmin(admin.ModelAdmin):
             - валюта (currency)
             - тестовое задание (testcase)
             - опыт работы (experience)
+            - тип занятости (employment)
+            - график работы (schedule)
             - статус архивной (is_archived)
             - статус шаблона (is_template)
+            - шаблон письма-приглашения (template_invite)
         - list_filter (tuple) - список фильтров:
             - ответственный HR (hr)
             - название (name)
@@ -279,6 +285,8 @@ class VacancyAdmin(admin.ModelAdmin):
             - заработная вилка, до (salary_to)
             - валюта (currency)
             - опыт работы (experience)
+            - тип занятости (employment)
+            - график работы (schedule)
             - статус архивной (is_archived)
             - статус шаблона (is_template)
         - search_fields (tuple) - список полей для поиска объектов:
@@ -302,9 +310,12 @@ class VacancyAdmin(admin.ModelAdmin):
         'currency',
         'testcase',
         'experience',
+        'employment',
+        'schedule',
         'pub_datetime',
         'is_archived',
         'is_template',
+        'template_invite',
     )
     list_editable = (
         'name',
@@ -318,8 +329,11 @@ class VacancyAdmin(admin.ModelAdmin):
         'currency',
         'testcase',
         'experience',
+        'employment',
+        'schedule',
         'is_archived',
         'is_template',
+        'template_invite',
     )
     list_filter = (
         'hr',
@@ -329,6 +343,8 @@ class VacancyAdmin(admin.ModelAdmin):
         'salary_to',
         'currency',
         'experience',
+        'employment',
+        'schedule',
         'is_archived',
         'is_template',
     )

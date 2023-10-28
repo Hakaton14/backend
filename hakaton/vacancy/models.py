@@ -221,6 +221,9 @@ class Vacancy(models.Model):
     description = models.TextField(
         verbose_name='Описание',
         max_length=VACANCY_TEXT_MAX_LEN,
+        default=None,
+        blank=True,
+        null=True,
     )
     responsibilities = models.TextField(
         verbose_name='Обязанности',
