@@ -14,25 +14,25 @@ from rest_framework.viewsets import ModelViewSet
 from api.v1.filters import TaskMonthFilter
 from api.v1.schemas import (
     CITY_VIEW_SCHEMA, CURRENCY_VIEW_SCHEMA, EMPLOYMENT_VIEW_SCHEMA,
-    EXPERIENCE_VIEW_SCHEMA, LANGUAGE_VIEW_SCHEMA, SCHEDULE_VIEW_SCHEMA,
-    SKILL_CATEGORY_VIEW_SCHEMA, SKILL_SEARCH_VIEW_SCHEMA, STUDENT_VIEW_SCHEMA,
-    STUDENT_MARK_WATCHED_SCHEMA, TASK_VIEW_SCHEMA, TASK_VIEW_LIST_SCHEMA,
-    TOKEN_OBTAIN_SCHEMA, TOKEN_REFRESH_SCHEMA,
+    EXPERIENCE_VIEW_SCHEMA, LANGUAGE_VIEW_SCHEMA, LANGUAGE_LEVEL_VIEW_SCHEMA,
+    SCHEDULE_VIEW_SCHEMA, SKILL_CATEGORY_VIEW_SCHEMA, SKILL_SEARCH_VIEW_SCHEMA,
+    STUDENT_VIEW_SCHEMA, STUDENT_MARK_WATCHED_SCHEMA, TASK_VIEW_SCHEMA,
+    TASK_VIEW_LIST_SCHEMA, TOKEN_OBTAIN_SCHEMA, TOKEN_REFRESH_SCHEMA,
     USER_VIEW_SCHEMA, USER_ME_SCHEMA,
     VACANCY_VIEW_SCHEMA,
 )
 from api.v1.permissions import IsOwnerPut
 from api.v1.serializers import (
     CitySerializer, CurrencySerializer, EmploymentSerializer,
-    ExperienceSerializer, LanguageSerializer, ScheduleSerializer,
-    SkillSerializer, SkillCategorySerializer, StudentShortSerializer,
-    StudentFullSerializer, TaskSerializer, VacancySerializer,
-    UserRegisterSerializer, UserUpdateSerializer,
+    ExperienceSerializer, LanguageSerializer, LanguageLevelSerializer,
+    ScheduleSerializer, SkillSerializer, SkillCategorySerializer,
+    StudentShortSerializer, StudentFullSerializer, TaskSerializer,
+    VacancySerializer, UserRegisterSerializer, UserUpdateSerializer,
 )
 from student.models import Student
 from user.models import HrTask, HrWatched, User
 from vacancy.models import (
-    City, Currency, Employment, Experience, Language,
+    City, Currency, Employment, Experience, Language, LanguageLevel,
     Schedule, Skill, SkillCategory, Vacancy,
 )
 
@@ -86,6 +86,15 @@ class LanguageView(ListAPIView):
     """
     queryset = Language.objects.all()
     serializer_class = LanguageSerializer
+
+
+@extend_schema(**LANGUAGE_LEVEL_VIEW_SCHEMA)
+class LanguageLevelView(ListAPIView):
+    """
+    Вью функция list предоставления разговорных языков.
+    """
+    queryset = LanguageLevel.objects.all()
+    serializer_class = LanguageLevelSerializer
 
 
 @extend_schema(**SCHEDULE_VIEW_SCHEMA)

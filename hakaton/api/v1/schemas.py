@@ -128,6 +128,13 @@ LANGUAGE_VIEW_SCHEMA: dict[str, str] = {
     'summary': 'Получить список разговорных языков.',
 }
 
+LANGUAGE_LEVEL_VIEW_SCHEMA: dict[str, str] = {
+    'description': (
+        'Возвращает список уровней владения разговорными языками.'
+    ),
+    'summary': 'Получить список уровней владения разговорными языками.',
+}
+
 SCHEDULE_VIEW_SCHEMA: dict[str, str] = {
     'description': 'Возвращает список графиков работы.',
     'summary': 'Получить список графиков работы.',
