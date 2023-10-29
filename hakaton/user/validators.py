@@ -2,11 +2,13 @@ from re import fullmatch
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext
 
-EMAIL_PATTERN: str = r'^(?!\.)[0-9A-Za-z\.]{5,50}@[a-zA-z]+\.[a-zA-z]+$'
+EMAIL_PATTERN: str = r'^(?!\.)[0-9A-Za-z\.\_\-]{1,50}@[a-zA-z]+\.[a-zA-z]+$'
 EMAIL_ERROR: str = gettext(
     'Можно использовать буквы латинского алфавита (a-z), цифры (0-9) и точки.'
     '\n'
     'Первый символ должен быть латинской буквой или цифрой.'
+    '\n'
+    'Длина локальной части (до @) не должна превышать 50 символов.'
 )
 
 LINK_PATTERN: str = r'^http(s)?://[\w\d]+\.\w+/[\w\d]+(/)?$'
