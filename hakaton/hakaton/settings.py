@@ -2,7 +2,6 @@ import os
 
 from corsheaders.defaults import default_headers
 from celery.schedules import crontab
-from corsheaders.defaults import default_headers
 
 from hakaton.app_data import (  # noqa F401
     ACCESS_TOKEN_LIFETIME_TD, BASE_DIR, DB_POSTGRESQL, DB_SQLITE, SECRET_KEY,
