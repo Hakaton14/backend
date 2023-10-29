@@ -1,3 +1,4 @@
+from django.db.models import Q, QuerySet
 from django.shortcuts import get_object_or_404
 from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import status
@@ -26,8 +27,8 @@ from api.v1.serializers import (
     CitySerializer, CurrencySerializer, EmploymentSerializer,
     ExperienceSerializer, LanguageSerializer, LanguageLevelSerializer,
     ScheduleSerializer, SkillSerializer, SkillCategorySerializer,
-    StudentShortSerializer, StudentFullSerializer, TaskSerializer,
-    VacancySerializer, UserRegisterSerializer, UserUpdateSerializer,
+    StudentSerializer, TaskSerializer, VacancySerializer,
+    UserRegisterSerializer, UserUpdateSerializer,
 )
 from student.models import Student
 from user.models import HrTask, HrWatched, User
@@ -136,22 +137,34 @@ class StudentViewSet(ModelViewSet):
     """Вью-сет для взаимодействия с моделью Student."""
     # INFO: метод POST нужен для того, чтобы дочерние @action
     #       эндпоинты с методом POST были доступны.
+    # TODO: выдавать список просмотренных.
     http_method_names = ('get', 'post',)
+    serializer_class = StudentSerializer
 
     def get_queryset(self):
-        return Student.objects.all(
+        students: QuerySet = Student.objects.all(
         ).select_related(
             'city',
+            'experience',
         ).prefetch_related(
             'student_employment',
             'student_language',
+            'student_schedule',
             'student_skill',
         )
-
-    def get_serializer_class(self):
-        if self.action == 'retrieve':
-            return StudentFullSerializer
-        return StudentShortSerializer
+        from_vacancy: QuerySet = self._get_from_vacancy(
+            vacancy_id=self.request.query_params.get('from_vacancy'),
+            students=students,
+        )
+        if from_vacancy:
+            return from_vacancy
+        from_query: QuerySet = self._get_from_query(
+            students=students,
+            query=self.request.query_params,
+        )
+        if from_query:
+            return from_query
+        return students
 
     @extend_schema(exclude=True)
     def create(self, request, *args, **kwargs):
@@ -171,6 +184,188 @@ class StudentViewSet(ModelViewSet):
             candidate=candidate
         )
         return Response(status=status.HTTP_200_OK)
+
+    def _get_from_query(self, students: QuerySet, query: dict[str, any]) -> QuerySet:  # noqa (E501)
+        """
+        Проверяет query параметры. Если хотя бы один параметр существует,
+        возвращает всех кандидатов, которые соответствуют.
+        Иначе - возвращает None.
+        """
+        # TODO: подумать над рефакторингом и оптимизацией.
+        if query.get('city') is not None:
+            students: QuerySet = self._filter_by_city(
+                students=students,
+                city=City.objects.get(id=query.get('city'))
+            )
+        if query.get('experience') is not None:
+            students: QuerySet = self._filter_by_experience(
+                students=students,
+                experience=Experience.objects.get(id=query.get('experience'))
+            )
+        if query.get('employment') is not None:
+            students: QuerySet = self._filter_by_employment(
+                students=students,
+                employment=Employment.objects.get(id=query.get('employment'))
+            )
+        if query.get('schedule') is not None:
+            students: QuerySet = self._filter_by_schedule(
+                students=students,
+                schedule=Schedule.objects.get(id=query.get('schedule'))
+            )
+        if query.get('skills') is not None:
+            students: QuerySet = self._filter_by_skills(
+                students=students,
+                skill_ids=query.get('skills')
+            )
+        if query.get('languages') is not None:
+            languages_data: list[str] = list(query.get('languages').split(','))
+            languages: list[dict[str, int]] = []
+            for language in languages_data:
+                language_id, language_level = language.split('-')
+                languages.append(
+                    {
+                        'language_id': language_id,
+                        'language_level': language_level
+                    }
+                )
+            students: QuerySet = self._filter_by_languages(
+                students=students,
+                languages=languages,
+            )
+        return students
+
+
+    def _get_from_vacancy(self, vacancy_id: str, students: QuerySet) -> QuerySet:  # noqa (E501)
+        """
+        Проверяет query параметр 'from_vacancy'. Если такой параметр существует
+        и является ID существующей вакансии - возвращает всех кандидатов,
+        которые подходят под требования вакансии.
+        Иначе - возвращает None.
+        """
+        try:
+            vacancy_id: int = int(vacancy_id)
+        except (TypeError, ValueError):
+            vacancy_id: None = None
+        if (vacancy_id is None or
+                not Vacancy.objects.filter(id=vacancy_id).exists()
+                ):  # noqa (E124)
+            return None
+        vacancy: Vacancy = Vacancy.objects.select_related(
+            'city',
+            'experience',
+            'employment',
+            'schedule',
+        ).prefetch_related(
+            'vacancy_employment',
+            'vacancy_language',
+            'vacancy_skill',
+        ).get(
+            id=vacancy_id,
+        )
+        students: QuerySet = self._filter_by_city(
+            students=students,
+            city=vacancy.city
+        )
+        students: QuerySet = self._filter_by_employment(
+            students=students,
+            employment=vacancy.employment
+        )
+        students: QuerySet = self._filter_by_experience(
+            students=students,
+            experience=vacancy.experience
+        )
+        students: QuerySet = self._filter_by_languages(
+            students=students,
+            languages=list(
+                {
+                    'language_id': languages.language.id,
+                    'language_level': languages.level.level
+                } for languages in vacancy.vacancy_language.all()
+            )
+        )
+        students: QuerySet = self._filter_by_schedule(
+            students=students,
+            schedule=vacancy.schedule
+        )
+        students: QuerySet = self._filter_by_skills(
+            students=students,
+            skill_ids=list(skill.id for skill in vacancy.vacancy_skill.all())
+        )
+        return students
+
+    def _filter_by_city(self, students: QuerySet, city: City) -> QuerySet:
+        """
+        Принимает список студентов. Производит фильтрацию тех из них,
+        кто имеет возможность работать непосредственно в офисе.
+        Возвращает отфильтрованный список студентов.
+        """
+        return students.filter(Q(city=city) | Q(relocation=True))
+
+    def _filter_by_experience(
+            self, students: QuerySet, experience: Experience) -> QuerySet:
+        """
+        Принимает список студентов. Производит фильтрацию тех из них,
+        кто имеет указанный в вакансии опыт работы.
+        Возвращает отфильтрованный список студентов.
+        """
+        return students.filter(experience=experience)
+
+    def _filter_by_employment(
+            self, students: QuerySet, employment: Employment) -> QuerySet:
+        """
+        Принимает список студентов. Производит фильтрацию тех из них,
+        кто имеет указанный в вакансии тип занятости.
+        Возвращает отфильтрованный список студентов.
+        """
+        return students.filter(student_employment__employment=employment)
+
+    def _filter_by_languages(
+            self, students: QuerySet, languages: list[dict]) -> QuerySet:
+        """
+        Принимает список студентов. Производит фильтрацию тех из них,
+        кто имеет все (или более) указанные в вакансии навыки.
+        Возвращает отфильтрованный список студентов.
+        """
+        user_lists = [
+            students.filter(
+                student_language__language_id=language['language_id'],
+                student_language__level__gte=language['language_level'],
+            ).values_list(
+                'id', flat=True
+            ) for language in languages
+        ]
+        common_users = set(user_lists[0])
+        for user_list in user_lists[1:]:
+            common_users &= set(user_list)
+        return students.filter(id__in=common_users)
+
+    def _filter_by_schedule(
+            self, students: QuerySet, schedule: Schedule) -> QuerySet:
+        """
+        Принимает список студентов. Производит фильтрацию тех из них,
+        кто имеет указанный в вакансии график работы.
+        Возвращает отфильтрованный список студентов.
+        """
+        return students.filter(student_schedule__schedule=schedule)
+
+    def _filter_by_skills(
+            self, students: QuerySet, skill_ids: list[int]) -> QuerySet:
+        """
+        Принимает список студентов. Производит фильтрацию тех из них,
+        кто имеет все (или более) указанные в вакансии навыки.
+        Возвращает отфильтрованный список студентов.
+        """
+        user_lists = [
+            students.filter(
+                student_skill__skill_id=skill_id
+            ).values_list(
+                'id', flat=True
+            ) for skill_id in skill_ids
+        ]
+        common_users = set(user_lists[0])
+        for user_list in user_lists[1:]:
+            common_users &= set(user_list)
+        return students.filter(id__in=common_users)
 
 
 @extend_schema_view(**TASK_VIEW_SCHEMA)
@@ -263,6 +458,7 @@ class VacancyViewSet(ModelViewSet):
     queryset = Vacancy.objects.all()
 
     def get_queryset(self):
+        # TODO: проверить актуальность полей.
         return Vacancy.objects.filter(
             hr=self.request.user,
         ).select_related(

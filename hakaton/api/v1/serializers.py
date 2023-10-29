@@ -136,7 +136,6 @@ class StudentEmploymentSerializer(ModelSerializer):
         fields = ('id', 'name',)
 
     def get_id(self, obj) -> int:
-        print(obj)
         return obj.employment.id
 
     def get_name(self, obj) -> str:
@@ -185,7 +184,7 @@ class StudentLanguageSerializer(ModelSerializer):
         return obj.level.name
 
 
-class StudentFullSerializer(ModelSerializer):
+class StudentSerializer(ModelSerializer):
     """Сериализатор представления полного профиля студента."""
 
     city = CitySerializer()
@@ -218,24 +217,6 @@ class StudentFullSerializer(ModelSerializer):
             'about_me',
             'about_exp',
             'about_education',
-        )
-
-
-class StudentShortSerializer(ModelSerializer):
-    """Сериализатор представления полного профиля студента."""
-
-    skills = StudentSkillsSerializer(source='student_skill', many=True,)
-
-    class Meta:
-        model = Student
-        # TODO: добавить поле даты рождения и вычислять количество полных лет.
-        fields = (
-            'id',
-            'first_name',
-            'last_name',
-            # 'age',
-            'skills',
-            'city',
         )
 
 
