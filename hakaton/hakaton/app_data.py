@@ -98,10 +98,29 @@ def user_avatar_path(instance, filename) -> str:
     return f'{USER_PHOTO_FOLDER}{unique_filename}'
 
 
+"""Email settings."""
+
+
+DEFAULT_FROM_EMAIL = 'Praktikum Services'
+
+EMAIL_HOST: str = os.getenv('EMAIL_HOST')
+EMAIL_PORT: int = int(os.getenv('EMAIL_PORT'))
+EMAIL_HOST_USER: str = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD: str = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS: bool = bool(os.getenv('EMAIL_USE_TLS'))
+EMAIL_USE_SSL: bool = bool(os.getenv('EMAIL_USE_SSL'))
+EMAIL_SSL_CERTFILE: str = os.getenv('EMAIL_SSL_CERTFILE')
+EMAIL_SSL_KEYFILE: str = os.getenv('EMAIL_SSL_KEYFILE')
+EMAIL_TIMEOUT: int = int(os.getenv('EMAIL_TIMEOUT'))
+
+
 """Security."""
 
 
 ACCESS_TOKEN_LIFETIME: int = int(os.getenv('ACCESS_TOKEN_LIFETIME', 0))
 ACCESS_TOKEN_LIFETIME_TD: timedelta = timedelta(days=ACCESS_TOKEN_LIFETIME)
+
+CITE_DOMAIN: str = os.getenv('CITE_DOMAIN')
+CITE_IP: str = os.getenv('CITE_IP')
 
 SECRET_KEY: str = os.getenv('SECRET_KEY')
