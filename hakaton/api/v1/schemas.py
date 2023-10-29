@@ -185,7 +185,10 @@ STUDENT_VIEW_SCHEMA: dict[str, str] = {
             OpenApiParameter(
                 name='language',
                 location=OpenApiParameter.QUERY,
-                description='перечень id языков и уровня владения ими',
+                description=(
+                    'перечень id языков и id уровня владения ими '
+                    'в формате 1-2,2-3,...'
+                ),
                 required=False,
                 type=int,
             ),

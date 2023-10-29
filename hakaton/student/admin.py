@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from hakaton.app_data import ADMIN_LIST_PER_PAGE
 from student.models import (
-    Student, StudentEmployment, StudentLanguage, StudentSkill,
+    Student, StudentEmployment, StudentLanguage, StudentSchedule, StudentSkill,
 )
 
 
@@ -27,6 +27,7 @@ class StudentAdmin(admin.ModelAdmin):
             - город проживания (city)
             - готовность к переезду (relocation)
             - специализация (specialization)
+            - опыт работы (experience)
             - обо мне (about_me)
             - об опыте (about_exp)
             - об образовании (about_education)
@@ -44,6 +45,7 @@ class StudentAdmin(admin.ModelAdmin):
             - ссылка на страницу linkedin (link_in)
             - готовность к переезду (relocation)
             - специализация (specialization)
+            - опыт работы (experience)
             - обо мне (about_me)
             - об опыте (about_exp)
             - об образовании (about_education)
@@ -55,6 +57,7 @@ class StudentAdmin(admin.ModelAdmin):
             - город проживания (city)
             - готовность к переезду (relocation)
             - специализация (specialization)
+            - опыт работы (experience)
         - search_fields (tuple) - список полей для поиска объектов:
             - имя (first_name)
             - фамилия (second_name)
@@ -76,6 +79,7 @@ class StudentAdmin(admin.ModelAdmin):
         'city',
         'relocation',
         'specialization',
+        'experience',
         'about_me',
         'about_exp',
         'about_education',
@@ -94,6 +98,7 @@ class StudentAdmin(admin.ModelAdmin):
         'city',
         'relocation',
         'specialization',
+        'experience',
         'about_me',
         'about_exp',
         'about_education',
@@ -105,6 +110,7 @@ class StudentAdmin(admin.ModelAdmin):
         'city',
         'relocation',
         'specialization',
+        'experience',
     )
     search_fields = (
         'first_name',
@@ -139,6 +145,42 @@ class StudentEmploymentAdmin(admin.ModelAdmin):
     list_editable = (
         'student',
         'employment',
+    )
+    list_per_page = ADMIN_LIST_PER_PAGE
+
+
+@admin.register(StudentSchedule)
+class StudentScheduleAdmin(admin.ModelAdmin):
+    """
+    Переопределяет административный интерфейс Django
+    для модели StudentSchedule.
+
+    Атрибуты:
+        - list_display (tuple) - список полей для отображения в интерфейсе:
+            - ID (id)
+            - студент (student)
+            - график работы (schedule)
+        - list_editable (tuple) - список полей для изменения в интерфейсе:
+            - график работы (schedule)
+        - list_filter (tuple) - список фильтров:
+            - график работы (schedule)
+        - search_fields (tuple) - список полей для поиска объектов:
+            - студент (student)
+        - list_per_page (int) - количество объектов на одной странице
+    """
+    list_display = (
+        'id',
+        'student',
+        'schedule',
+    )
+    list_editable = (
+        'schedule',
+    )
+    list_filter = (
+        'schedule',
+    )
+    search_fields = (
+        'student',
     )
     list_per_page = ADMIN_LIST_PER_PAGE
 

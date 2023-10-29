@@ -7,7 +7,7 @@
 ##########################################################################
 
 
-@jwt_access = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTE3NjkwLCJpYXQiOjE2OTg1MTI4OTAsImp0aSI6IjhmYWJmNjFjYmUxZDRhNDBiYzAzZTQ4MDllNzliMzliIiwidXNlcl9pZCI6Mn0.qmekd451gc4lJzE-dVmXw6ZuZR2GxA4bE-Beisp9IK4
+@jwt_access = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
 
 
 ##########################################################################
@@ -53,7 +53,7 @@ POST {{auth_jwt_create}} HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "testuser2@email.com",
+    "email": "hr.user@email.com",
     "password": "MyPass!1"
 }
 
@@ -73,11 +73,11 @@ Content-Type: application/json
 
 ###
 GET {{cities}} HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTE3NjkwLCJpYXQiOjE2OTg1MTI4OTAsImp0aSI6IjhmYWJmNjFjYmUxZDRhNDBiYzAzZTQ4MDllNzliMzliIiwidXNlcl9pZCI6Mn0.qmekd451gc4lJzE-dVmXw6ZuZR2GxA4bE-Beisp9IK4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
 
 ###
 GET {{cities}}?search=М HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTE3NjkwLCJpYXQiOjE2OTg1MTI4OTAsImp0aSI6IjhmYWJmNjFjYmUxZDRhNDBiYzAzZTQ4MDllNzliMzliIiwidXNlcl9pZCI6Mn0.qmekd451gc4lJzE-dVmXw6ZuZR2GxA4bE-Beisp9IK4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
 
 
 ##########################################################################
@@ -87,7 +87,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 ###
 GET {{currencies}} HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTE3NjkwLCJpYXQiOjE2OTg1MTI4OTAsImp0aSI6IjhmYWJmNjFjYmUxZDRhNDBiYzAzZTQ4MDllNzliMzliIiwidXNlcl9pZCI6Mn0.qmekd451gc4lJzE-dVmXw6ZuZR2GxA4bE-Beisp9IK4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
 
 
 ##########################################################################
@@ -97,7 +97,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 ###
 GET {{employments}} HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTE3NjkwLCJpYXQiOjE2OTg1MTI4OTAsImp0aSI6IjhmYWJmNjFjYmUxZDRhNDBiYzAzZTQ4MDllNzliMzliIiwidXNlcl9pZCI6Mn0.qmekd451gc4lJzE-dVmXw6ZuZR2GxA4bE-Beisp9IK4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
 
 
 ##########################################################################
@@ -107,7 +107,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 ###
 GET {{experiences}} HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTE3NjkwLCJpYXQiOjE2OTg1MTI4OTAsImp0aSI6IjhmYWJmNjFjYmUxZDRhNDBiYzAzZTQ4MDllNzliMzliIiwidXNlcl9pZCI6Mn0.qmekd451gc4lJzE-dVmXw6ZuZR2GxA4bE-Beisp9IK4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
 
 
 ##########################################################################
@@ -117,7 +117,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 ###
 GET {{languages}} HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTE3NjkwLCJpYXQiOjE2OTg1MTI4OTAsImp0aSI6IjhmYWJmNjFjYmUxZDRhNDBiYzAzZTQ4MDllNzliMzliIiwidXNlcl9pZCI6Mn0.qmekd451gc4lJzE-dVmXw6ZuZR2GxA4bE-Beisp9IK4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
 
 
 ##########################################################################
@@ -127,7 +127,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 ###
 GET {{schedules}} HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTE3NjkwLCJpYXQiOjE2OTg1MTI4OTAsImp0aSI6IjhmYWJmNjFjYmUxZDRhNDBiYzAzZTQ4MDllNzliMzliIiwidXNlcl9pZCI6Mn0.qmekd451gc4lJzE-dVmXw6ZuZR2GxA4bE-Beisp9IK4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
 
 
 ##########################################################################
@@ -137,7 +137,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 ###
 GET {{skills}} HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTE3NjkwLCJpYXQiOjE2OTg1MTI4OTAsImp0aSI6IjhmYWJmNjFjYmUxZDRhNDBiYzAzZTQ4MDllNzliMzliIiwidXNlcl9pZCI6Mn0.qmekd451gc4lJzE-dVmXw6ZuZR2GxA4bE-Beisp9IK4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
 
 ###
 GET {{skill-categories}} HTTP/1.1
@@ -145,17 +145,25 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 
 #########################################################################
-################################## SKILLS ################################
+################################# STUDENTS ##############################
 ##########################################################################
 
 
 ###
 GET {{students}} HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTE3NjkwLCJpYXQiOjE2OTg1MTI4OTAsImp0aSI6IjhmYWJmNjFjYmUxZDRhNDBiYzAzZTQ4MDllNzliMzliIiwidXNlcl9pZCI6Mn0.qmekd451gc4lJzE-dVmXw6ZuZR2GxA4bE-Beisp9IK4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
 
 ###
 GET {{students}}1/ HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTM3NDM4LCJpYXQiOjE2OTgzMzI2MzgsImp0aSI6IjY3NzdkNmFjOWIwOTRmYTk5NjdkMTUwNGJmODQ1MGVjIiwidXNlcl9pZCI6Mn0.OOrK-4vwoyxRd8DlXOpT-9eJgwNOjmAj6ciLQE9Blls
+
+###
+GET {{students}}?from_vacancy=1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+
+###
+GET {{students}}?employment=2&languages=3-1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
 
 
 ##########################################################################
@@ -165,15 +173,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 ###
 GET {{tasks}} HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTE3NjkwLCJpYXQiOjE2OTg1MTI4OTAsImp0aSI6IjhmYWJmNjFjYmUxZDRhNDBiYzAzZTQ4MDllNzliMzliIiwidXNlcl9pZCI6Mn0.qmekd451gc4lJzE-dVmXw6ZuZR2GxA4bE-Beisp9IK4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
 
 ###
 GET {{tasks}}?date=2023-12 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTE3NjkwLCJpYXQiOjE2OTg1MTI4OTAsImp0aSI6IjhmYWJmNjFjYmUxZDRhNDBiYzAzZTQ4MDllNzliMzliIiwidXNlcl9pZCI6Mn0.qmekd451gc4lJzE-dVmXw6ZuZR2GxA4bE-Beisp9IK4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
 
 ###
 POST {{tasks}} HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTE3NjkwLCJpYXQiOjE2OTg1MTI4OTAsImp0aSI6IjhmYWJmNjFjYmUxZDRhNDBiYzAzZTQ4MDllNzliMzliIiwidXNlcl9pZCI6Mn0.qmekd451gc4lJzE-dVmXw6ZuZR2GxA4bE-Beisp9IK4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
 Content-Type: application/json
 
 {
@@ -184,7 +192,7 @@ Content-Type: application/json
 
 ###
 PATCH {{tasks}}3/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTE3NjkwLCJpYXQiOjE2OTg1MTI4OTAsImp0aSI6IjhmYWJmNjFjYmUxZDRhNDBiYzAzZTQ4MDllNzliMzliIiwidXNlcl9pZCI6Mn0.qmekd451gc4lJzE-dVmXw6ZuZR2GxA4bE-Beisp9IK4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
 Content-Type: application/json
 
 {
@@ -195,7 +203,7 @@ Content-Type: application/json
 
 ###
 DELETE {{tasks}}3/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTE3NjkwLCJpYXQiOjE2OTg1MTI4OTAsImp0aSI6IjhmYWJmNjFjYmUxZDRhNDBiYzAzZTQ4MDllNzliMzliIiwidXNlcl9pZCI6Mn0.qmekd451gc4lJzE-dVmXw6ZuZR2GxA4bE-Beisp9IK4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
 
 
 ##########################################################################
@@ -228,7 +236,7 @@ Content-Type: application/json
 
 ###
 GET {{vacancies}} HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTE3NjkwLCJpYXQiOjE2OTg1MTI4OTAsImp0aSI6IjhmYWJmNjFjYmUxZDRhNDBiYzAzZTQ4MDllNzliMzliIiwidXNlcl9pZCI6Mn0.qmekd451gc4lJzE-dVmXw6ZuZR2GxA4bE-Beisp9IK4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
 
 
 ###
@@ -252,6 +260,17 @@ Content-Type: application/json
     "employment": 1,
     "schedule": 2,
     "skills": [1, 2, 3],
+    "languages": [
+        {
+            "language": 1,
+            "level": 2
+        },
+        {
+            "language": 3,
+            "level": 1
+        }
+
+    ],
     "is_archived": false,
     "is_template": true,
     "template_invite": "Тут текст письма-приглашения."
