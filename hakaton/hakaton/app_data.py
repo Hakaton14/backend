@@ -120,4 +120,7 @@ EMAIL_TIMEOUT: int = int(os.getenv('EMAIL_TIMEOUT'))
 ACCESS_TOKEN_LIFETIME: int = int(os.getenv('ACCESS_TOKEN_LIFETIME', 0))
 ACCESS_TOKEN_LIFETIME_TD: timedelta = timedelta(days=ACCESS_TOKEN_LIFETIME)
 
+CITE_DOMAIN: str = os.getenv('CITE_DOMAIN')
+CITE_IP: str = os.getenv('CITE_IP')
+
 SECRET_KEY: str = os.getenv('SECRET_KEY')
