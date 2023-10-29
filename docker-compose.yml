@@ -14,6 +14,9 @@ services:
     env_file:
       - hakaton/.env
 
+  redis:
+    image: redis:7.2.1-alpine
+
   backend:
     build:
       context: hakaton
@@ -24,6 +27,7 @@ services:
       - media_volume:/app/media
     depends_on:
       - db
+      - redis
 
   frontend:
     build:
