@@ -25,5 +25,4 @@ if ($mediaVolumeExists) {
     docker volume rm backend_media_volume
 }
 
-#docker compose up
-
+docker compose up
