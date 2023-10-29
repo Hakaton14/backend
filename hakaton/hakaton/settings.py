@@ -1,9 +1,14 @@
 import os
 
 from corsheaders.defaults import default_headers
+from celery.schedules import crontab
+from corsheaders.defaults import default_headers
 
 from hakaton.app_data import (  # noqa F401
-    ACCESS_TOKEN_LIFETIME_TD, BASE_DIR, DB_POSTGRESQL, DB_SQLITE, SECRET_KEY
+    ACCESS_TOKEN_LIFETIME_TD, BASE_DIR, DB_POSTGRESQL, DB_SQLITE, SECRET_KEY,
+    DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_PORT, EMAIL_HOST_USER,
+    EMAIL_HOST_PASSWORD, EMAIL_USE_TLS, EMAIL_USE_SSL, EMAIL_SSL_CERTFILE,
+    EMAIL_SSL_KEYFILE, EMAIL_TIMEOUT,
 )
 
 
@@ -15,7 +20,48 @@ from hakaton.app_data import (  # noqa F401
 DEBUG = True
 
 
+"""Celery settings."""
+
+
+CELERY_TIMEZONE = 'Europe/Moscow'
+
+CELERY_BEAT_SCHEDULE = {
+    'send_hr_task_notify': {
+        'task': 'user.tasks.send_hr_task_notify',
+        'schedule': crontab(hour=7),
+    },
+}
+
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+
+CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
+
+
+"""Email settings."""
+
+
+if DEBUG:
+    EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
+    EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+DEFAULT_FROM_EMAIL = DEFAULT_FROM_EMAIL
+EMAIL_HOST: str = EMAIL_HOST
+EMAIL_PORT: int = EMAIL_PORT
+EMAIL_HOST_USER: str = EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD: str = EMAIL_HOST_PASSWORD
+EMAIL_USE_TLS: bool = EMAIL_USE_TLS
+EMAIL_USE_SSL: bool = EMAIL_USE_SSL
+EMAIL_SSL_CERTFILE: str = EMAIL_SSL_CERTFILE
+EMAIL_SSL_KEYFILE: str = EMAIL_SSL_KEYFILE
+EMAIL_TIMEOUT: int = EMAIL_TIMEOUT
+
+
 """Django settings."""
+
 
 AUTH_USER_MODEL = 'user.User'
 
@@ -31,6 +77,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_celery_beat',
     'django_filters',
     'djoser',
     'corsheaders',
