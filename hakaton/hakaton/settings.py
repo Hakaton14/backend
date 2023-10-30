@@ -187,20 +187,29 @@ CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOW_HEADERS = [
     *default_headers,
-    "access-control-allow-credentials",
+    'access-control-allow-credentials',
+    'Access-Control-Allow-Headers',
+    'Access-Control-Allow-Credentials',
 ]
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
     'http://127.0.0.1:5173',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+    f'http://{CITE_DOMAIN}',
+    f'http://{CITE_IP}',
+    f'https://{CITE_DOMAIN}',
+    f'https://{CITE_IP}',
 ]
 
+CORS_ALLOW_ALL_ORIGINS: bool = True
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
