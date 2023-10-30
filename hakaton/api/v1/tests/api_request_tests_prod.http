@@ -1,0 +1,277 @@
+# Powered by REST Client via Visual Studio Code
+# https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+
+
+##########################################################################
+################################## TOKENS ################################
+##########################################################################
+
+
+@jwt_access = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+
+
+##########################################################################
+################################ ENDPOINTS ###############################
+##########################################################################
+
+
+@auth_jwt_create = http://hr-praktikum.servebeer.com/api/v1/auth/token/create/
+@auth_jwt_refresh = http://hr-praktikum.servebeer.com/api/v1/auth/token/refresh/
+
+@cities = http://hr-praktikum.servebeer.com/api/v1/cities/
+
+@currencies = http://hr-praktikum.servebeer.com/api/v1/currencies/
+
+@employments = http://hr-praktikum.servebeer.com/api/v1/employments/
+
+@experiences = http://hr-praktikum.servebeer.com/api/v1/experiences/
+
+@languages = http://hr-praktikum.servebeer.com/api/v1/languages/
+
+@schedules = http://hr-praktikum.servebeer.com/api/v1/schedules/
+
+@skills = http://hr-praktikum.servebeer.com/api/v1/skills/
+
+@skill-categories = http://hr-praktikum.servebeer.com/api/v1/skills/by-categories/
+
+@students = http://hr-praktikum.servebeer.com/api/v1/students/
+
+@tasks = http://hr-praktikum.servebeer.com/api/v1/tasks/
+
+@users = http://hr-praktikum.servebeer.com/api/v1/users/
+
+@vacancies = http://hr-praktikum.servebeer.com/api/v1/vacancies/
+
+
+##########################################################################
+################################### AUTH #################################
+##########################################################################
+
+
+###
+POST {{auth_jwt_create}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "hr.user@email.com",
+    "password": "MyPass!1"
+}
+
+###
+POST {{auth_jwt_refresh}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY5ODUwNTI3MCwiaWF0IjoxNjk4NDE4ODcwLCJqdGkiOiI0ZjFmMzFjYjM3ZWY0NmI3YmExYjAyMWY5MGEwNmE2OCIsInVzZXJfaWQiOjJ9.WzNqoH5K2_eSBkkRj6vOgNNx2Qt00Re_Wn9veFaHymc"
+}
+
+
+##########################################################################
+################################# CITIES #################################
+##########################################################################
+
+
+###
+GET {{cities}} HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+
+###
+GET {{cities}}?search=М HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+
+
+##########################################################################
+################################ CURRENCIES ##############################
+##########################################################################
+
+
+###
+GET {{currencies}} HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+
+
+##########################################################################
+################################ EMPLOYMENT ##############################
+##########################################################################
+
+
+###
+GET {{employments}} HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+
+
+##########################################################################
+############################### EXPERIENCES ##############################
+##########################################################################
+
+
+###
+GET {{experiences}} HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+
+
+##########################################################################
+################################# LANGUAGES ##############################
+##########################################################################
+
+
+###
+GET {{languages}} HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+
+
+##########################################################################
+################################# SCHEDULES ##############################
+##########################################################################
+
+
+###
+GET {{schedules}} HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+
+
+##########################################################################
+################################## SKILLS ################################
+##########################################################################
+
+
+###
+GET {{skills}} HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+
+###
+GET {{skill-categories}} HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTM3NDM4LCJpYXQiOjE2OTgzMzI2MzgsImp0aSI6IjY3NzdkNmFjOWIwOTRmYTk5NjdkMTUwNGJmODQ1MGVjIiwidXNlcl9pZCI6Mn0.OOrK-4vwoyxRd8DlXOpT-9eJgwNOjmAj6ciLQE9Blls
+
+
+#########################################################################
+################################# STUDENTS ##############################
+##########################################################################
+
+
+###
+GET {{students}} HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+
+###
+GET {{students}}1/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTM3NDM4LCJpYXQiOjE2OTgzMzI2MzgsImp0aSI6IjY3NzdkNmFjOWIwOTRmYTk5NjdkMTUwNGJmODQ1MGVjIiwidXNlcl9pZCI6Mn0.OOrK-4vwoyxRd8DlXOpT-9eJgwNOjmAj6ciLQE9Blls
+
+###
+GET {{students}}?from_vacancy=1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+
+###
+GET {{students}}?employment=5&languages=3-1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+
+
+##########################################################################
+################################## TASKS #################################
+##########################################################################
+
+
+###
+GET {{tasks}} HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+
+###
+GET {{tasks}}?date=2023-12 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+
+###
+POST {{tasks}} HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+Content-Type: application/json
+
+{
+    "description": "API 1",
+    "date": "2023-12-01",
+    "time": "12:21:01"
+}
+
+###
+PATCH {{tasks}}3/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+Content-Type: application/json
+
+{
+    "description": "REAPI 2",
+    "date": "2023-12-01",
+    "time": "12:21:01"
+}
+
+###
+DELETE {{tasks}}3/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+
+
+##########################################################################
+################################## USERS #################################
+##########################################################################
+
+
+###
+GET {{users}}me/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTM3NDM4LCJpYXQiOjE2OTgzMzI2MzgsImp0aSI6IjY3NzdkNmFjOWIwOTRmYTk5NjdkMTUwNGJmODQ1MGVjIiwidXNlcl9pZCI6Mn0.OOrK-4vwoyxRd8DlXOpT-9eJgwNOjmAj6ciLQE9Blls
+
+
+###
+POST {{users}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "hr.user@email.com",
+    "password": "MyPass!1",
+    "first_name": "Илона",
+    "last_name": "Маск",
+    "phone": "+7 911 111 22 22"
+}
+
+
+##########################################################################
+################################ VACANCIES ###############################
+##########################################################################
+
+
+###
+GET {{vacancies}} HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+
+
+###
+POST {{vacancies}} HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTM1NjEzLCJpYXQiOjE2OTgzMzA4MTMsImp0aSI6IjQyZDhlYTUxNmQzOTRhMjY5ZDZiNmYxMWRmNWU0YjhiIiwidXNlcl9pZCI6Mn0.aZEiZorb7jvb1Rwj3UL1biVLWminI-GZnZ_bngDNotE
+Content-Type: application/json
+
+{
+    "name": "Python разработчик",
+    "city": 1,
+    "address": "Тут адрес в виде текста.",
+    "description": "Тут требования вакансии в виде текста.",
+    "responsibilities": "Тут обязанности в виде текста.",
+    "requirements": "Тут требования в виде текста.",
+    "conditions": "Тут условия в виде текста.",
+    "salary_from": 1000,
+    "salary_to": 2000,
+    "currency": 1,
+    "testcase": "Тут тестовое задание в виде текста.",
+    "experience": 1,
+    "employment": 1,
+    "schedule": 2,
+    "skills": [1, 2, 3],
+    "languages": [
+        {
+            "language": 1,
+            "level": 2
+        },
+        {
+            "language": 3,
+            "level": 1
+        }
+
+    ],
+    "is_archived": false,
+    "is_template": true,
+    "template_invite": "Тут текст письма-приглашения."
+}
