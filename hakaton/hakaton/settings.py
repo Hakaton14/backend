@@ -91,7 +91,7 @@ ROOT_URLCONF = 'hakaton.urls'
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Yandex Hakaton API',
-    'VERSION': '0.4.0',
+    'VERSION': '0.6.0',
     'DESCRIPTION': 'Team 14',
     'CONTACT': {
         'name': 'Kirill Svidunovich',
