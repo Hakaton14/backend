@@ -100,16 +100,16 @@ jobs:
             sudo docker image rm thesuncatcher222/hakaton_14_backend
             sudo docker image rm thesuncatcher222/hakaton_14_gateway
             sudo docker compose -f docker-compose.production.yml up -d
-            sudo systemctl restart nginx
+            sudo service nginx restart
   
-            send_message_telegram:
-              name: Send message to telegram
-              needs: deploy_on_server
-              runs-on: ubuntu-latest
-              steps:
-                - name: Send message
-                  uses: appleboy/telegram-action@master
-                  with:
-                    to: ${{ secrets.TELEGRAM_ME_ID }}
-                    token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-                    message: Деплой "backend" выполнен успешно!
+  send_message_telegram:
+    name: Send message to telegram
+    needs: deploy_on_server
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_ME_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          message: Деплой "backend" выполнен успешно!
