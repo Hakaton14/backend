@@ -1,0 +1,46 @@
+version: '3.8'
+
+volumes:
+  database_volume:
+  static_volume:
+  media_volume:
+
+services:
+
+  db:
+    image: postgres:15-alpine
+    volumes:
+      - database_volume:/var/lib/postgresql/data/
+    env_file:
+      - .env
+
+  redis:
+    image: redis:7.2.1-alpine
+
+  backend:
+    image: thesuncatcher222/hakaton_14_backend:latest
+    env_file: .env
+    volumes:
+      - static_volume:/app/static
+      - media_volume:/app/media
+    depends_on:
+      - db
+      - redis
+
+  frontend:
+    image: thesuncatcher222/hakaton_14_frontend:latest
+    volumes:
+      - static_volume:/app/build
+    depends_on:
+      - backend
+
+  nginx:
+    image: thesuncatcher222/hakaton_14_gateway:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - static_volume:/var/html/static/
+      - media_volume:/var/html/media/
+    depends_on:
+      - backend
+      - frontend
