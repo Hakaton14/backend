@@ -13,4 +13,4 @@
 ---
 
 Архив с main доступен по ссылке:
-[рhakaton_team_14_main.zip](https://github.com/Hakaton14/backend/files/13213465/hakaton_team_14_main.zip)
+[рhakaton_team_14_main.zip](https://github.com/Hakaton14/backend/files/13213465/hakaton_team_14_main.zip).
