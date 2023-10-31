@@ -198,12 +198,10 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:8000',
     'http://127.0.0.1:8000',
     f'http://{CITE_DOMAIN}',
-    f'http://{CITE_IP}',
+    f'http://{CITE_IP}:8000',
     f'https://{CITE_DOMAIN}',
-    f'https://{CITE_IP}',
+    f'https://{CITE_IP}:8000',
 ]
-
-CORS_ALLOW_ALL_ORIGINS: bool = True
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
