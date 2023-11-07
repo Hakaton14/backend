@@ -112,4 +112,4 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_ME_ID }}
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          message: Деплой "backend" выполнен успешно!
+          message: Деплой "hr-praktikum backend" выполнен успешно!
