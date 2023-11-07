@@ -64,13 +64,13 @@ jobs:
         with:
           context: ./hakaton/
           push: True
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/hakaton_14_backend:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/hr_praktikum_backend:latest
       - name: Push gateway image to the Dockerhub
         uses: docker/build-push-action@v4
         with:
           context: ./gateway/
           push: True
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/hakaton_14_gateway:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/hr_praktikum_gateway:latest
 
   deploy_on_server:
     name: Deploy project on server
@@ -79,14 +79,14 @@ jobs:
     steps:
       - name: Clone project to runner
         uses: actions/checkout@v3
-      - name: Copy docker-compose.production.yml to server via ssh
+      - name: Copy docker-compose.yml to server via ssh
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          source: "docker-compose.production.yml"
-          target: "hakaton"
+          source: "docker-compose.yml"
+          target: "/home/hr_praktikum"
       - name: Executing remote ssh commands to deploy
         uses: appleboy/ssh-action@master
         with:
@@ -95,11 +95,11 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd hakaton
-            sudo docker compose -f docker-compose.production.yml pull
-            sudo docker compose -f docker-compose.production.yml down
-            sudo docker image rm thesuncatcher222/hakaton_14_backend
-            sudo docker image rm thesuncatcher222/hakaton_14_gateway
-            sudo docker compose -f docker-compose.production.yml up -d
+            sudo docker compose down
+            sudo docker image rm thesuncatcher222/hr_praktikum_backend
+            sudo docker image rm thesuncatcher222/hr_praktikum_gateway
+            sudo docker volume rm hr_praktikum_hr_praktikum_static_volume
+            sudo docker compose up -d --build
             sudo service nginx restart
   
   send_message_telegram:
