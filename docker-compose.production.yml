@@ -18,7 +18,7 @@ services:
     image: redis:7.2.1-alpine
 
   hr_praktikum_backend:
-    build: ./hakaton/
+    image: thesuncatcher222/hr_praktikum_backend:latest
     env_file: .env
     volumes:
       - hr_praktikum_static_volume:/app/static
@@ -28,7 +28,7 @@ services:
       - hr_praktikum_redis
 
   hr_praktikum_frontend:
-    build: ../frontend/
+    image: thesuncatcher222/hr_praktikum_frontend:latest
     volumes:
       - hr_praktikum_static_volume:/app/build
     env_file: .env
@@ -36,7 +36,7 @@ services:
       - hr_praktikum_backend
 
   hr_praktikum_gateway:
-    build: ./gateway/
+    image: thesuncatcher222/hr_praktikum_gateway:latest
     ports:
       - "8000:8000"
     volumes:
