@@ -94,7 +94,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd hakaton
+            cd /home/hr_praktikum
             sudo docker compose down
             sudo docker image rm ${{ secrets.DOCKERHUB_USERNAME }}/hr_praktikum_backend
             sudo docker image rm ${{ secrets.DOCKERHUB_USERNAME }}/hr_praktikum_gateway
