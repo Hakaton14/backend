@@ -7,7 +7,7 @@
 ##########################################################################
 
 
-@jwt_access = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+@jwt_access = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTQ2Mzc5LCJpYXQiOjE2OTg4NTk5NzksImp0aSI6IjE1MWNkYTVkZTY0NzRlOWZiMWM1YTUxZjFkOTkzZjQ5IiwidXNlcl9pZCI6Mn0.yIlgZ7YFiQid2B543xjvl82p4Rba8bFvgxSGNkcKAFQ
 
 
 ##########################################################################
@@ -15,32 +15,32 @@
 ##########################################################################
 
 
-@auth_jwt_create = http://hr-praktikum.servebeer.com/api/v1/auth/token/create/
-@auth_jwt_refresh = http://hr-praktikum.servebeer.com/api/v1/auth/token/refresh/
+@auth_jwt_create = https://hr-praktikum.webtm.ru/api/v1/auth/token/create/
+@auth_jwt_refresh = https://hr-praktikum.webtm.ru/api/v1/auth/token/refresh/
 
-@cities = http://hr-praktikum.servebeer.com/api/v1/cities/
+@cities = https://hr-praktikum.webtm.ru/api/v1/cities/
 
-@currencies = http://hr-praktikum.servebeer.com/api/v1/currencies/
+@currencies = https://hr-praktikum.webtm.ru/api/v1/currencies/
 
-@employments = http://hr-praktikum.servebeer.com/api/v1/employments/
+@employments = https://hr-praktikum.webtm.ru/api/v1/employments/
 
-@experiences = http://hr-praktikum.servebeer.com/api/v1/experiences/
+@experiences = https://hr-praktikum.webtm.ru/api/v1/experiences/
 
-@languages = http://hr-praktikum.servebeer.com/api/v1/languages/
+@languages = https://hr-praktikum.webtm.ru/api/v1/languages/
 
-@schedules = http://hr-praktikum.servebeer.com/api/v1/schedules/
+@schedules = https://hr-praktikum.webtm.ru/api/v1/schedules/
 
-@skills = http://hr-praktikum.servebeer.com/api/v1/skills/
+@skills = https://hr-praktikum.webtm.ru/api/v1/skills/
 
-@skill-categories = http://hr-praktikum.servebeer.com/api/v1/skills/by-categories/
+@skill-categories = https://hr-praktikum.webtm.ru/api/v1/skills/by-categories/
 
-@students = http://hr-praktikum.servebeer.com/api/v1/students/
+@students = https://hr-praktikum.webtm.ru/api/v1/students/
 
-@tasks = http://hr-praktikum.servebeer.com/api/v1/tasks/
+@tasks = https://hr-praktikum.webtm.ru/api/v1/tasks/
 
-@users = http://hr-praktikum.servebeer.com/api/v1/users/
+@users = https://hr-praktikum.webtm.ru/api/v1/users/
 
-@vacancies = http://hr-praktikum.servebeer.com/api/v1/vacancies/
+@vacancies = https://hr-praktikum.webtm.ru/api/v1/vacancies/
 
 
 ##########################################################################
@@ -73,11 +73,11 @@ Content-Type: application/json
 
 ###
 GET {{cities}} HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTQ2Mzc5LCJpYXQiOjE2OTg4NTk5NzksImp0aSI6IjE1MWNkYTVkZTY0NzRlOWZiMWM1YTUxZjFkOTkzZjQ5IiwidXNlcl9pZCI6Mn0.yIlgZ7YFiQid2B543xjvl82p4Rba8bFvgxSGNkcKAFQ
 
 ###
 GET {{cities}}?search=М HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTQ2Mzc5LCJpYXQiOjE2OTg4NTk5NzksImp0aSI6IjE1MWNkYTVkZTY0NzRlOWZiMWM1YTUxZjFkOTkzZjQ5IiwidXNlcl9pZCI6Mn0.yIlgZ7YFiQid2B543xjvl82p4Rba8bFvgxSGNkcKAFQ
 
 
 ##########################################################################
@@ -87,7 +87,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 ###
 GET {{currencies}} HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTQ2Mzc5LCJpYXQiOjE2OTg4NTk5NzksImp0aSI6IjE1MWNkYTVkZTY0NzRlOWZiMWM1YTUxZjFkOTkzZjQ5IiwidXNlcl9pZCI6Mn0.yIlgZ7YFiQid2B543xjvl82p4Rba8bFvgxSGNkcKAFQ
 
 
 ##########################################################################
@@ -97,7 +97,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 ###
 GET {{employments}} HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTQ2Mzc5LCJpYXQiOjE2OTg4NTk5NzksImp0aSI6IjE1MWNkYTVkZTY0NzRlOWZiMWM1YTUxZjFkOTkzZjQ5IiwidXNlcl9pZCI6Mn0.yIlgZ7YFiQid2B543xjvl82p4Rba8bFvgxSGNkcKAFQ
 
 
 ##########################################################################
@@ -107,7 +107,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 ###
 GET {{experiences}} HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTQ2Mzc5LCJpYXQiOjE2OTg4NTk5NzksImp0aSI6IjE1MWNkYTVkZTY0NzRlOWZiMWM1YTUxZjFkOTkzZjQ5IiwidXNlcl9pZCI6Mn0.yIlgZ7YFiQid2B543xjvl82p4Rba8bFvgxSGNkcKAFQ
 
 
 ##########################################################################
@@ -117,7 +117,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 ###
 GET {{languages}} HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTQ2Mzc5LCJpYXQiOjE2OTg4NTk5NzksImp0aSI6IjE1MWNkYTVkZTY0NzRlOWZiMWM1YTUxZjFkOTkzZjQ5IiwidXNlcl9pZCI6Mn0.yIlgZ7YFiQid2B543xjvl82p4Rba8bFvgxSGNkcKAFQ
 
 
 ##########################################################################
@@ -127,7 +127,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 ###
 GET {{schedules}} HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTQ2Mzc5LCJpYXQiOjE2OTg4NTk5NzksImp0aSI6IjE1MWNkYTVkZTY0NzRlOWZiMWM1YTUxZjFkOTkzZjQ5IiwidXNlcl9pZCI6Mn0.yIlgZ7YFiQid2B543xjvl82p4Rba8bFvgxSGNkcKAFQ
 
 
 ##########################################################################
@@ -137,7 +137,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 ###
 GET {{skills}} HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTQ2Mzc5LCJpYXQiOjE2OTg4NTk5NzksImp0aSI6IjE1MWNkYTVkZTY0NzRlOWZiMWM1YTUxZjFkOTkzZjQ5IiwidXNlcl9pZCI6Mn0.yIlgZ7YFiQid2B543xjvl82p4Rba8bFvgxSGNkcKAFQ
 
 ###
 GET {{skill-categories}} HTTP/1.1
@@ -151,7 +151,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 ###
 GET {{students}} HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTQ2Mzc5LCJpYXQiOjE2OTg4NTk5NzksImp0aSI6IjE1MWNkYTVkZTY0NzRlOWZiMWM1YTUxZjFkOTkzZjQ5IiwidXNlcl9pZCI6Mn0.yIlgZ7YFiQid2B543xjvl82p4Rba8bFvgxSGNkcKAFQ
 
 ###
 GET {{students}}1/ HTTP/1.1
@@ -159,11 +159,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 ###
 GET {{students}}?from_vacancy=1 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTQ2Mzc5LCJpYXQiOjE2OTg4NTk5NzksImp0aSI6IjE1MWNkYTVkZTY0NzRlOWZiMWM1YTUxZjFkOTkzZjQ5IiwidXNlcl9pZCI6Mn0.yIlgZ7YFiQid2B543xjvl82p4Rba8bFvgxSGNkcKAFQ
 
 ###
 GET {{students}}?employment=5&languages=3-1 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTQ2Mzc5LCJpYXQiOjE2OTg4NTk5NzksImp0aSI6IjE1MWNkYTVkZTY0NzRlOWZiMWM1YTUxZjFkOTkzZjQ5IiwidXNlcl9pZCI6Mn0.yIlgZ7YFiQid2B543xjvl82p4Rba8bFvgxSGNkcKAFQ
 
 
 ##########################################################################
@@ -173,15 +173,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 ###
 GET {{tasks}} HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTQ2Mzc5LCJpYXQiOjE2OTg4NTk5NzksImp0aSI6IjE1MWNkYTVkZTY0NzRlOWZiMWM1YTUxZjFkOTkzZjQ5IiwidXNlcl9pZCI6Mn0.yIlgZ7YFiQid2B543xjvl82p4Rba8bFvgxSGNkcKAFQ
 
 ###
 GET {{tasks}}?date=2023-12 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTQ2Mzc5LCJpYXQiOjE2OTg4NTk5NzksImp0aSI6IjE1MWNkYTVkZTY0NzRlOWZiMWM1YTUxZjFkOTkzZjQ5IiwidXNlcl9pZCI6Mn0.yIlgZ7YFiQid2B543xjvl82p4Rba8bFvgxSGNkcKAFQ
 
 ###
 POST {{tasks}} HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTQ2Mzc5LCJpYXQiOjE2OTg4NTk5NzksImp0aSI6IjE1MWNkYTVkZTY0NzRlOWZiMWM1YTUxZjFkOTkzZjQ5IiwidXNlcl9pZCI6Mn0.yIlgZ7YFiQid2B543xjvl82p4Rba8bFvgxSGNkcKAFQ
 Content-Type: application/json
 
 {
@@ -192,7 +192,7 @@ Content-Type: application/json
 
 ###
 PATCH {{tasks}}3/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTQ2Mzc5LCJpYXQiOjE2OTg4NTk5NzksImp0aSI6IjE1MWNkYTVkZTY0NzRlOWZiMWM1YTUxZjFkOTkzZjQ5IiwidXNlcl9pZCI6Mn0.yIlgZ7YFiQid2B543xjvl82p4Rba8bFvgxSGNkcKAFQ
 Content-Type: application/json
 
 {
@@ -203,7 +203,7 @@ Content-Type: application/json
 
 ###
 DELETE {{tasks}}3/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTQ2Mzc5LCJpYXQiOjE2OTg4NTk5NzksImp0aSI6IjE1MWNkYTVkZTY0NzRlOWZiMWM1YTUxZjFkOTkzZjQ5IiwidXNlcl9pZCI6Mn0.yIlgZ7YFiQid2B543xjvl82p4Rba8bFvgxSGNkcKAFQ
 
 
 ##########################################################################
@@ -236,7 +236,7 @@ Content-Type: application/json
 
 ###
 GET {{vacancies}} HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5MTQzMjA1LCJpYXQiOjE2OTg1Mzg0MDUsImp0aSI6IjQwNDMxYjE2MmU4YzRiZDNhNTRkNWMzY2ZjMjc3MmI1IiwidXNlcl9pZCI6Mn0.wZKvfQYoxsz9OmDa7oj0eAZSvzE3j8b6KNYkOmyxRLI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk4OTQ2Mzc5LCJpYXQiOjE2OTg4NTk5NzksImp0aSI6IjE1MWNkYTVkZTY0NzRlOWZiMWM1YTUxZjFkOTkzZjQ5IiwidXNlcl9pZCI6Mn0.yIlgZ7YFiQid2B543xjvl82p4Rba8bFvgxSGNkcKAFQ
 
 
 ###
