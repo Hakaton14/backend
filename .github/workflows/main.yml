@@ -86,7 +86,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           source: "docker-compose.production.yml"
-          target: "/home/hr_praktikum/docker-compose.yml"
+          target: "/home/hr_praktikum/"
       - name: Executing remote ssh commands to deploy
         uses: appleboy/ssh-action@master
         with:
@@ -96,6 +96,8 @@ jobs:
           script: |
             cd /home/hr_praktikum
             sudo docker compose down
+            sudo rm docker-compose.yml
+            sudo mv docker-compose.production.yml docker-compose.yml
             sudo docker image rm ${{ secrets.DOCKERHUB_USERNAME }}/hr_praktikum_backend
             sudo docker image rm ${{ secrets.DOCKERHUB_USERNAME }}/hr_praktikum_gateway
             sudo docker volume rm hr_praktikum_hr_praktikum_static_volume
