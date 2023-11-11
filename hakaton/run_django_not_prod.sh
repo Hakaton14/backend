@@ -4,7 +4,7 @@ echo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 echo @@@@@@@@@@@@@@@@@@@@@@@ waiting for database @@@@@@@@@@@@@@@@@@@@@@@@
 echo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-while ! pg_isready -h hr_praktikum_database -p 5432; do
+while ! pg_isready -h hr_practicum_database -p 5432; do
     echo "База данных недоступна, ждем 5 секунд..."
     sleep 5
 done

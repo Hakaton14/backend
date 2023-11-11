@@ -1,47 +1,47 @@
 version: '3.8'
 
 volumes:
-  hr_praktikum_database_volume:
-  hr_praktikum_static_volume:
-  hr_praktikum_media_volume:
+  hr_practicum_database_volume:
+  hr_practicum_static_volume:
+  hr_practicum_media_volume:
 
 services:
 
-  hr_praktikum_database:
+  hr_practicum_database:
     image: postgres:15-alpine
     volumes:
-      - hr_praktikum_database_volume:/var/lib/postgresql/data/
+      - hr_practicum_database_volume:/var/lib/postgresql/data/
     env_file:
       - .env
 
-  hr_praktikum_redis:
+  hr_practicum_redis:
     image: redis:7.2.1-alpine
 
-  hr_praktikum_backend:
+  hr_practicum_backend:
     build: ./hakaton/
     env_file: .env
     volumes:
-      - hr_praktikum_static_volume:/app/static
-      - hr_praktikum_media_volume:/app/media
+      - hr_practicum_static_volume:/app/static
+      - hr_practicum_media_volume:/app/media
     depends_on:
-      - hr_praktikum_database
-      - hr_praktikum_redis
+      - hr_practicum_database
+      - hr_practicum_redis
 
-  hr_praktikum_frontend:
+  hr_practicum_frontend:
     build: ../frontend/
     volumes:
-      - hr_praktikum_static_volume:/app/build
+      - hr_practicum_static_volume:/app/build
     env_file: .env
     depends_on:
-      - hr_praktikum_backend
+      - hr_practicum_backend
 
-  hr_praktikum_gateway:
+  hr_practicum_gateway:
     build: ./gateway/
     ports:
       - "8000:8000"
     volumes:
-      - hr_praktikum_static_volume:/var/html/static/
-      - hr_praktikum_media_volume:/var/html/media/
+      - hr_practicum_static_volume:/var/html/static/
+      - hr_practicum_media_volume:/var/html/media/
     depends_on:
-      - hr_praktikum_backend
-      - hr_praktikum_frontend
+      - hr_practicum_backend
+      - hr_practicum_frontend

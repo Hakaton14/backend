@@ -179,15 +179,6 @@ def import_vacancy_student_status() -> None:
     return
 
 
-def create_admin():
-    """Создает модель суперпользователя."""
-    email: str = 'admin@email.com'
-    password: str = 'admin'
-    if not User.objects.filter(email=email):
-        User.objects.create_superuser(email=email, password=password)
-    return
-
-
 def create_student():
     """Создает объекты разных студентов."""
     csv_data: csv.DictReader = import_csv(csv_name='student')
@@ -370,7 +361,6 @@ class Command(BaseCommand):
             import_skill_category()
             import_skill()
             import_vacancy_student_status()
-            create_admin()
             create_student()
             create_vacancy()
         except Exception as err:

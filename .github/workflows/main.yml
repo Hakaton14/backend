@@ -64,13 +64,13 @@ jobs:
         with:
           context: ./hakaton/
           push: True
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/hr_praktikum_backend:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/hr_practicum_backend:latest
       - name: Push gateway image to the Dockerhub
         uses: docker/build-push-action@v4
         with:
           context: ./gateway/
           push: True
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/hr_praktikum_gateway:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/hr_practicum_gateway:latest
 
   deploy_on_server:
     name: Deploy project on server
@@ -86,7 +86,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           source: "docker-compose.production.yml"
-          target: "/home/hr_praktikum/"
+          target: "/home/hr_practicum/"
       - name: Executing remote ssh commands to deploy
         uses: appleboy/ssh-action@master
         with:
@@ -94,13 +94,13 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd /home/hr_praktikum
+            cd /home/hr_practicum
             sudo docker compose down
             sudo rm docker-compose.yml
             sudo mv docker-compose.production.yml docker-compose.yml
-            sudo docker image rm ${{ secrets.DOCKERHUB_USERNAME }}/hr_praktikum_backend
-            sudo docker image rm ${{ secrets.DOCKERHUB_USERNAME }}/hr_praktikum_gateway
-            sudo docker volume rm hr_praktikum_hr_praktikum_static_volume
+            sudo docker image rm ${{ secrets.DOCKERHUB_USERNAME }}/hr_practicum_backend
+            sudo docker image rm ${{ secrets.DOCKERHUB_USERNAME }}/hr_practicum_gateway
+            sudo docker volume rm hr_practicum_hr_practicum_static_volume
             sudo docker compose up -d --build
             sudo service nginx restart
   
@@ -114,4 +114,4 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_ME_ID }}
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          message: Деплой "Hr-Praktikum backend" выполнен успешно!
+          message: Деплой "Hr-practicum backend" выполнен успешно!

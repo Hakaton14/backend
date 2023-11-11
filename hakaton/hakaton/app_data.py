@@ -101,7 +101,7 @@ def user_avatar_path(instance, filename) -> str:
 """Email settings."""
 
 
-DEFAULT_FROM_EMAIL = 'Praktikum Services'
+DEFAULT_FROM_EMAIL = 'practicum Services'
 
 EMAIL_HOST: str = os.getenv('EMAIL_HOST')
 EMAIL_PORT: int = int(os.getenv('EMAIL_PORT'))
