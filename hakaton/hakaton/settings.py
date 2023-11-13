@@ -203,6 +203,10 @@ CORS_ALLOWED_ORIGINS = [
     f'https://{CITE_IP}:8000',
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    f'https://{CITE_DOMAIN}',
+]
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
